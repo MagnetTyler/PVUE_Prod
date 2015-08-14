@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Arabic</label>
+            <name>Arabic</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Chinese</label>
+            <name>Chinese</name>
+        </dataCategory>
+        <dataCategory>
+            <label>English</label>
+            <name>English</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Japanese</label>
+            <name>Japanese</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Korean</label>
+            <name>Korean</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Arabic, English, Chinese, Japanese and Korean</description>
+    <label>Language</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

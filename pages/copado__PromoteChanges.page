@@ -1,0 +1,434 @@
+<apex:page id="thePage" standardController="copado__Promotion__c" extensions="copado.PromoteChangesExtension,copado.Settings">
+    <c:GAnalytics />
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+    <script id="inits">
+        var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(c){var a="",d,b,f,g,h,e,j=0;for(c=Base64._utf8_encode(c);j<c.length;)d=c.charCodeAt(j++),b=c.charCodeAt(j++),f=c.charCodeAt(j++),g=d>>2,d=(d&3)<<4|b>>4,h=(b&15)<<2|f>>6,e=f&63,isNaN(b)?h=e=64:isNaN(f)&&(e=64),a=a+this._keyStr.charAt(g)+this._keyStr.charAt(d)+this._keyStr.charAt(h)+this._keyStr.charAt(e);return a},decode:function(c){var a="",d,b,f,g,h,e=0;for(c=c.replace(/[^A-Za-z0-9\+\/\=]/g,"");e<c.length;)d=this._keyStr.indexOf(c.charAt(e++)),b=this._keyStr.indexOf(c.charAt(e++)),g=this._keyStr.indexOf(c.charAt(e++)),h=this._keyStr.indexOf(c.charAt(e++)),d=d<<2|b>>4,b=(b&15)<<4|g>>2,f=(g&3)<<6|h,a+=String.fromCharCode(d),64!=g&&(a+=String.fromCharCode(b)),64!=h&&(a+=String.fromCharCode(f));return a=Base64._utf8_decode(a)},_utf8_encode:function(c){c=c.replace(/\r\n/g,"\n");for(var a="",d=0;d<c.length;d++){var b=c.charCodeAt(d);128>b?a+=String.fromCharCode(b):(127<b&&2048>b?a+=String.fromCharCode(b>>6|192):(a+=String.fromCharCode(b>>12|224),a+=String.fromCharCode(b>>6&63|128)),a+=String.fromCharCode(b&63|128))}return a},_utf8_decode:function(c){for(var a="",d=0,b=c1=c2=0;d<c.length;)b=c.charCodeAt(d),128>b?(a+=String.fromCharCode(b),d++):191<b&&224>b?(c2=c.charCodeAt(d+1),a+=String.fromCharCode((b&31)<<6|c2&63),d+=2):(c2=c.charCodeAt(d+1),c3=c.charCodeAt(d+2),a+=String.fromCharCode((b&15)<<12|(c2&63)<<6|c3&63),d+=3);return a}};
+        var $copado = jQuery.noConflict();
+        var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <script src="/soap/ajax/32.0/connection.js"></script>
+        <script>
+        var copadoApp = {
+            ns: '{!namespace}',
+            promotionId: '{!Promotion__c.Id}',
+            sendEmailNotification: {!Promotion__c.Send_Deployment_Complete_email__c},
+            promotedUserStoryIds: '{!promotedUserStoryIds}',
+            sourceOrgId: '{!Promotion__c.source_org_credential__c}',
+            destinationOrgId: '{!Promotion__c.Destination_Org_Credential__c}',
+            createFullProfilesStep: {!Promotion__c.Create_Full_Profiles_Step__c},
+            createFullPermissionSetsStep: {!Promotion__c.Create_Full_Permission_Sets_Step__c},
+            deploymentId: '',
+            promotedMetadata: [],
+            masterKeySet_metadata: [],
+            promotedProfiles: [],
+            masterKeySet_profiles: [],
+            promotedPermissionSets: [],
+            masterKeySet_permissionSets: [],
+            manualtasks_befores: [],
+            manualtasks_afters: [],
+        
+            insertDeployment: function(){
+                var records = [];
+                var r = new sforce.SObject(copadoApp.ns+"Deployment__c");
+                r[copadoApp.ns+'Promotion__c'] = copadoApp.promotionId;
+                r.Name = prompt('Please enter a Deployment name','Promotion').substring(0,80);
+                r[copadoApp.ns+'Status__c'] = 'Draft';
+                r[copadoApp.ns+'Send_Deployment_Complete_email__c'] = copadoApp.sendEmailNotification;
+                r[copadoApp.ns+'From_Org__c'] = copadoApp.sourceOrgId;
+                records[0] = r;
+                var result = sforce.connection.create([r]);
+                if(result[0].getBoolean('success')){
+                    copadoApp.deploymentId = result[0].id;
+                    return copadoApp.deploymentId;
+                }
+                else{
+                    copadoApp.sforceFailure(result[0]);
+
+                    return false;
+                }
+            },
+            insertStep: function(deploymentId, stepName, stepType, attachBody, stepOrder){
+                setLockScreenMessage('Creating '+stepType+' step...');
+                var records = [];
+                var r = new sforce.SObject(copadoApp.ns+"Step__c");
+                r.Name = stepName.substring(0,80);
+                r[copadoApp.ns+'Type__c'] = stepType;
+                r[copadoApp.ns+'Deployment__c'] = deploymentId;
+                r[copadoApp.ns+'Order__c'] = stepOrder;
+                var result = sforce.connection.create([r]);
+                if(result[0].getBoolean('success')){
+                    var att = new sforce.SObject("Attachment");
+                    att.parentId = result[0].id;
+                    att.name = stepType;
+                    att.body = Base64.encode(attachBody);
+                    result = sforce.connection.create([att]);
+                }
+                return true;
+            },
+            createStepsAndDestOrgs: function(){
+                console.time("DEDUPETIMER2");
+                console.log('Profile params', copadoApp.deploymentId, copadoApp.promotedProfiles, copadoApp.promotedPermissionSets);
+                var continueFullProfile = false;
+                var continueFullPermSet = false;
+
+                if(copadoApp.promotedProfiles.length>0){
+                    if(copadoApp.createFullProfilesStep == true)continueFullProfile = true;
+                    if(copadoApp.createFullProfilesStep == false){
+                        continueFullProfile = confirm('We have found full profiles. Press OK to create a full profile deployment step, otherwise press Cancel.');
+                    }
+                }
+                if(copadoApp.promotedPermissionSets.length>0){
+                    if(copadoApp.createFullPermissionSetsStep == true)continueFullPermSet = true;
+                    if(copadoApp.createFullPermissionSetsStep == false){
+                        continueFullPermSet = confirm('We have found permission sets. Press OK to create a full Permission Set deployment step, otherwise press Cancel.');
+                    }
+                }
+                console.log('starting steps and dest orgs creation');
+                if(copadoApp.promotedProfiles.length>0 && continueFullProfile==false){
+                    for(var i=0; i<copadoApp.promotedProfiles.length; i++){
+                        var o = copadoApp.promotedProfiles[i];
+                        copadoApp.promotedMetadata.push({t:o.t, n:o.n, s:true});
+                    }
+                }
+                if(copadoApp.promotedPermissionSets.length>0 && continueFullPermSet==false){
+                    for(var i=0; i<copadoApp.promotedPermissionSets.length; i++){
+                        var o = copadoApp.promotedPermissionSets[i];
+                        copadoApp.promotedMetadata.push({t:o.t, n:o.n, s:true});
+                    }
+                }
+
+                copadoApp.processManualTasks(copadoApp.deploymentId);
+
+                var metadataStepOrder = copadoApp.manualtasks_befores.length==0?0:copadoApp.manualtasks_befores.length+1;
+                if(copadoApp.promotedMetadata.length>0){
+                    copadoApp.insertStep(copadoApp.deploymentId, 'Metadata', 'Metadata', JSON.stringify(copadoApp.promotedMetadata), metadataStepOrder);
+                }
+
+                if(continueFullProfile){
+                    metadataStepOrder++
+                    copadoApp.insertStep(copadoApp.deploymentId, 'Full Profiles', 'Full Profiles', JSON.stringify(copadoApp.promotedProfiles), metadataStepOrder);
+                }
+                if(continueFullPermSet){
+                    metadataStepOrder++;
+                    copadoApp.insertStep(copadoApp.deploymentId, 'Full Permission Sets', 'Full Permission Sets', JSON.stringify(copadoApp.promotedPermissionSets), metadataStepOrder);   
+                }
+
+                
+                //Insert manual tasks
+                var result_befores = sforce.connection.create(copadoApp.manualtasks_befores);
+                console.log('Manual step insert result_befores: ', result_befores);
+                
+                for(var i=0; i<copadoApp.manualtasks_afters.length; i++){
+                    copadoApp.manualtasks_afters[i][copadoApp.ns+'Order__c'] = copadoApp.manualtasks_afters[i][copadoApp.ns+'Order__c']+metadataStepOrder;
+                }
+                var result_afters = sforce.connection.create(copadoApp.manualtasks_afters);
+                console.log('Manual step insert result_afters: ', result_afters);
+
+                copadoApp.insertDestinationOrgs(copadoApp.deploymentId);
+                console.timeEnd("DEDUPETIMER2");
+            },
+            checkIfInListElseAdd: function(results){
+                for(var i=0; i<results.length; i++){
+                    var o = results[i];
+                    var keyValue = o.t+o.n+o.s
+                    if(o.t == 'Profile'){
+                        copadoApp.masterKeySet_profiles.push(keyValue);
+                        copadoApp.promotedProfiles.push({t: o.t, n:o.n, s:true});
+                    }
+                    else if(o.t == 'PermissionSet'){
+                        copadoApp.masterKeySet_permissionSets.push(keyValue);
+                        copadoApp.promotedPermissionSets.push({t: o.t, n:o.n, s:true});
+                    }
+                    else {
+                        copadoApp.masterKeySet_metadata.push(keyValue);
+                        copadoApp.promotedMetadata.push({t: o.t, n:o.n, s:true});
+                    }
+                }
+                copadoApp.createStepsAndDestOrgs();
+                return true;
+            },
+            processManualTasks: function(deploymentId){
+                setLockScreenMessage('Getting manual tasks...');
+                var ids = (copadoApp.promotedUserStoryIds.length>0)?copadoApp.promotedUserStoryIds.split(','):[];
+                var sids = ids.toString();
+                sids = '\''+sids.replace(/,/g,'\',\'')+'\'';
+                var results = [];
+                var q = "SELECT Id, Name, __NS__User_Story__c, __NS__Task_Description__c, __NS__Perform_in_Source_Org__c, __NS__Perform_in_Destination_Orgs__c, __NS__Perform_Manual_Task__c, __NS__Order__c FROM __NS__Deployment_Task__c WHERE __NS__User_Story__c IN ("+sids+") order by __NS__Perform_Manual_Task__c DESC, __NS__Order__c ASC";
+                q = q.replace(/__NS__/g,copadoApp.ns);
+                var result = sforce.connection.query(q);
+                var records = result.getArray("records");
+                var currentStepCount_befores = 0;
+                var currentStepCount_afters = 0;
+                if(records.length>0){
+                    var ns = copadoApp.ns;
+                    setLockScreenMessage('Adding manual tasks to deployment...');
+                    copadoApp.manualtasks_befores = [];
+                    copadoApp.manualtasks_afters = [];
+                    for(var i=0; i<records.length; i++){
+                        if(records[i][ns+'Perform_Manual_Task__c'] == 'Before Deployment'){
+                            currentStepCount_befores++;
+                            copadoApp.manualtasks_befores.push( 
+                                copadoApp.createManualStep(currentStepCount_befores, records[i], deploymentId, ns)
+                            );   
+                        }
+                        else{
+                            currentStepCount_afters++;
+                            copadoApp.manualtasks_afters.push( 
+                                copadoApp.createManualStep(currentStepCount_afters, records[i], deploymentId, ns)
+                            );
+                        }
+                    }
+                }
+                else{
+                    console.log('No manual tasks found');
+                }
+                return true;
+            },
+            /**
+             * Create a Manual Step based in the record information 
+             * Serializing the task datail in dataJson field
+             * @param  {[type]} counter      [description]
+             * @param  {[type]} record       [description]
+             * @param  {[type]} deploymentId [description]
+             * @param  {[type]} ns           [description]
+             * @return {[type]}              [description]
+             */
+            createManualStep: function(counter, record, deploymentId, ns){
+                var r = new sforce.SObject(ns+"Step__c");
+                r.Name = record.Name.substring(0,80);
+                r[ns+'Type__c'] = 'Manual Task';
+                r[ns+'Deployment__c'] = deploymentId;
+                r[ns+'Order__c'] = counter;
+                var obj = {
+                    Perform_in_Destination_Orgs: record[ns+'Perform_in_Destination_Orgs__c'] == 'true',
+                    Perform_in_Source_Org: record[ns+'Perform_in_Source_Org__c'] == 'true',
+                    Task_Description: record[ns+'Task_Description__c'],
+                    Perform_Manual_Task: record[ns+'Perform_Manual_Task__c']
+                };
+                r[ns+'dataJson__c'] = JSON.stringify(obj);
+                return r;
+
+            },
+            insertDestinationOrgs: function(deploymentId){
+                setLockScreenMessage('Creating destination org...');
+                var records = [];
+                var r = new sforce.SObject(copadoApp.ns+"Destination_Org__c");
+                r[copadoApp.ns+'To_Org__c'] = copadoApp.destinationOrgId;
+                r[copadoApp.ns+'Deployment__c'] = deploymentId;
+                var result = sforce.connection.create([r]);
+                console.log('Destination org created with id: '+result[0].id);
+                unlockScreen();
+                reRenderForm();
+            },
+            getUserStoryAttachments: function(){
+                setLockScreenMessage('Getting User Story attachments...');
+                var ids = (copadoApp.promotedUserStoryIds.length>0)?copadoApp.promotedUserStoryIds.split(','):[];
+                var results = [];
+                var counter = ids.length;
+                for(var i=0; i<ids.length; i++){
+                    sforce.connection.query("select Id, Name, ParentId, Body from Attachment where ParentId='"+ids[i]+"' and Name='Metadata'", {
+                        onSuccess : function(result){
+                            var records = result.getArray("records");
+                            if(records.length == 1){
+                                var b = Base64.decode(records[0].Body);
+                                var tmp = JSON.parse(b);
+                                results = results.concat(tmp);
+                            }
+                            else{
+                                console.log('Attachment not found');
+                            }
+                            counter--;
+                            if(counter == 0){
+                                copadoApp.checkIfInListElseAdd(results);
+                            }
+                        },
+                        onFailure : function(error){
+                            counter--;
+                            if(counter == 0){
+                                copadoApp.checkIfInListElseAdd(results);
+                            }
+                        }
+                    });
+                }
+                return true;
+            },
+            createDeployment: function(){
+                if(copadoApp.sourceOrgId == ''){
+                    alert('A source org credential must be defined prior to creating a deployment.');
+                    return false;
+                }
+                if(copadoApp.destinationOrgId == ''){
+                    alert('A destination org credential must be defined prior to creating a deployment.');
+                    return false;
+                }
+                //alert('This operation may take up to a minute as we work through your user stories and create your deployment. Please be patient.\n\nYour deployment will be shown in the list once ready.');
+                
+                lockScreen();
+                var fn = function(){
+                    console.time("DEDUPETIMER1");
+                    var deploymentId = copadoApp.insertDeployment();
+                    console.timeEnd("DEDUPETIMER1");
+                    if(deploymentId)copadoApp.getUserStoryAttachments();
+                }
+                setTimeout(fn, 100);
+                
+            },
+            sforceFailure: function(error){
+                console.error('An error has occured with the Salesforce Ajax Toolkit: ',error);
+                alert(error);
+            }
+        }
+    </script>
+    <c:ScreenLocker id="cmpScreenLocker" msg="Creating deployment" />
+        
+    <apex:form id="theForm">
+        <apex:actionFunction name="reRenderForm" reRender="theForm"/>
+        <apex:pageMessages id="pageMessages" />
+        <apex:pageMessage id="msgFlowNotFollowed" rendered="{!showFlowWarning}" severity="WARNING" strength="2" title="Flow not being followed" summary="test summary" detail="test detail" />
+        <apex:outputPanel id="pnlDetail" >
+            <apex:detail id="detail"  inlineEdit="false" showChatter="true" relatedList="true" title="true" />
+        </apex:outputPanel>
+
+
+        <div id="wrapper">
+            <div id="left" style="width:50%; margin-left:0px; float:left;">
+                <apex:pageBlock id="pbLeft" title="User Stories not included in promotion" >
+                    <apex:pageBlockButtons id="pbButtons2" location="top">
+                        <apex:commandButton status="tblStatus" reRender="theForm" id="btnGetUserStories" value="Add selected User Stories" action="{!addStoriesToPromotion}" />
+                    </apex:pageBlockButtons>
+
+                    <apex:actionStatus id="tblStatus" onstop="levelPageBlockHeight()" onstart="levelPageBlockHeight()">
+                        <apex:facet name="start">           
+                            <table class="list" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr class="headerRow">
+                                        <th class="noRowsHeader" scope="col"><img src="/img/loading.gif" /></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </apex:facet>
+                        <apex:facet name="stop">
+                            <apex:pageBlockTable id="pbTableUserStories" value="{!userStories}" var="u" >
+                                <apex:column id="col1">
+                                    <apex:facet name="header">
+                                        <input type="checkbox" id="chkAll" onclick="checkAll(this,'{!$Component.pbTableUserStories}','chkUserStory')" />
+                                    </apex:facet>
+                                    <apex:inputCheckbox id="chkUserStory" value="{!u.selected}" />
+                                </apex:column>
+                                <apex:column id="editCol2" >
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.Name.Label}
+                                    </apex:facet>
+                                    <apex:outputField value="{!u.userStory.Name}" />
+                                </apex:column>
+                                <apex:column id="editCol3" >
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__User_Story_Title__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.userStory.copado__User_Story_Title__c}" />
+                                </apex:column>
+                                <apex:column id="editCol4">
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__Status__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.userStory.copado__Status__c}" />
+                                </apex:column>
+                                <apex:column id="editCol5" >
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__Epic__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.userStory.Epic__r.copado__Epic_Title__c}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlock>
+            </div>
+            <div id="right" style="width:50%; float:right; position:relative;">
+                <apex:pageBlock id="pbRight" title="User Stories to be Promoted" >
+                    <apex:pageBlockButtons id="pbButtons1" location="top">
+                        <button id="btnRemoveSelected" class="btn" value="Remove selected User Stories" onclick="deleteSelections(); return false;">Remove selected User Stories</button>
+                        <apex:commandButton reRender="theForm" id="btnCreateDeployment" value="Create deployment" onclick="copadoApp.createDeployment();" styleClass="btnImportant" disabled="{!!enableCreateDeploymentButton}" />
+                    </apex:pageBlockButtons>
+                    <apex:actionFunction name="doRemove" reRender="theForm" action="{!removeSelectedUserStories}" status="tblStatus1"/>
+                    <apex:actionStatus id="tblStatus1" onstop="levelPageBlockHeight()" onstart="levelPageBlockHeight()">
+                        <apex:facet name="start">           
+                            <table class="list" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr class="headerRow">
+                                        <th class="noRowsHeader" scope="col"><img src="/img/loading.gif" /></th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </apex:facet>
+                        <apex:facet name="stop">
+                            <apex:pageBlockTable id="pbTablePromotedStories" value="{!promotedWrappedStories}" var="u" >
+                                <apex:column id="col1">
+                                    <apex:facet name="header">
+                                        <input type="checkbox" id="chkAll" onclick="checkAll(this,'{!$Component.pbTablePromotedStories}','chkUserStory')" />
+                                    </apex:facet>
+                                    <apex:inputCheckbox id="chkUserStory" value="{!u.selected}" />
+                                </apex:column>
+                                <apex:column id="detailCol2">
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.Name.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.promotedUS.User_Story__r.Name}" />
+                                </apex:column>
+                                <apex:column id="detailCol3" >
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__User_Story_Title__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.promotedUS.User_Story__r.copado__User_Story_Title__c}" />
+                                </apex:column>
+                                <apex:column id="detailCol4">
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__Status__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.promotedUS.User_Story__r.copado__Status__c}" />
+                                </apex:column>
+                                <apex:column id="detailCol5" >
+                                    <apex:facet name="header">
+                                        {!$ObjectType.copado__User_Story__c.fields.copado__Epic__c.Label}
+                                    </apex:facet>
+                                    <apex:outputText value="{!u.promotedUS.User_Story__r.Epic__r.copado__Epic_Title__c}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlock>
+            </div>
+        </div>
+        <script>
+            copadoApp.promotedUserStoryIds = '{!promotedUserStoryIds}';
+        </script>
+    </apex:form>
+    <script id="script_CheckAll" type="text/javascript" src="{!URLFOR($Resource.CopadoChangeManagement, 'Assets/js/common.js')}"></script>
+    <script>
+        function levelPageBlockHeight(){
+            var $l = $copado('div[id$="pbLeft"]');
+            var $r = $copado('div[id$="pbRight"]');
+            if($l.height() > $r.height())$r.height($l.height());
+            else $l.height($r.height());
+        }
+        $copado( document ).ready(function() {
+            levelPageBlockHeight();
+        });
+        function deleteSelections(){
+            var doDel = confirm('{!$Label.ARE_YOU_SURE}');
+            if(doDel){
+                doRemove();
+                return false;
+            }
+            else{
+                return false;
+            }
+        }
+    </script>
+    <script>
+        ga('send', 'pageview', {
+          'page': '/PromoteChanges',
+          'title': 'Promote Changes'
+        });
+    </script>
+</apex:page>

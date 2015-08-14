@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Proposal</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Proposals</value>
+    </caseValues>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Proposal Due Date</value>
+        </caseValues>
+        <name>close_date_opportunity</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Products</value>
+        </caseValues>
+        <name>description_opportunity</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Annual Revenue</value>
+        </caseValues>
+        <name>expected_revenue_opportunity</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Program Manager</value>
+        </caseValues>
+        <name>is_opportunity_split</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Ship Date</value>
+        </caseValues>
+        <name>next_step_opportunity</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Contract Revenue</value>
+        </caseValues>
+        <name>opportunity_currency</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Market</value>
+        </caseValues>
+        <name>opportunity_division</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Sales Lead</value>
+        </caseValues>
+        <name>opportunity_owner</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Anticipated Award Date</value>
+        </caseValues>
+        <name>primary_campaign_source</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <label><!-- Actual Award Date --></label>
+        <name>Actual_Award_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Annual Candidate Volume --></label>
+        <name>Annual_Candidate_Volume__c</name>
+    </fields>
+    <fields>
+        <label><!-- Annual Revenue --></label>
+        <name>Annual_Revenue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Anticipated Award Date --></label>
+        <name>Anticipated_Award_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract End Date --></label>
+        <name>Contract_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Revenue --></label>
+        <name>Contract_Revenue__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Start Date --></label>
+        <name>Contract_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Terms --></label>
+        <name>Contract_Terms__c</name>
+    </fields>
+    <fields>
+        <label><!-- Contract Value --></label>
+        <name>Contract_Value__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current Vendor --></label>
+        <name>Current_Vendor__c</name>
+        <picklistValues>
+            <masterLabel>ACER</masterLabel>
+            <translation><!-- ACER --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ACT</masterLabel>
+            <translation><!-- ACT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AMP</masterLabel>
+            <translation><!-- AMP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BTL</masterLabel>
+            <translation><!-- BTL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPS HR Consulting</masterLabel>
+            <translation><!-- CPS HR Consulting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Calibrand</masterLabel>
+            <translation><!-- Calibrand --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Managed</masterLabel>
+            <translation><!-- Client Managed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ConnecMe</masterLabel>
+            <translation><!-- ConnecMe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DeakinPrime</masterLabel>
+            <translation><!-- DeakinPrime --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Eduquity</masterLabel>
+            <translation><!-- Eduquity --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Evaluation Systems</masterLabel>
+            <translation><!-- Evaluation Systems --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FastTEST Web Platform</masterLabel>
+            <translation><!-- FastTEST Web Platform --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Headmaster</masterLabel>
+            <translation><!-- Headmaster --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Janison</masterLabel>
+            <translation><!-- Janison --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kryterion</masterLabel>
+            <translation><!-- Kryterion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lamark</masterLabel>
+            <translation><!-- Lamark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LearnDirect</masterLabel>
+            <translation><!-- LearnDirect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MeritTrac</masterLabel>
+            <translation><!-- MeritTrac --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NAIC</masterLabel>
+            <translation><!-- NAIC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NSE.IT Ltd</masterLabel>
+            <translation><!-- NSE.IT Ltd --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>None - New Program</masterLabel>
+            <translation><!-- None - New Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PSI</masterLabel>
+            <translation><!-- PSI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pearson VUE</masterLabel>
+            <translation><!-- Pearson VUE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prometric</masterLabel>
+            <translation><!-- Prometric --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QuestionMark</masterLabel>
+            <translation><!-- QuestionMark --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Self-operated</masterLabel>
+            <translation><!-- Self-operated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TCSiON</masterLabel>
+            <translation><!-- TCSiON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VETASSESS</masterLabel>
+            <translation><!-- VETASSESS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Whitecloud</masterLabel>
+            <translation><!-- Whitecloud --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Global Business Solutions Lead --></help>
+        <label><!-- GBS Lead --></label>
+        <name>GBS_Lead__c</name>
+        <picklistValues>
+            <masterLabel>Amede Anku-Roberts</masterLabel>
+            <translation><!-- Amede Anku-Roberts --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ayman Al Kurdi</masterLabel>
+            <translation><!-- Ayman Al Kurdi --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Christie Weidner</masterLabel>
+            <translation><!-- Christie Weidner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>David Bennett</masterLabel>
+            <translation><!-- David Bennett --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deb Danielson</masterLabel>
+            <translation><!-- Deb Danielson --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Deb Smith</masterLabel>
+            <translation><!-- Deb Smith --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>GBS not applicable</masterLabel>
+            <translation><!-- GBS not applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lisa McMenamy</masterLabel>
+            <translation><!-- Lisa McMenamy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Matthew Boyles</masterLabel>
+            <translation><!-- Matthew Boyles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Max Ali</masterLabel>
+            <translation><!-- Max Ali --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Misa Ishikawa</masterLabel>
+            <translation><!-- Misa Ishikawa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rob Waller</masterLabel>
+            <translation><!-- Rob Waller --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Implementation Date --></label>
+        <name>Implementation_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Industry --></label>
+        <name>Industry__c</name>
+        <picklistValues>
+            <masterLabel>Academia, Education and Admissions</masterLabel>
+            <translation><!-- Academia, Education and Admissions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Academic</masterLabel>
+            <translation><!-- Academic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Commercial</masterLabel>
+            <translation><!-- Commercial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Construction</masterLabel>
+            <translation><!-- Construction --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultant</masterLabel>
+            <translation><!-- Consultant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Continuing Education</masterLabel>
+            <translation><!-- Continuing Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cosmetology</masterLabel>
+            <translation><!-- Cosmetology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Employment or Human Resources</masterLabel>
+            <translation><!-- Employment or Human Resources --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial and Related Services</masterLabel>
+            <translation><!-- Financial and Related Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Government</masterLabel>
+            <translation><!-- Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Health and Safety</masterLabel>
+            <translation><!-- Health and Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Information Technology</masterLabel>
+            <translation><!-- Information Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance</masterLabel>
+            <translation><!-- Insurance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Language Testing</masterLabel>
+            <translation><!-- Language Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medical</masterLabel>
+            <translation><!-- Medical --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nurse Aide</masterLabel>
+            <translation><!-- Nurse Aide --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Professional Association</masterLabel>
+            <translation><!-- Professional Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Safety</masterLabel>
+            <translation><!-- Public Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate</masterLabel>
+            <translation><!-- Real Estate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate Appraisers</masterLabel>
+            <translation><!-- Real Estate Appraisers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transportation and Road Safety</masterLabel>
+            <translation><!-- Transportation and Road Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vocational</masterLabel>
+            <translation><!-- Vocational --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>LeadSource</name>
+        <picklistValues>
+            <masterLabel>ATP</masterLabel>
+            <translation><!-- ATP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conference / Speaking event</masterLabel>
+            <translation><!-- Conference / Speaking event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Direct Contact</masterLabel>
+            <translation><!-- Direct Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Existing Contact</masterLabel>
+            <translation><!-- Existing Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Informal Request</masterLabel>
+            <translation><!-- Informal Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LinkedIn</masterLabel>
+            <translation><!-- LinkedIn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing Inbox</masterLabel>
+            <translation><!-- Marketing Inbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFB</masterLabel>
+            <translation><!-- RFB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFI</masterLabel>
+            <translation><!-- RFI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFP</masterLabel>
+            <translation><!-- RFP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFQ</masterLabel>
+            <translation><!-- RFQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Mailbox</masterLabel>
+            <translation><!-- Sales Mailbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twitter</masterLabel>
+            <translation><!-- Twitter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Webinar</masterLabel>
+            <translation><!-- Webinar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>e-ATP</masterLabel>
+            <translation><!-- e-ATP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Platform --></label>
+        <name>Platform__c</name>
+    </fields>
+    <fields>
+        <label><!-- Products --></label>
+        <name>Products__c</name>
+        <picklistValues>
+            <masterLabel>ACA</masterLabel>
+            <translation><!-- ACA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ACU</masterLabel>
+            <translation><!-- ACU --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>E^Pro</masterLabel>
+            <translation><!-- E^Pro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HP</masterLabel>
+            <translation><!-- HP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IC3</masterLabel>
+            <translation><!-- IC3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MOS</masterLabel>
+            <translation><!-- MOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MTA</masterLabel>
+            <translation><!-- MTA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>QBCU</masterLabel>
+            <translation><!-- QBCU --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Program Manager --></label>
+        <name>Program_Manager__c</name>
+        <relationshipLabel><!-- Proposals (Program Manager) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Proposal Analyst --></label>
+        <name>Proposal_Analyst__c</name>
+        <picklistValues>
+            <masterLabel>Christian Ellingsen</masterLabel>
+            <translation><!-- Christian Ellingsen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jennifer Cerciello</masterLabel>
+            <translation><!-- Jennifer Cerciello --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kate Glickman</masterLabel>
+            <translation><!-- Kate Glickman --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nicholas Kinlaw</masterLabel>
+            <translation><!-- Nicholas Kinlaw --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rachel Zitomer</masterLabel>
+            <translation><!-- Rachel Zitomer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ray Cain</masterLabel>
+            <translation><!-- Ray Cain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ron Love</masterLabel>
+            <translation><!-- Ron Love --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Terri Dunbar</masterLabel>
+            <translation><!-- Terri Dunbar --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sales Lead --></label>
+        <name>Sales_Lead__c</name>
+        <relationshipLabel><!-- Proposals (Sales Lead) --></relationshipLabel>
+    </fields>
+    <fields>
+        <name>StageName</name>
+        <picklistValues>
+            <masterLabel>1 - Qualification</masterLabel>
+            <translation><!-- 1 - Qualification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2 - Confirmed Prospect</masterLabel>
+            <translation><!-- 2 - Confirmed Prospect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3 - Bid In Preparation</masterLabel>
+            <translation><!-- 3 - Bid In Preparation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4 - Bid Submitted</masterLabel>
+            <translation><!-- 4 - Bid Submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5 - Bid Refinement</masterLabel>
+            <translation><!-- 5 - Bid Refinement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6 - Verbal Commitment</masterLabel>
+            <translation><!-- 6 - Verbal Commitment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7 - Final Negotiation</masterLabel>
+            <translation><!-- 7 - Final Negotiation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8 - Contract Signed</masterLabel>
+            <translation><!-- 8 - Contract Signed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BQS/Proposal/CV</masterLabel>
+            <translation><!-- BQS/Proposal/CV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contract Lost</masterLabel>
+            <translation><!-- Contract Lost --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contract Signed</masterLabel>
+            <translation><!-- Contract Signed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contracting</masterLabel>
+            <translation><!-- Contracting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L-Lost</masterLabel>
+            <translation><!-- L-Lost --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negotiation</masterLabel>
+            <translation><!-- Negotiation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Prospect</masterLabel>
+            <translation><!-- New Prospect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Prospect and Sales Meeting/Call</masterLabel>
+            <translation><!-- New Prospect and Sales Meeting/Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proposal Submitted</masterLabel>
+            <translation><!-- Proposal Submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W-Withdrawn</masterLabel>
+            <translation><!-- W-Withdrawn --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>Type</name>
+        <picklistValues>
+            <masterLabel>Added Business</masterLabel>
+            <translation><!-- Added Business --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New Business</masterLabel>
+            <translation><!-- New Business --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renewal</masterLabel>
+            <translation><!-- Renewal --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- G2 Certiport Opportunity --></label>
+        <name>G2_Certiport_Opportunity</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- G2 Proposal --></label>
+        <name>G2_Proposal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Regulatory Proposal --></label>
+        <name>Regulatory_Proposal</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- x2006Opportunities --></label>
+        <name>x2006Opportunities</name>
+    </webLinks>
+</CustomObjectTranslation>

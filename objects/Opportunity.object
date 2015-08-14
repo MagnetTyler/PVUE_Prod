@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <businessProcesses>
+        <fullName>G2 Certiport Sales Process</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>Contract Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Signed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contracting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negotiation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proposal Submitted</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <businessProcesses>
+        <fullName>G2 Sales Process</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>BQS%2FProposal%2FCV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contract Signed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contracting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negotiation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Prospect and Sales Meeting%2FCall</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <businessProcesses>
+        <fullName>Regulatory Sales Process</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>1 - Qualification</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2 - Confirmed Prospect</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3 - Bid In Preparation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 - Bid Submitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 - Bid Refinement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 - Verbal Commitment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 - Final Negotiation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8 - Contract Signed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>L-Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>W-Withdrawn</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+</CustomObject>

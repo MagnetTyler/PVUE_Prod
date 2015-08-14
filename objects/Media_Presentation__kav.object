@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleTypeChannelDisplay>
+        <articleTypeTemplates>
+            <channel>App</channel>
+            <page>Media_Presentation_Template</page>
+            <template>Page</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Prm</channel>
+            <page>Media_Presentation_Template</page>
+            <template>Page</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Csp</channel>
+            <page>Media_Presentation_Template</page>
+            <template>Page</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Pkb</channel>
+            <template>Toc</template>
+        </articleTypeTemplates>
+    </articleTypeChannelDisplay>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>An article used to attach videos and similar attachments, preceded by an abstract</description>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <fields>
+        <fullName>Attachment_1__c</fullName>
+        <description>Attach a file related to the video</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related attachment</inlineHelpText>
+        <label>Attachment 1</label>
+        <required>false</required>
+        <type>File</type>
+    </fields>
+    <fields>
+        <fullName>Attachment_2__c</fullName>
+        <description>Attach a second file related to the video</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related attachment</inlineHelpText>
+        <label>Attachment 2</label>
+        <required>false</required>
+        <type>File</type>
+    </fields>
+    <fields>
+        <fullName>Case_topic__c</fullName>
+        <externalId>false</externalId>
+        <label>Case topic</label>
+        <picklist>
+            <controllingField>Internal_or_Test_Center_case__c</controllingField>
+            <picklistValues>
+                <fullName>Accommodations</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admissions/Check-In</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admissions/Check-In - Client admissions waiver</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Candidate Inquiries</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam Delivery</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware - Admissions Equipment</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware - DVR</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware - General</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware - PPC Network</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware - Workstation</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Help/Question</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Help/Question - Call transfer</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Help/Question - Help</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Help/Question - Project Time (off phone)</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 2 / Manager</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Level 2 / Manager - Site Task/Notification</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Password Reset</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quality Notes</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quality Notes - Pre-Activation</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Quality Notes - Privacy Status</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Registration/Appointment Issues</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Software - Non VTS software</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Software - VTS software</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center Quality</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center Quality - PVTC Report Card</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center Request</fullName>
+                <controllingFieldValues>Test Center</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VSS - Exam Delivery</fullName>
+                <controllingFieldValues>Internal</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Details_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Details 1</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Details_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Details 2</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Details_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Details 3</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Details_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Details 4</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <description>The article includes links to a video.</description>
+        <externalId>false</externalId>
+        <label>Details</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Final_Category_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Case category</label>
+        <picklist>
+            <controllingField>Case_topic__c</controllingField>
+            <picklistValues>
+                <fullName>Accommodation</fullName>
+                <controllingFieldValues>Help/Question - Help</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Acknowledge Notification</fullName>
+                <controllingFieldValues>Level 2 / Manager - Site Task/Notification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Adding/Removing Clients</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Add new user</fullName>
+                <controllingFieldValues>Test Center Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admin</fullName>
+                <controllingFieldValues>Hardware - Workstation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Administrator error</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admissions manager</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Amplifier</fullName>
+                <controllingFieldValues>Hardware - DVR</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Answer a Question</fullName>
+                <controllingFieldValues>Level 2 / Manager - Site Task/Notification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved Testing Accommodation</fullName>
+                <controllingFieldValues>Accommodations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ATS Notification/Request (1XXX)</fullName>
+                <controllingFieldValues>Level 2 / Manager</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Backup Admissions Data</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Biometric waivers</fullName>
+                <controllingFieldValues>Admissions/Check-In - Client admissions waiver</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Call center (list client in description)</fullName>
+                <controllingFieldValues>Help/Question - Call transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Camera</fullName>
+                <controllingFieldValues>Hardware - Admissions Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Candidate complaint about exam content</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Candidate ends exam early - no result</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Candidate Error/Misconduct</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Candidate Error or Misconduct</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change of Address</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change to private</fullName>
+                <controllingFieldValues>Quality Notes - Privacy Status</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change to public</fullName>
+                <controllingFieldValues>Quality Notes - Privacy Status</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Channel quality</fullName>
+                <controllingFieldValues>Help/Question - Call transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chateau</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chat session</fullName>
+                <controllingFieldValues>Help/Question - Project Time (off phone)</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Client Request to Override</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complaint of unprofessional treatment</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complete a task</fullName>
+                <controllingFieldValues>Level 2 / Manager - Site Task/Notification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Consent and waiver form</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Defect</fullName>
+                <controllingFieldValues>Level 2 / Manager</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivery</fullName>
+                <controllingFieldValues>Hardware - Workstation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delivery manager</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DOC</fullName>
+                <controllingFieldValues>Quality Notes - Pre-Activation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Documentation</fullName>
+                <controllingFieldValues>Test Center Quality - PVTC Report Card</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Duplicate account merge request</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DVI cables</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DVR</fullName>
+                <controllingFieldValues>Hardware - DVR</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DVR camera</fullName>
+                <controllingFieldValues>Hardware - DVR</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Essay rescore request</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam already passed by candidate</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam error during test/launch</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam Latency</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam not readied</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Exam results - not in client database</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>EZ watch</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Family emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hardware issue</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Headphones</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Headset</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Host file replacement</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hours of Availability</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ID exceptions</fullName>
+                <controllingFieldValues>Admissions/Check-In - Client admissions waiver</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Improvement plan</fullName>
+                <controllingFieldValues>Test Center Quality - PVTC Report Card</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect/Missing Content</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect candidate tested</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incorrect date of birth</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Install</fullName>
+                <controllingFieldValues>Help/Question - Project Time (off phone)</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Integrity Shops - Not built - R1</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internal</fullName>
+                <controllingFieldValues>Password Reset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jury Emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Keyboard</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kronos</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Log Sheet Request</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost and found</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maintenance Call</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manual update</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Medical emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Military</fullName>
+                <controllingFieldValues>Quality Notes - Pre-Activation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Military Emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Missing Admission Steps</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Modem/Router</fullName>
+                <controllingFieldValues>Hardware - PPC Network</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monitor</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mouse</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>MS office</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Name change request</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Name discrepancy</fullName>
+                <controllingFieldValues>Admissions/Check-In - Client admissions waiver</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palm vein</fullName>
+                <controllingFieldValues>Hardware - Admissions Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palm Vein Failures</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PaperPort</fullName>
+                <controllingFieldValues>Software - Non VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Personal item inspected</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Photos Required</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Power outage</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PPC Domain</fullName>
+                <controllingFieldValues>Password Reset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PPC Site Maintenance</fullName>
+                <controllingFieldValues>Help/Question - Project Time (off phone)</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printer</fullName>
+                <controllingFieldValues>Hardware</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem Selecting GMAT School - Not built - R1</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with Accommodation</fullName>
+                <controllingFieldValues>Accommodations</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with Audio/video</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with candidate ID</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with computer software</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with payment method</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with required documentation</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with testing environment</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Problem with VUE app</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Proctor</fullName>
+                <controllingFieldValues>Hardware - Workstation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Program coordinator</fullName>
+                <controllingFieldValues>Help/Question - Call transfer</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Provide an upload</fullName>
+                <controllingFieldValues>Level 2 / Manager - Site Task/Notification</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PVTC</fullName>
+                <controllingFieldValues>Quality Notes - Pre-Activation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PVTC Select</fullName>
+                <controllingFieldValues>Quality Notes - Pre-Activation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Registered for wrong exam</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Registered for wrong language</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Registration manager</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reprint utility</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Request to update personal information</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RMA/Wrapper</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scanner</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Schedule/run TDFT</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduled for wrong day</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Scheduled for wrong time</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Score report didn&apos;t print</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Score reprint</fullName>
+                <controllingFieldValues>Candidate Inquiries</controllingFieldValues>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Self Proctor</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Server</fullName>
+                <controllingFieldValues>Hardware - PPC Network</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ServiceDirect</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Signature Biometric Does Not Match Previous Attempt - Not built - R1</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Signature pad</fullName>
+                <controllingFieldValues>Hardware - Admissions Equipment</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Manager</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site manager software</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Name Change</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Temporary Deactivation</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Termination</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Site Visitor</fullName>
+                <controllingFieldValues>Admissions/Check-In</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Software update notification</fullName>
+                <controllingFieldValues>Level 2 / Manager</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Switch</fullName>
+                <controllingFieldValues>Hardware - PPC Network</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TA Certification</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TA Re-Certification - Not built - R2</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test center emergency evacuation</fullName>
+                <controllingFieldValues>Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center Fulfillment - Equipment and Supplies</fullName>
+                <controllingFieldValues>Test Center Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center Portal</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Testing Center Documentation Inquiries - Not Built - R2</fullName>
+                <controllingFieldValues>Test Center Quality</controllingFieldValues>
+                <controllingFieldValues>Test Center Request</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Track validation</fullName>
+                <controllingFieldValues>Level 2 / Manager</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Traffic Incident if involved emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
+                <controllingFieldValues>Hardware - Workstation</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training/Meeting</fullName>
+                <controllingFieldValues>Help/Question - Project Time (off phone)</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unexpected Behavior</fullName>
+                <controllingFieldValues>VSS - Exam Delivery</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>USB hub</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VGA cables</fullName>
+                <controllingFieldValues>Hardware - General</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VTS</fullName>
+                <controllingFieldValues>Password Reset</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VTS Applications</fullName>
+                <controllingFieldValues>Help/Question</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>VUE testing system</fullName>
+                <controllingFieldValues>Software - VTS software</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Weather emergency</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Web registration problem</fullName>
+                <controllingFieldValues>Registration/Appointment Issues</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Workstation Additions</fullName>
+                <controllingFieldValues>Quality Notes</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Internal_or_Test_Center_case__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal or Test Center case</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Test Center</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Knowledge_Rendering__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Knowledge Rendering</label>
+        <referenceTo>Knowledge_Rendering__c</referenceTo>
+        <relationshipLabel>Media Presentations</relationshipLabel>
+        <relationshipName>Media_Presentations</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Video_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Video 1</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Video_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Video 2</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Video_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Video 3</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Video_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Video 4</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Video__c</fullName>
+        <description>Add video--embed or insert URL of hosted video</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Embedded video or URL of video</inlineHelpText>
+        <label>Video</label>
+        <length>32768</length>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <label>Media Presentation</label>
+    <pluralLabel>Media Presentations</pluralLabel>
+</CustomObject>

@@ -1,0 +1,105 @@
+<apex:page standardController="How_to__kav" standardStylesheets="false">
+
+    <head>
+        <apex:Stylesheet value="{!URLFOR($Resource.KnowledgeCss)}"/>
+    </head>
+    <knowledge:articleRendererToolBar articleId="{! $CurrentPage.parameters.id}" canvote="{! ISPICKVAL($User.userType, 'Standard')}" />
+    <knowledge:articleCaseToolbar caseId="{! $CurrentPage.Parameters.Caseid}" articleId="{! $CurrentPage.parameters.id}" rendered="{! $CurrentPage.Parameters.Caseid} != null"/>
+    <topics:widget entity="{!How_to__kav.id}" renderStyle="enhanced"/>
+
+    <body>
+        <apex:variable value="{!$User.Channel_type__c}" Var="uservar"/>
+        <P class="Title"> {!How_to__kav.title}</P>
+        <div class="knowledge-article">          
+            
+        <h1>{!$Label.Overview}</h1>
+            <apex:outputField value="{!How_to__kav.Overview__c}" rendered="{!How_to__kav.Knowledge_Rendering__c == null}" /> 
+            
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Overview_1_Channel_Types__c}" var="Overview1var"/>
+            <apex:outputText rendered="{!uservar == 'Internal'&& Not(ISBLANK(Overview1var)) && How_to__kav.Knowledge_Rendering__c != null}" >
+                {!$Label.Overview} {!$Label.Visible_to} {!Overview1var}
+            </apex:outputText>
+            <apex:outputfield value="{!How_to__kav.Overview__c}"  rendered="{!CONTAINS(Overview1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}"/>
+            
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Overview_2_Channel_Types__c}" var="Overview2var"/>
+            <apex:outputText rendered="{!uservar == 'Internal'&& Not(ISBLANK(Overview2var))}" >
+                {!$Label.Overview} {!$Label.Visible_to} {!Overview2var}
+            </apex:outputText>
+            <apex:outputfield value="{!How_to__kav.Overview_2__c}" rendered="{!CONTAINS(Overview2var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}"/>
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Overview_3_Channel_Types__c}" var="Overview3var"/>
+            <apex:outputText rendered="{!uservar == 'Internal'&& Not(ISBLANK(Overview3var))}" >
+                {!$Label.Overview} {!$Label.Visible_to} {!Overview3var}
+            </apex:outputText>          
+            <apex:outputfield value="{!How_to__kav.Overview_3__c}" rendered="{!CONTAINS(Overview3var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}"/>            
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Overview_4_Channel_Types__c}" var="Overview4var"/>
+            <apex:outputText rendered="{!uservar == 'Internal'&& Not(ISBLANK(Overview4var))}" >
+                {!$Label.Overview} {!$Label.Visible_to} {!Overview4var}
+            </apex:outputText>            
+            <apex:outputfield value="{!How_to__kav.Overview_4__c}" rendered="{!CONTAINS(Overview4var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}"/>         
+
+            <h1> {!$Label.Steps}</h1> 
+            <apex:outputField value="{!How_to__kav.Steps__c}" rendered="{!How_to__kav.Knowledge_Rendering__c == null}" />        
+            
+                   
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Steps_1_Channel_Types__c}" var="Steps1var"/>    
+            <apex:outputField value="{!How_to__kav.Steps_1__c}" rendered="{!CONTAINS(Steps1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+                <apex:outputText rendered="{!uservar == 'Internal'&& Not(ISBLANK(Steps1var))}" >
+                    {!$Label.Steps} {!$Label.Visible_to} {!Steps1var}
+                </apex:outputText>
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Steps_2_Channel_Types__c}" var="Steps2var"/>    
+            <apex:outputField value="{!How_to__kav.Steps_2__c}" rendered="{!CONTAINS(Steps2var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+                <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Steps2var))}" >
+                    {!$Label.Steps} {!$Label.Visible_to} {!Steps2var}
+                </apex:outputText>
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Steps_3_Channel_Types__c}" var="Steps3var"/>    
+                <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Steps3var))}" >
+                    {!$Label.Steps} {!$Label.Visible_to} {!Steps3var}
+                </apex:outputText>
+            <apex:outputField value="{!How_to__kav.Steps_3__c}" rendered="{!CONTAINS(Steps3var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.Steps_4_Channel_Types__c}" var="Steps4var"/>    
+                <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Steps4var))}" >
+                    {!$Label.Steps} {!$Label.Visible_to} {!Steps1var}
+                </apex:outputText>
+            <apex:outputField value="{!How_to__kav.Steps_4__c}" rendered="{!CONTAINS(Steps4var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+
+        <h1>{!$Label.More_information}</h1>
+            <apex:outputField value="{!How_to__kav.More_information__c}" rendered="{!How_to__kav.Knowledge_Rendering__c == null}" />       
+            
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.More_Information_1_Channel_Types__c}" var="MoreInfo1var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(MoreInfo1var))}" >
+                {!$Label.More_information} {!$Label.Visible_to} {!MoreInfo1var}
+            </apex:outputText>
+            <apex:outputField value="{!How_to__kav.More_information_1__c}" rendered="{!CONTAINS(MoreInfo1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+       
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.More_Information_2_Channel_Types__c}" var="MoreInfo2var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(MoreInfo2var))}" >
+                {!$Label.More_information} {!$Label.Visible_to} {!MoreInfo2var}
+            </apex:outputText>
+            <apex:outputField value="{!How_to__kav.More_Information_2__c}" rendered="{!CONTAINS(MoreInfo1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+             
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.More_Information_3_Channel_Types__c}" var="MoreInfo3var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(MoreInfo3var))}" >
+                {!$Label.More_information} {!$Label.Visible_to} {!MoreInfo3var}
+            </apex:outputText>
+            <apex:outputField value="{!How_to__kav.More_Information_3__c}" rendered="{!CONTAINS(MoreInfo1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+            
+            <apex:variable value="{!How_to__kav.Knowledge_rendering__r.More_Information_4_Channel_Types__c}" var="MoreInfo4var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(MoreInfo4var))}" >
+                {!$Label.More_information} {!$Label.Visible_to} {!MoreInfo4var}
+            </apex:outputText>
+            <apex:outputField value="{!How_to__kav.More_Information_4__c}" rendered="{!CONTAINS(MoreInfo1var, uservar)|| (uservar == 'Internal' &&How_to__kav.Knowledge_Rendering__c != null)}" />        
+            
+        <h4>{!$Label.Article_information}</h4>
+        <p class="ArticleInfoText">
+            {!$Label.Article_Number}&nbsp;<apex:outputField value="{!How_to__kav.ArticleNumber}"/>                        
+            <br/>
+            {!$Label.Article_Type}&nbsp;<apex:outputField value="{!How_to__kav.ArticleType}"/>                
+            <br/>          
+      
+            {!$Label.Article_Version} &nbsp;<apex:outputField value="{!How_to__kav.VersionNumber}"/>                
+            <br/>
+            {!$Label.Last_Published_Date}&nbsp;<apex:outputField value="{!How_to__kav.LastPublishedDate}"/>                
+        </p> 
+        </div>        
+    </body>
+</apex:page>

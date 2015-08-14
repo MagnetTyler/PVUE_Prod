@@ -1,0 +1,202 @@
+<apex:page id="thePage" standardController="copado__User_Story__c" extensions="copado.MetadataselectorExtension" showHeader="false" sidebar="false" standardStyleSheets="true">
+    
+    <head>
+        <c:GAnalytics />
+        <c:WizardUtils />
+        <apex:stylesheet value="{!URLFOR($Resource.copado__jqx,'jqwidgets/styles/jqx.base.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.copado__jqx,'jqwidgets/jqx-all.js')}" />
+
+        <link rel="stylesheet" href="{!URLFOR($Resource.Statics,'css/wizard.css')}" />
+
+        <script>
+            var __sfdcSessionId = '{!GETSESSIONID()}';
+            var $copado = jQuery.noConflict();
+        </script>
+        <script id="connectionJS" src="/soap/ajax/30.0/connection.js"></script>
+        <c:WizardUtils id="cmpWizardUtilities" />
+    </head>
+    
+    <apex:outputPanel id="msg" styleClass="fixedMsg">
+        <apex:pageMessages id="theMessages" />
+    </apex:outputPanel>
+
+    <div style="display:none;">
+        <apex:pageMessage title="{!$Label.copado__WARNING}" summary="__MSG__" severity="warning" strength="3" id="js-msg-WARNING" />
+        <apex:pageMessage title="{!$Label.copado__SUCCESS}" summary="__MSG__" severity="confirm" strength="3" id="js-msg-CONFIRM" />
+        <apex:pageMessage title="{!$Label.copado__ERROR}" summary="__MSG__" severity="error" strength="3" id="js-msg-ERROR" />
+    </div>
+    
+    <apex:form id="theForm" rendered="{!hasOrg}">
+        <div id="loadingDiv"><center><img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i></center></div>
+        <apex:actionFunction name="showMessage" action="{!showMessage}" rerender="msg">
+            <apex:param name="errorLevel" assignTo="{!errorLevel}" value="" />
+            <apex:param name="messageName" assignTo="{!messageName}" value="" />
+        </apex:actionFunction>
+        
+        <apex:pageBlock >
+            <div id="jqxgrid_metadata"></div>
+        </apex:pageBlock>
+        <script>
+            var copadoApp = {
+                userStoryId: '{!copado__User_Story__c.Id}',
+                testClassesArray: [],
+                metadataArray: [],
+                hasError: {!hasError},
+                
+                showMessage: function(type, msg, timeout){
+                    $copado('.fixedMsg')
+                        .html($copado('[id$=js-msg-'+type+']').html().replace('__MSG__',msg))
+                        .fadeIn('slow');
+
+                    //showMessage(type,msg);
+                    if(timeout == -1)return false;
+                    timeout = (timeout==0)? 7000 : timeout;
+
+                    setTimeout(function(){$copado('.fixedMsg').fadeOut('slow');},timeout);
+                    return false;
+                },
+                getUserStoryAttachment: function(name, parentId){
+                    try{
+                        var result = sforce.connection.query("Select Id, Name, Body from Attachment where Name='"+name+"' and ParentId='"+parentId+"' order by LastModifiedDate DESC limit 1");
+                        records = result.getArray("records");
+                        return records;
+                    }
+                    catch(error){
+                        console.error('Error getting attachment by name and parentId: '+error);
+                        return;
+                    }
+                },
+                getUserStoryApexTestClasses: function(){
+                    var tmp_classes = [];
+                    var result = copadoApp.getUserStoryAttachment('ApexTestClasses', copadoApp.userStoryId);
+                    if(result.length > 0){
+                        var obj = $copado.parseJSON(Base64.decode(result[0].Body));
+                        copadoApp.testClassesArray = obj;
+                    }
+                    return;
+                },
+                getUserStoryMetadata: function(){
+                    console.log('Getting selected metadata');
+                    var result = copadoApp.getUserStoryAttachment('MetaData', copadoApp.userStoryId);
+                    if(result.length > 0){
+                        console.log('Results found: '+result.length);
+                        var obj = $copado.parseJSON(Base64.decode(result[0].Body));
+                        console.log('Object: ', obj);
+                        copadoApp.metadataArray = obj;
+                    }
+                    return;
+                }
+            }
+            
+            copadoApp.getUserStoryApexTestClasses();
+            copadoApp.getUserStoryMetadata();
+            
+            var metadatagrid = $copado('#jqxgrid_metadata');
+            var apextestsgrid = $copado('#jqxgrid_apextests');
+        
+            try{
+                var theme = 'base',
+                source = {
+                    datatype: "array",
+                    updaterow: function (rowid, rowdata, commit) {
+                        commit(true);
+                        data[rowid] = rowdata;
+                    }
+                };
+                
+                source_meta = {
+                    localdata: copadoApp.metadataArray,
+                    datafields: [
+                        { name: 't', type: 'string' },
+                        { name: 'n', type: 'string' },
+                        { name: 'b', type: 'string' },
+                        { name: 'd', type: 'string' },
+                        { name: 'cb', type: 'string' },
+                        { name: 'cd', type: 'string' }
+                    ],
+                    datatype: "array",
+                    updaterow: function (rowid, rowdata, commit) {
+                        commit(true);
+                        data[rowid] = rowdata;
+                    }
+                };
+                source_apex = {
+                    localdata: copadoApp.testClassesArray,
+                    datafields: [
+                        { name: 'n', type: 'string' },
+                        { name: 'ns', type: 'string' }
+                    ],
+                    datatype: "array",
+                    updaterow: function (rowid, rowdata, commit) {
+                        commit(true);
+                        data[rowid] = rowdata;
+                    }
+                };
+                
+                dataAdapter_apex = new $copado.jqx.dataAdapter(source_apex);
+                $grida = $copado('<div>');
+                apextestsgrid.html($grida);
+                $grida.jqxGrid({
+                    width: '100%',
+                    source: dataAdapter_apex,
+                    showfilterrow: true,
+                    filterable: true,
+                    theme: theme,
+                    editable: false, 
+                    selectionmode: 'none',
+                    enablebrowserselection: true,
+                    pageable: true,
+                    pagesizeoptions: ['10', '20', '50','100','200','500','1000','2000','5000'],
+                    pagesize: 20,
+                    sortable: true,
+                    columnsresize: true,
+                    localization: localizationobj,
+                    columns: [
+                        {text: '{!$Label.copado__NAME}', filtertype: 'textbox', filtercondition: 'contains', editable:false, datafield: 'n'},
+                        {text: 'Namespace', filtertype: 'textbox', filtercondition: 'contains', editable:false, datafield: 'ns', width:400}
+                    ]
+                });
+                dataAdapter_meta = new $copado.jqx.dataAdapter(source_meta);
+                console.log('Metadata adaptaber: ', dataAdapter_meta);
+                $gridm = $copado('<div>');
+                metadatagrid.html($gridm);
+                $gridm.jqxGrid({
+                    width: '100%',
+                    source: dataAdapter_meta,
+                    showfilterrow: true,
+                    filterable: true,
+                    theme: theme,
+                    editable: false, 
+                    selectionmode: 'none',
+                    enablebrowserselection: true,
+                    pageable: true,
+                    pagesizeoptions: ['10', '20', '50','100','200','500','1000','2000','5000'],
+                    pagesize: 20,
+                    sortable: true,
+                    columnsresize: true,
+                    localization: localizationobj,
+                    columns: [
+                        {text: '{!$Label.copado__NAME}', filtertype: 'textbox', filtercondition: 'contains', editable:false, datafield: 'n'},
+                        {text:'{!$Label.copado__TYPE}', datafield:'t', filtertype:'checkedlist', editable:false, columntype:'textbox' },
+                        {text: '{!$ObjectType.copado__Step__c.Fields.LastModifiedById.Label}', filtertype: 'checkedlist', editable:false, datafield: 'b', width: 220},
+                        {text: '{!$ObjectType.copado__Step__c.Fields.LastModifiedDate.Label}', filtertype: 'textbox', editable:false, datafield: 'd', width: 120},
+                        {text: '{!$ObjectType.copado__Step__c.Fields.CreatedById.Label}', filtertype: 'checkedlist', editable:false, datafield: 'cb', width: 220},
+                        {text: '{!$ObjectType.copado__Step__c.Fields.CreatedDate.Label}', filtertype: 'textbox', editable:false, datafield: 'cd', width: 120}
+                    ]
+                });
+                $copado('#loadingDiv').hide();
+            }catch(e){
+                console.error(e);
+            }
+            
+        </script>
+    </apex:form>
+    <style> #jqxTabs .apexp .bPageBlock.apexDefaultPageBlock .pbBody {margin:0;}</style>
+    <script>
+        ga('send', 'pageview', {
+          'page': '/UserStorySelectedMetadata',
+          'title': 'User Story Selected Metadata'
+        });
+    </script>
+</apex:page>

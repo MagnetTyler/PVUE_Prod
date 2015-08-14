@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>How-to</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>How-tos</value>
+    </caseValues>
+    <fields>
+        <help><!-- Attach a file needed to complete instructions in the article, if applicable --></help>
+        <label><!-- Attachment 1 --></label>
+        <name>Attachment_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Attach a file needed to complete instructions in the article, if applicable --></help>
+        <label><!-- Attachment 2 --></label>
+        <name>Attachment_2__c</name>
+    </fields>
+    <fields>
+        <help><!-- Attach a file, such as a job aid or form, referred to in the article, if applicable --></help>
+        <label><!-- Attachments --></label>
+        <name>Attachments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case topic --></label>
+        <name>Case_topic__c</name>
+        <picklistValues>
+            <masterLabel>Accommodations</masterLabel>
+            <translation><!-- Accommodations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Admissions/Check-In</masterLabel>
+            <translation><!-- Admissions/Check-In --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Admissions/Check-In - Client admissions waiver</masterLabel>
+            <translation><!-- Admissions/Check-In - Client admissions waiver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate Inquiries</masterLabel>
+            <translation><!-- Candidate Inquiries --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam Delivery</masterLabel>
+            <translation><!-- Exam Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware</masterLabel>
+            <translation><!-- Hardware --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware - Admissions Equipment</masterLabel>
+            <translation><!-- Hardware - Admissions Equipment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware - DVR</masterLabel>
+            <translation><!-- Hardware - DVR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware - General</masterLabel>
+            <translation><!-- Hardware - General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware - PPC Network</masterLabel>
+            <translation><!-- Hardware - PPC Network --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware - Workstation</masterLabel>
+            <translation><!-- Hardware - Workstation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Help/Question</masterLabel>
+            <translation><!-- Help/Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Help/Question - Call transfer</masterLabel>
+            <translation><!-- Help/Question - Call transfer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Help/Question - Help</masterLabel>
+            <translation><!-- Help/Question - Help --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Help/Question - Project Time (off phone)</masterLabel>
+            <translation><!-- Help/Question - Project Time (off phone) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Level 2 / Manager</masterLabel>
+            <translation><!-- Level 2 / Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Level 2 / Manager - Site Task/Notification</masterLabel>
+            <translation><!-- Level 2 / Manager - Site Task/Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Password Reset</masterLabel>
+            <translation><!-- Password Reset --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Notes</masterLabel>
+            <translation><!-- Quality Notes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Notes - Pre-Activation</masterLabel>
+            <translation><!-- Quality Notes - Pre-Activation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quality Notes - Privacy Status</masterLabel>
+            <translation><!-- Quality Notes - Privacy Status --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registration/Appointment Issues</masterLabel>
+            <translation><!-- Registration/Appointment Issues --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Software - Non VTS software</masterLabel>
+            <translation><!-- Software - Non VTS software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Software - VTS software</masterLabel>
+            <translation><!-- Software - VTS software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test</masterLabel>
+            <translation><!-- Test --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center Quality</masterLabel>
+            <translation><!-- Test Center Quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center Quality - PVTC Report Card</masterLabel>
+            <translation><!-- Test Center Quality - PVTC Report Card --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center Request</masterLabel>
+            <translation><!-- Test Center Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VSS - Exam Delivery</masterLabel>
+            <translation><!-- VSS - Exam Delivery --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case category --></label>
+        <name>Final_Category_Name__c</name>
+        <picklistValues>
+            <masterLabel>ATS Notification/Request (1XXX)</masterLabel>
+            <translation><!-- ATS Notification/Request (1XXX) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Accommodation</masterLabel>
+            <translation><!-- Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Acknowledge Notification</masterLabel>
+            <translation><!-- Acknowledge Notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add new user</masterLabel>
+            <translation><!-- Add new user --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Adding/Removing Clients</masterLabel>
+            <translation><!-- Adding/Removing Clients --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Admin</masterLabel>
+            <translation><!-- Admin --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Administrator error</masterLabel>
+            <translation><!-- Administrator error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Admissions manager</masterLabel>
+            <translation><!-- Admissions manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Amplifier</masterLabel>
+            <translation><!-- Amplifier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Answer a Question</masterLabel>
+            <translation><!-- Answer a Question --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approved Testing Accommodation</masterLabel>
+            <translation><!-- Approved Testing Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backup Admissions Data</masterLabel>
+            <translation><!-- Backup Admissions Data --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Biometric waivers</masterLabel>
+            <translation><!-- Biometric waivers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Call center (list client in description)</masterLabel>
+            <translation><!-- Call center (list client in description) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Camera</masterLabel>
+            <translation><!-- Camera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate Error or Misconduct</masterLabel>
+            <translation><!-- Candidate Error or Misconduct --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate Error/Misconduct</masterLabel>
+            <translation><!-- Candidate Error/Misconduct --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate complaint about exam content</masterLabel>
+            <translation><!-- Candidate complaint about exam content --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate ends exam early - no result</masterLabel>
+            <translation><!-- Candidate ends exam early - no result --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change of Address</masterLabel>
+            <translation><!-- Change of Address --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change to private</masterLabel>
+            <translation><!-- Change to private --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Change to public</masterLabel>
+            <translation><!-- Change to public --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Channel quality</masterLabel>
+            <translation><!-- Channel quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chat session</masterLabel>
+            <translation><!-- Chat session --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chateau</masterLabel>
+            <translation><!-- Chateau --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Client Request to Override</masterLabel>
+            <translation><!-- Client Request to Override --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Complaint of unprofessional treatment</masterLabel>
+            <translation><!-- Complaint of unprofessional treatment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Complete a task</masterLabel>
+            <translation><!-- Complete a task --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consent and waiver form</masterLabel>
+            <translation><!-- Consent and waiver form --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DOC</masterLabel>
+            <translation><!-- DOC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DVI cables</masterLabel>
+            <translation><!-- DVI cables --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DVR</masterLabel>
+            <translation><!-- DVR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DVR camera</masterLabel>
+            <translation><!-- DVR camera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Defect</masterLabel>
+            <translation><!-- Defect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery</masterLabel>
+            <translation><!-- Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery manager</masterLabel>
+            <translation><!-- Delivery manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Documentation</masterLabel>
+            <translation><!-- Documentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Duplicate account merge request</masterLabel>
+            <translation><!-- Duplicate account merge request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EZ watch</masterLabel>
+            <translation><!-- EZ watch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Essay rescore request</masterLabel>
+            <translation><!-- Essay rescore request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam Latency</masterLabel>
+            <translation><!-- Exam Latency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam already passed by candidate</masterLabel>
+            <translation><!-- Exam already passed by candidate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam error during test/launch</masterLabel>
+            <translation><!-- Exam error during test/launch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam not readied</masterLabel>
+            <translation><!-- Exam not readied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Exam results - not in client database</masterLabel>
+            <translation><!-- Exam results - not in client database --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Family emergency</masterLabel>
+            <translation><!-- Family emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hardware issue</masterLabel>
+            <translation><!-- Hardware issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Headphones</masterLabel>
+            <translation><!-- Headphones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Headset</masterLabel>
+            <translation><!-- Headset --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Host file replacement</masterLabel>
+            <translation><!-- Host file replacement --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hours of Availability</masterLabel>
+            <translation><!-- Hours of Availability --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ID exceptions</masterLabel>
+            <translation><!-- ID exceptions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Improvement plan</masterLabel>
+            <translation><!-- Improvement plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incorrect candidate tested</masterLabel>
+            <translation><!-- Incorrect candidate tested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incorrect date of birth</masterLabel>
+            <translation><!-- Incorrect date of birth --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incorrect/Missing Content</masterLabel>
+            <translation><!-- Incorrect/Missing Content --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Install</masterLabel>
+            <translation><!-- Install --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integrity Shops - Not built - R1</masterLabel>
+            <translation><!-- Integrity Shops - Not built - R1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal</masterLabel>
+            <translation><!-- Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Jury Emergency</masterLabel>
+            <translation><!-- Jury Emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Keyboard</masterLabel>
+            <translation><!-- Keyboard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Kronos</masterLabel>
+            <translation><!-- Kronos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Log Sheet Request</masterLabel>
+            <translation><!-- Log Sheet Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lost and found</masterLabel>
+            <translation><!-- Lost and found --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MS office</masterLabel>
+            <translation><!-- MS office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Maintenance Call</masterLabel>
+            <translation><!-- Maintenance Call --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Manual update</masterLabel>
+            <translation><!-- Manual update --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medical emergency</masterLabel>
+            <translation><!-- Medical emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Military</masterLabel>
+            <translation><!-- Military --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Military Emergency</masterLabel>
+            <translation><!-- Military Emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Missing Admission Steps</masterLabel>
+            <translation><!-- Missing Admission Steps --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modem/Router</masterLabel>
+            <translation><!-- Modem/Router --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Monitor</masterLabel>
+            <translation><!-- Monitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mouse</masterLabel>
+            <translation><!-- Mouse --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name change request</masterLabel>
+            <translation><!-- Name change request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Name discrepancy</masterLabel>
+            <translation><!-- Name discrepancy --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPC Domain</masterLabel>
+            <translation><!-- PPC Domain --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPC Site Maintenance</masterLabel>
+            <translation><!-- PPC Site Maintenance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PVTC</masterLabel>
+            <translation><!-- PVTC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PVTC Select</masterLabel>
+            <translation><!-- PVTC Select --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palm Vein Failures</masterLabel>
+            <translation><!-- Palm Vein Failures --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Palm vein</masterLabel>
+            <translation><!-- Palm vein --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PaperPort</masterLabel>
+            <translation><!-- PaperPort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Personal item inspected</masterLabel>
+            <translation><!-- Personal item inspected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Photos Required</masterLabel>
+            <translation><!-- Photos Required --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Power outage</masterLabel>
+            <translation><!-- Power outage --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Printer</masterLabel>
+            <translation><!-- Printer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem Selecting GMAT School - Not built - R1</masterLabel>
+            <translation><!-- Problem Selecting GMAT School - Not built - R1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with Accommodation</masterLabel>
+            <translation><!-- Problem with Accommodation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with Audio/video</masterLabel>
+            <translation><!-- Problem with Audio/video --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with VUE app</masterLabel>
+            <translation><!-- Problem with VUE app --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with candidate ID</masterLabel>
+            <translation><!-- Problem with candidate ID --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with computer software</masterLabel>
+            <translation><!-- Problem with computer software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with payment method</masterLabel>
+            <translation><!-- Problem with payment method --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with required documentation</masterLabel>
+            <translation><!-- Problem with required documentation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problem with testing environment</masterLabel>
+            <translation><!-- Problem with testing environment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proctor</masterLabel>
+            <translation><!-- Proctor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program coordinator</masterLabel>
+            <translation><!-- Program coordinator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provide an upload</masterLabel>
+            <translation><!-- Provide an upload --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RMA/Wrapper</masterLabel>
+            <translation><!-- RMA/Wrapper --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registered for wrong exam</masterLabel>
+            <translation><!-- Registered for wrong exam --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registered for wrong language</masterLabel>
+            <translation><!-- Registered for wrong language --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Registration manager</masterLabel>
+            <translation><!-- Registration manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reprint utility</masterLabel>
+            <translation><!-- Reprint utility --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Request to update personal information</masterLabel>
+            <translation><!-- Request to update personal information --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scanner</masterLabel>
+            <translation><!-- Scanner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Schedule/run TDFT</masterLabel>
+            <translation><!-- Schedule/run TDFT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled for wrong day</masterLabel>
+            <translation><!-- Scheduled for wrong day --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled for wrong time</masterLabel>
+            <translation><!-- Scheduled for wrong time --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Score report didn&apos;t print</masterLabel>
+            <translation><!-- Score report didn&apos;t print --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Score reprint</masterLabel>
+            <translation><!-- Score reprint --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Self Proctor</masterLabel>
+            <translation><!-- Self Proctor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server</masterLabel>
+            <translation><!-- Server --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ServiceDirect</masterLabel>
+            <translation><!-- ServiceDirect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Signature Biometric Does Not Match Previous Attempt - Not built - R1</masterLabel>
+            <translation><!-- Signature Biometric Does Not Match Previous Attempt - Not built - R1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Signature pad</masterLabel>
+            <translation><!-- Signature pad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Manager</masterLabel>
+            <translation><!-- Site Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Name Change</masterLabel>
+            <translation><!-- Site Name Change --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Temporary Deactivation</masterLabel>
+            <translation><!-- Site Temporary Deactivation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Termination</masterLabel>
+            <translation><!-- Site Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site Visitor</masterLabel>
+            <translation><!-- Site Visitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Site manager software</masterLabel>
+            <translation><!-- Site manager software --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Software update notification</masterLabel>
+            <translation><!-- Software update notification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Switch</masterLabel>
+            <translation><!-- Switch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TA Certification</masterLabel>
+            <translation><!-- TA Certification --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TA Re-Certification - Not built - R2</masterLabel>
+            <translation><!-- TA Re-Certification - Not built - R2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center Fulfillment - Equipment and Supplies</masterLabel>
+            <translation><!-- Test Center Fulfillment - Equipment and Supplies --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center Portal</masterLabel>
+            <translation><!-- Test Center Portal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test center emergency evacuation</masterLabel>
+            <translation><!-- Test center emergency evacuation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Testing Center Documentation Inquiries - Not Built - R2</masterLabel>
+            <translation><!-- Testing Center Documentation Inquiries - Not Built - R2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Track validation</masterLabel>
+            <translation><!-- Track validation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Traffic Incident if involved emergency</masterLabel>
+            <translation><!-- Traffic Incident if involved emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training</masterLabel>
+            <translation><!-- Training --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training/Meeting</masterLabel>
+            <translation><!-- Training/Meeting --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USB hub</masterLabel>
+            <translation><!-- USB hub --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unexpected Behavior</masterLabel>
+            <translation><!-- Unexpected Behavior --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VGA cables</masterLabel>
+            <translation><!-- VGA cables --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VTS</masterLabel>
+            <translation><!-- VTS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VTS Applications</masterLabel>
+            <translation><!-- VTS Applications --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VUE testing system</masterLabel>
+            <translation><!-- VUE testing system --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Weather emergency</masterLabel>
+            <translation><!-- Weather emergency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web registration problem</masterLabel>
+            <translation><!-- Web registration problem --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Workstation Additions</masterLabel>
+            <translation><!-- Workstation Additions --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Information for approver --></label>
+        <name>Information_for_approver__c</name>
+    </fields>
+    <fields>
+        <help><!-- Internal-only information about article content, intended for first-level support --></help>
+        <label><!-- Internal Comments --></label>
+        <name>Internal_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Internal or Test Center case --></label>
+        <name>Internal_or_Test_Center_case__c</name>
+        <picklistValues>
+            <masterLabel>Internal</masterLabel>
+            <translation><!-- Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test Center</masterLabel>
+            <translation><!-- Test Center --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Knowledge Rendering --></label>
+        <name>Knowledge_Rendering__c</name>
+        <relationshipLabel><!-- How-tos --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- More Information 2 --></label>
+        <name>More_Information_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- More Information 3 --></label>
+        <name>More_Information_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- More Information 4 --></label>
+        <name>More_Information_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- More information 1 --></label>
+        <name>More_information_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- Add any next steps related to the article&apos;s procedure and appropriate references --></help>
+        <label><!-- More information --></label>
+        <name>More_information__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overview 1 --></label>
+        <name>Overview_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overview 2 --></label>
+        <name>Overview_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overview 3 --></label>
+        <name>Overview_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Overview 4 --></label>
+        <name>Overview_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Summarize the article&apos;s purpose (what can a reader do by following the procedure?). Include a &quot;Before you begin&quot; section to list any prerequisite tasks or status. --></help>
+        <label><!-- Overview --></label>
+        <name>Overview__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps 1 --></label>
+        <name>Steps_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps 2 --></label>
+        <name>Steps_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps 3 --></label>
+        <name>Steps_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Steps 4 --></label>
+        <name>Steps_4__c</name>
+    </fields>
+    <fields>
+        <help><!-- Provide clear, parallel steps for achieving the objective or multiple sets of related objectives/steps --></help>
+        <label><!-- Steps --></label>
+        <name>Steps__c</name>
+    </fields>
+    <fields>
+        <label><!-- Topic --></label>
+        <name>Topic__c</name>
+        <picklistValues>
+            <masterLabel>Topic 1</masterLabel>
+            <translation><!-- Topic 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Topic 2</masterLabel>
+            <translation><!-- Topic 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Topic 3</masterLabel>
+            <translation><!-- Topic 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>ValidationStatus</name>
+        <picklistValues>
+            <masterLabel>Not Validated</masterLabel>
+            <translation><!-- Not Validated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Validated</masterLabel>
+            <translation><!-- Validated --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

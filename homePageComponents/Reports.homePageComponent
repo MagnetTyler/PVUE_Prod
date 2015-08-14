@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <links>Opportunity_Pipeline_All_Regions</links>
+    <links>Opportunity_Pipeline_Americas</links>
+    <links>Opportunity_Pipeline_Australia</links>
+    <links>Opportunity_Pipeline_China</links>
+    <links>Opportunity_Pipeline_Europe</links>
+    <links>Opportunity_Pipeline_India</links>
+    <links>Opportunity_Pipeline_Japan</links>
+    <links>Opportunity_Pipeline_Korea</links>
+    <links>Opportunity_Pipeline_MEA</links>
+    <links>Opportunity_Pipeline_South_East_Asia</links>
+    <links>Opportunity_Pipeline_UK</links>
+    <links>All_Reports</links>
+    <pageComponentType>links</pageComponentType>
+</HomePageComponent>

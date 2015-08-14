@@ -1,0 +1,60 @@
+<apex:page standardController="Informational__kav" standardStylesheets="false">
+
+    <head>
+        <apex:Stylesheet value="{!URLFOR($Resource.KnowledgeCss)}"/>
+    </head>
+    <knowledge:articleRendererToolBar articleId="{! $CurrentPage.parameters.id}" canvote="{! ISPICKVAL($User.userType, 'Standard')}" />
+    <knowledge:articleCaseToolbar caseId="{! $CurrentPage.Parameters.Caseid}" articleId="{! $CurrentPage.parameters.id}" rendered="{! $CurrentPage.Parameters.Caseid} != null"/>
+    <topics:widget entity="{! Informational__kav.id}" renderStyle="enhanced"/>
+
+    <body>
+        <apex:variable value="{!$User.Channel_type__c}" Var="uservar"/>
+        <P class="Title"> {! Informational__kav.title}</P>
+        <div class="knowledge-article">
+            
+            
+            <h1>{!$Label.Details}</h1>
+                <apex:outputField value="{!Informational__kav.Details__c}" rendered="{!Informational__kav.Knowledge_Rendering__c == null}"/>
+            
+            <apex:variable value="{!Informational__kav.Knowledge_rendering__r.Details_Channel_Types_1__c}" var="Details1var"/>            
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Details1var))}" >
+                {!$Label.Details} {!$Label.Visible_to} {!Details1var}
+            </apex:outputText>
+            <apex:outputfield value="{! Informational__kav.Details_1__c}" rendered="{!CONTAINS(Details1var, uservar)|| (uservar == 'Internal' && Informational__kav.Knowledge_Rendering__c != null)}"/>
+            
+            <apex:variable value="{!Informational__kav.Knowledge_rendering__r.Details_Channel_Types_2__c}" var="Details2var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Details2var))}" >
+                {!$Label.Details} {!$Label.Visible_to} {!Details2var}
+            </apex:outputText>
+            <apex:outputfield value="{! Informational__kav.Details_2__c}" rendered="{!CONTAINS(Details2var, uservar)|| (uservar == 'Internal' && Informational__kav.Knowledge_Rendering__c != null)}"/>
+            
+            <apex:variable value="{!Informational__kav.Knowledge_rendering__r.Details_Channel_Types_3__c}" var="Details3var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Details3var))}" >
+                {!$Label.Details} {!$Label.Visible_to} {!Details3var}
+            </apex:outputText>
+            <apex:outputfield value="{! Informational__kav.Details_3__c}" rendered="{!CONTAINS(Details3var, uservar)|| (uservar == 'Internal' && Informational__kav.Knowledge_Rendering__c != null)}"/>
+            
+            <apex:variable value="{!Informational__kav.Knowledge_rendering__r.Details_Channel_Types_4__c}" var="Details4var"/>
+            <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Details4var))}" >
+                {!$Label.Details} {!$Label.Visible_to} {!Details4var}
+            </apex:outputText>
+            <apex:outputfield value="{! Informational__kav.Details_4__c}" rendered="{!CONTAINS(Details4var, uservar)|| (uservar == 'Internal' && Informational__kav.Knowledge_Rendering__c != null)}"/>
+        
+        <h4>{!$Label.Article_information}</h4>
+        <p class="ArticleInfoText">
+            {!$Label.Article_Number}  <apex:outputField value="{!Informational__kav.ArticleNumber}"/>                
+        </p>
+          
+        <p class="ArticleInfoText">
+            {!$Label.Article_Type}<apex:outputField value="{!Informational__kav.ArticleType}"/>                
+        </p>   
+        <p class="ArticleInfoText">
+            {!$Label.Article_Version} <apex:outputField value="{!Informational__kav.VersionNumber}"/>                
+        </p>   
+        <p class="ArticleInfoText">
+            {!$Label.Last_Published_Date} <apex:outputField value="{!Informational__kav.LastPublishedDate}"/>                
+        </p>                
+     
+        </div>
+    </body>
+</apex:page>

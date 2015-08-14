@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>PPC</label>
+                <name>PPC</name>
+            </dataCategory>
+            <dataCategory>
+                <label>PPCUK</label>
+                <name>PPCUK</name>
+            </dataCategory>
+            <dataCategory>
+                <label>PTC</label>
+                <name>PTC</name>
+            </dataCategory>
+            <dataCategory>
+                <label>NCLEX TTC Channel</label>
+                <name>NCLEX_TTC_Channel</name>
+            </dataCategory>
+            <label>Pearson Company Owned Test Center</label>
+            <name>Pearson_Company_Owned_Test_Center</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>PVTC</label>
+                <name>PVTC</name>
+            </dataCategory>
+            <dataCategory>
+                <label>PVTC Select</label>
+                <name>PVTC_Select</name>
+            </dataCategory>
+            <dataCategory>
+                <label>GED Only</label>
+                <name>GED_Only</name>
+            </dataCategory>
+            <dataCategory>
+                <label>GED DOC</label>
+                <name>GED_Doc</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Registration Only</label>
+                <name>Registration_Only</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Government</label>
+                <name>Government</name>
+            </dataCategory>
+            <dataCategory>
+                <label>IHTTC</label>
+                <name>IHTTC</name>
+            </dataCategory>
+            <label>Pearson VUE Test Centers</label>
+            <name>Pearson_VUE_Test_Centers</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Anywhere Proctor</label>
+            <name>Anywhere_Proctor</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Non Proctored</label>
+            <name>Non_Proctored</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Online Proctoring (remote)</label>
+            <name>Online_Proctoring_remote</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Paper and Pencil Delivery</label>
+            <name>Paper_and_Pencil_Delivery</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Practical Test Centers</label>
+            <name>Practical_Test_Centers</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Temporary Test Center</label>
+            <name>Temporary_Test_Center</name>
+        </dataCategory>
+        <dataCategory>
+            <label>ZFTC</label>
+            <name>ZFTC</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Acclaim</label>
+                <name>Acclaim</name>
+            </dataCategory>
+            <dataCategory>
+                <label>ATS</label>
+                <name>ATS</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Candidate Services Management</label>
+                    <name>Candidate_Services_Management</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Candidate Services Program Coordinators</label>
+                    <name>Candidate_Services_Program_Coordinators</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Candidate Services Contact Center Agents</label>
+                    <name>Candidate_Services_Contact_Center_Agents</name>
+                </dataCategory>
+                <label>Candidate Services</label>
+                <name>Candidate_Services</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Certiport</label>
+                <name>Certiport</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Channel Quality Management</label>
+                    <name>Channel_Quality_Management</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Channel Quality</label>
+                    <name>Channel_Quality</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Channel Quality Channel Security</label>
+                    <name>Channel_Quality_Channel_Security</name>
+                </dataCategory>
+                <label>Channel Quality</label>
+                <name>Channel_Quality_misc</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Channel Sales</label>
+                <name>Channel_Sales</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Exam Developer</label>
+                <name>Exam_Developer</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Management Information</label>
+                <name>Management_Information</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Partner and Integration Support</label>
+                <name>Partner_and_Integration_Support</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Program Management</label>
+                <name>Program_Management</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Results Processing</label>
+                <name>Results_Processing</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Technical Account Management</label>
+                <name>Technical_Account_Management</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Test Publishing</label>
+                <name>Test_Publishing</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>Management</label>
+                    <name>Management</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>VSS2</label>
+                    <name>VSS2</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>VSS1</label>
+                    <name>VSS1</name>
+                </dataCategory>
+                <label>VUE Support Services</label>
+                <name>VUE_Support_Services</name>
+            </dataCategory>
+            <label>Internal</label>
+            <name>Internal</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Internal or external groups which are utilizing Knowledge Management</description>
+    <label>Audience</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

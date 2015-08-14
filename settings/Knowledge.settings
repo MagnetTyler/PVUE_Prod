@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<KnowledgeSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <answers>
+        <enableArticleCreation>false</enableArticleCreation>
+    </answers>
+    <cases>
+        <enableArticleCreation>false</enableArticleCreation>
+        <enableArticlePublicSharingSites>false</enableArticlePublicSharingSites>
+        <useProfileForPDFCreation>false</useProfileForPDFCreation>
+    </cases>
+    <defaultLanguage>en_US</defaultLanguage>
+    <enableChatterQuestionKBDeflection>false</enableChatterQuestionKBDeflection>
+    <enableCreateEditOnArticlesTab>false</enableCreateEditOnArticlesTab>
+    <enableExternalMediaContent>true</enableExternalMediaContent>
+    <enableKnowledge>true</enableKnowledge>
+    <languages>
+        <language>
+            <active>true</active>
+            <defaultAssignee></defaultAssignee>
+            <defaultReviewer></defaultReviewer>
+            <name>en_US</name>
+        </language>
+        <language>
+            <active>true</active>
+            <defaultAssignee></defaultAssignee>
+            <defaultReviewer></defaultReviewer>
+            <name>ja</name>
+        </language>
+    </languages>
+    <showArticleSummariesCustomerPortal>true</showArticleSummariesCustomerPortal>
+    <showArticleSummariesInternalApp>true</showArticleSummariesInternalApp>
+    <showArticleSummariesPartnerPortal>true</showArticleSummariesPartnerPortal>
+    <showValidationStatusField>true</showValidationStatusField>
+</KnowledgeSettings>

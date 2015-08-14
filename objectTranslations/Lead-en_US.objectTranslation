@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Leads</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Leads</value>
+    </caseValues>
+    <fields>
+        <label><!-- Annual candidate volume --></label>
+        <name>Annual_candidate_volume__c</name>
+        <picklistValues>
+            <masterLabel>1,000 - 5,000</masterLabel>
+            <translation><!-- 1,000 - 5,000 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20,000 - 50,000</masterLabel>
+            <translation><!-- 20,000 - 50,000 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5,000 - 20,000</masterLabel>
+            <translation><!-- 5,000 - 20,000 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fewer than 1,000</masterLabel>
+            <translation><!-- Fewer than 1,000 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>More than 50,000</masterLabel>
+            <translation><!-- More than 50,000 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- How can we help with your test program --></label>
+        <name>How_can_we_help_with_your_test_program__c</name>
+    </fields>
+    <fields>
+        <label><!-- How did you hear about us? --></label>
+        <name>How_did_you_hear_about_us__c</name>
+        <picklistValues>
+            <masterLabel>Adwords</masterLabel>
+            <translation><!-- Adwords --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Emails</masterLabel>
+            <translation><!-- Emails --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Events</masterLabel>
+            <translation><!-- Events --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Media article</masterLabel>
+            <translation><!-- Media article --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recommendation</masterLabel>
+            <translation><!-- Recommendation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales team visit</masterLabel>
+            <translation><!-- Sales team visit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web search</masterLabel>
+            <translation><!-- Web search --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>Industry</name>
+        <picklistValues>
+            <masterLabel>Academia, Education and Admissions</masterLabel>
+            <translation><!-- Academia, Education and Admissions --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Construction</masterLabel>
+            <translation><!-- Construction --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultant</masterLabel>
+            <translation><!-- Consultant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Continuing Education</masterLabel>
+            <translation><!-- Continuing Education --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cosmetology</masterLabel>
+            <translation><!-- Cosmetology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Employment or Human Resources</masterLabel>
+            <translation><!-- Employment or Human Resources --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Financial and Related Services</masterLabel>
+            <translation><!-- Financial and Related Services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Government</masterLabel>
+            <translation><!-- Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Health and Safety</masterLabel>
+            <translation><!-- Health and Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Information Technology</masterLabel>
+            <translation><!-- Information Technology --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance</masterLabel>
+            <translation><!-- Insurance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Language Testing</masterLabel>
+            <translation><!-- Language Testing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medical</masterLabel>
+            <translation><!-- Medical --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multiboard</masterLabel>
+            <translation><!-- Multiboard --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Nurse Aide</masterLabel>
+            <translation><!-- Nurse Aide --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Professional Association</masterLabel>
+            <translation><!-- Professional Association --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Safety</masterLabel>
+            <translation><!-- Public Safety --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate</masterLabel>
+            <translation><!-- Real Estate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Real Estate Appraisers</masterLabel>
+            <translation><!-- Real Estate Appraisers --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sample - for training purposes</masterLabel>
+            <translation><!-- Sample - for training purposes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transportation and Road Safety</masterLabel>
+            <translation><!-- Transportation and Road Safety --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>LeadSource</name>
+        <picklistValues>
+            <masterLabel>ATP</masterLabel>
+            <translation><!-- ATP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conference / Speaking event</masterLabel>
+            <translation><!-- Conference / Speaking event --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Direct Contact</masterLabel>
+            <translation><!-- Direct Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Existing Contact</masterLabel>
+            <translation><!-- Existing Contact --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Informal Request</masterLabel>
+            <translation><!-- Informal Request --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>LinkedIn</masterLabel>
+            <translation><!-- LinkedIn --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing Inbox</masterLabel>
+            <translation><!-- Marketing Inbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFB</masterLabel>
+            <translation><!-- RFB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFI</masterLabel>
+            <translation><!-- RFI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFP</masterLabel>
+            <translation><!-- RFP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RFQ</masterLabel>
+            <translation><!-- RFQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales Mailbox</masterLabel>
+            <translation><!-- Sales Mailbox --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Twitter</masterLabel>
+            <translation><!-- Twitter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Webinar</masterLabel>
+            <translation><!-- Webinar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>e-ATP</masterLabel>
+            <translation><!-- e-ATP --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Marketing Communications Permissions --></label>
+        <name>Marketing_Communications_Permissions__c</name>
+        <picklistValues>
+            <masterLabel>Marketing inbox – opt-in</masterLabel>
+            <translation><!-- Marketing inbox – opt-in --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing inbox – opt-out</masterLabel>
+            <translation><!-- Marketing inbox – opt-out --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permission requested by BDM/PM and not given – opt-out</masterLabel>
+            <translation><!-- Permission requested by BDM/PM and not given – opt-out --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Permission requested by BDM/PM – opt-in</masterLabel>
+            <translation><!-- Permission requested by BDM/PM – opt-in --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Other Services --></label>
+        <name>Other_Services_Program__c</name>
+    </fields>
+    <fields>
+        <name>Rating</name>
+        <picklistValues>
+            <masterLabel>Cold</masterLabel>
+            <translation><!-- Cold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Green</masterLabel>
+            <translation><!-- Green --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Hot</masterLabel>
+            <translation><!-- Hot --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Warm</masterLabel>
+            <translation><!-- Warm --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yellow</masterLabel>
+            <translation><!-- Yellow --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region --></label>
+        <name>Region__c</name>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Australia</masterLabel>
+            <translation><!-- Australia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>China</masterLabel>
+            <translation><!-- China --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Europe</masterLabel>
+            <translation><!-- Europe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>India</masterLabel>
+            <translation><!-- India --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Japan</masterLabel>
+            <translation><!-- Japan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Korea</masterLabel>
+            <translation><!-- Korea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Middle East Africa</masterLabel>
+            <translation><!-- Middle East Africa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>South East Asia</masterLabel>
+            <translation><!-- South East Asia --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>United Kingdom</masterLabel>
+            <translation><!-- United Kingdom --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Region test program being delivered --></label>
+        <name>Region_test_program_being_delivered__c</name>
+        <picklistValues>
+            <masterLabel>APAC</masterLabel>
+            <translation><!-- APAC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Americas</masterLabel>
+            <translation><!-- Americas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EMEA</masterLabel>
+            <translation><!-- EMEA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global</masterLabel>
+            <translation><!-- Global --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Services of Interest --></label>
+        <name>Services_of_Interest__c</name>
+        <picklistValues>
+            <masterLabel>Badging</masterLabel>
+            <translation><!-- Badging --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Both test development and delivery</masterLabel>
+            <translation><!-- Both test development and delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Credential management</masterLabel>
+            <translation><!-- Credential management --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing, e-commerce and other program growth services</masterLabel>
+            <translation><!-- Marketing, e-commerce and other program growth services --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test delivery</masterLabel>
+            <translation><!-- Test delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test development</masterLabel>
+            <translation><!-- Test development --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <name>Status</name>
+        <picklistValues>
+            <masterLabel>Contacted</masterLabel>
+            <translation><!-- Contacted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not viable</masterLabel>
+            <translation><!-- Not viable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Proposal submitted</masterLabel>
+            <translation><!-- Proposal submitted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Qualified</masterLabel>
+            <translation><!-- Qualified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unqualified</masterLabel>
+            <translation><!-- Unqualified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Launch</masterLabel>
+            <translation><!-- Launch --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Competitor</masterLabel>
+            <translation><!-- Competitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consultant</masterLabel>
+            <translation><!-- Consultant --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer</masterLabel>
+            <translation><!-- Customer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Former Client</masterLabel>
+            <translation><!-- Former Client --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Partner</masterLabel>
+            <translation><!-- Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Qualified Prospect</masterLabel>
+            <translation><!-- Qualified Prospect --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unqualified Lead</masterLabel>
+            <translation><!-- Unqualified Lead --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Vendor</masterLabel>
+            <translation><!-- Vendor --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- G2 Lead --></label>
+        <name>G2_Lead</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Regulatory Lead --></label>
+        <name>Regulatory_Lead</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- financialprofile --></label>
+        <name>financialprofile</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- map --></label>
+        <name>map</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- news --></label>
+        <name>news</name>
+    </webLinks>
+</CustomObjectTranslation>

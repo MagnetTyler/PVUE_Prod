@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Enable CCM --></label>
+        <name>copado__Enable_CCM__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable Copado --></label>
+        <name>copado__Enable_Copado__c</name>
+    </fields>
+</CustomObjectTranslation>

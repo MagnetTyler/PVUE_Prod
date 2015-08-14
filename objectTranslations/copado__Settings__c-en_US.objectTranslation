@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- CCM Licenses --></label>
+        <name>copado__CCM_Licenses__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copado Licenses --></label>
+        <name>copado__Copado_Licenses__c</name>
+    </fields>
+    <fields>
+        <label><!-- Copado_Site --></label>
+        <name>copado__Copado_Site__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enabled Multi-Licenses --></label>
+        <name>copado__Enabled_Multi_Licenses__c</name>
+    </fields>
+    <fields>
+        <help><!-- The namespace should contain two underscores &quot;__&quot; e.g. copado__ --></help>
+        <label><!-- Namespace --></label>
+        <name>copado__Namespace__c</name>
+    </fields>
+    <fields>
+        <label><!-- Server_URL --></label>
+        <name>copado__Server_URL__c</name>
+    </fields>
+</CustomObjectTranslation>

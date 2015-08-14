@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT_OWNER</field>
+    </columns>
+    <columns>
+        <field>ACCOUNT_NAME</field>
+    </columns>
+    <columns>
+        <field>INDUSTRY</field>
+    </columns>
+    <columns>
+        <field>STATUS</field>
+    </columns>
+    <columns>
+        <field>Contract.Other_Services__c</field>
+    </columns>
+    <columns>
+        <field>Contract.Services_Offered__c</field>
+    </columns>
+    <description>all accts with list of svcs</description>
+    <filter>
+        <criteriaItems>
+            <column>STATUS</column>
+            <operator>equals</operator>
+            <value>Active</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Region__c</column>
+            <operator>equals</operator>
+            <value>Americas</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>All Regulatory Clients</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ContractList</reportType>
+    <showDetails>true</showDetails>
+    <sortColumn>INDUSTRY</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>START_DATE</dateColumn>
+        <endDate>2015-01-01</endDate>
+        <interval>INTERVAL_CUSTOM</interval>
+        <startDate>1980-01-01</startDate>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SynonymDictionary xmlns="http://soap.sforce.com/2006/04/metadata">
+    <groups>
+        <languages>en_US</languages>
+        <terms>PTC</terms>
+        <terms>Pearson Testing Center</terms>
+        <terms>Pearson-owned</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>VSS</terms>
+        <terms>VUE Support Services</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>PVATC</terms>
+        <terms>PVATC Select</terms>
+        <terms>Pearson VUE Authorized Test Center</terms>
+        <terms>Pearson VUE Authorized Test Center Select</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>PPC</terms>
+        <terms>Pearson Professional Center</terms>
+        <terms>Pearson-owned center</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>TA</terms>
+        <terms>administrator</terms>
+        <terms>invigilator</terms>
+        <terms>proctor</terms>
+        <terms>test administrator</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>candidate</terms>
+        <terms>test taker</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>test center</terms>
+        <terms>test site</terms>
+        <terms>testing center</terms>
+        <terms>testing centre</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>client</terms>
+        <terms>exam sponsor</terms>
+        <terms>test owner</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>frequently asked question</terms>
+        <terms>FAQ</terms>
+    </groups>
+    <groups>
+        <languages>en_US</languages>
+        <terms>ABIM</terms>
+        <terms>American Board of Internal Medicine</terms>
+    </groups>
+    <label>_Default</label>
+</SynonymDictionary>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Candidate registration</label>
+                <name>Candidate_registration</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TA certification</label>
+                <name>TA_certification</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TDFTs</label>
+                <name>TDFTs</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Payment</label>
+                <name>Payment</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Rescheduling and canceling appointments</label>
+                <name>Rescheduling_and_canceling_appointments</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Troubleshooting registration/scheduling</label>
+                <name>Troubleshooting_registration_scheduling</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Accommodations</label>
+                <name>Accommodations</name>
+            </dataCategory>
+            <label>Registration/scheduling</label>
+            <name>Registration_scheduling</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Greeting candidates</label>
+                <name>Greeting_candidates</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Rules agreements</label>
+                <name>Rules_agreements</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Handouts and consent forms</label>
+                <name>Handouts_and_consent_forms</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Identification</label>
+                <name>Identification</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Collecting admissions data</label>
+                <name>Collecting_admissions_data</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Storing belongings</label>
+                <name>Storing_belongings</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Log sheet</label>
+                <name>Log_sheet</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Non-standard arrivals</label>
+                <name>Non_standard_arrivals</name>
+            </dataCategory>
+            <label>Admitting candidates</label>
+            <name>Admitting_candidates</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Sign-in and entry monitoring</label>
+                <name>Sign_in_and_entry_monitoring</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Exam materials</label>
+                <name>Exam_materials</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Permitted personal items</label>
+                <name>Permitted_personal_items</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Adjusting seat and equipment</label>
+                <name>Adjusting_seat_and_equipment</name>
+            </dataCategory>
+            <label>Seating candidates</label>
+            <name>Seating_candidates</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Starting an exam</label>
+                <name>Starting_an_exam</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Proctoring an exam</label>
+                <name>Proctoring_an_exam</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Breaks</label>
+                <name>Breaks</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TroubleShooting</label>
+                <name>TroubleShooting</name>
+            </dataCategory>
+            <label>Administering exam</label>
+            <name>Administering_exam</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Ending an exam</label>
+                <name>Ending_an_exam</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Sign-out procedures</label>
+                <name>Sign_out_procedures</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Handling comments and questions</label>
+                <name>Handling_comments_and_questions</name>
+            </dataCategory>
+            <label>Signing out candidates</label>
+            <name>Signing_out_candidates</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Handling lost and found items</label>
+                <name>Handling_lost_and_found_items</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Maintaining test center location informa</label>
+                <name>Maintaining_test_center_location_information</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Managing user accounts for personnel</label>
+                <name>Managing_user_accounts_for_personnel</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Setting up delivery hours, incl. holiday</label>
+                <name>Setting_up_delivery_hours_incl_holiday</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Updating software for center administrat</label>
+                <name>Updating_software_for_center_administration</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Maintaining security</label>
+                <name>Maintaining_security</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Emergency procedures</label>
+                <name>Emergency_procedures</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Site setup</label>
+                <name>Site_setup</name>
+            </dataCategory>
+            <dataCategory>
+                <label>TA requirements</label>
+                <name>TA_requirements</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Handling and reporting problems</label>
+                <name>Handling_and_reporting_problems</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Facilities</label>
+                <name>Facilities</name>
+            </dataCategory>
+            <dataCategory>
+                <label>ExamiNet</label>
+                <name>ExamiNet</name>
+            </dataCategory>
+            <label>Site administration</label>
+            <name>Site_administration</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>VUE Testing Software</label>
+                <name>VUE_Testing_Software</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Kronos</label>
+                <name>Kronos</name>
+            </dataCategory>
+            <dataCategory>
+                <label>PaperPort</label>
+                <name>PaperPort</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DVR Software</label>
+                <name>DVR_Software</name>
+            </dataCategory>
+            <dataCategory>
+                <label>MS Office</label>
+                <name>MS_Office</name>
+            </dataCategory>
+            <label>Software</label>
+            <name>Software</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Printers</label>
+                <name>Printers</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Admissions Equipment</label>
+                <name>Admissions_Equipment</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Workstation/Workstation equipment</label>
+                <name>Workstation_Workstation_equipment</name>
+            </dataCategory>
+            <dataCategory>
+                <label>DVR</label>
+                <name>DVR</name>
+            </dataCategory>
+            <label>Hardware</label>
+            <name>Hardware</name>
+        </dataCategory>
+        <dataCategory>
+            <dataCategory>
+                <label>Creating a Case</label>
+                <name>Creating_a_Case</name>
+            </dataCategory>
+            <dataCategory>
+                <label>Videos</label>
+                <name>Videos</name>
+            </dataCategory>
+            <dataCategory>
+                <label>E-Learning</label>
+                <name>E_Learning</name>
+            </dataCategory>
+            <label>Training</label>
+            <name>Training</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Marketing Materials</label>
+            <name>Marketing_Materials</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Audience is the different personas or profiles.</description>
+    <label>Subject</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

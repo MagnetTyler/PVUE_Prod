@@ -1,0 +1,42 @@
+<apex:page standardController="Media_Presentation__kav" standardStylesheets="false">
+
+    <head>
+        <apex:Stylesheet value="{!URLFOR($Resource.KnowledgeCss)}"/>
+    </head>
+    <knowledge:articleRendererToolBar articleId="{! $CurrentPage.parameters.id}" canvote="{! ISPICKVAL($User.userType, 'Standard')}" />
+    <knowledge:articleCaseToolbar caseId="{! $CurrentPage.Parameters.Caseid}" articleId="{! $CurrentPage.parameters.id}" rendered="{! $CurrentPage.Parameters.Caseid} != null"/>
+    <topics:widget entity="{! Media_Presentation__kav.id}" renderStyle="enhanced"/>
+
+    <body>
+        <P class="Title"> {! Media_Presentation__kav.title}</P>
+        <div class="knowledge-article">
+            
+            
+            <h1>Details</h1>
+                <p class="abstract">
+                    <apex:outputField value="{!Media_Presentation__kav.Details__c}" />
+                </p>
+            <h1>Video</h1>
+                <p class="BodyText">
+                    <apex:outputfield value="{!Media_Presentation__kav.Video__c}"/>
+                </p>
+                
+        <h4>{!$Label.Article_information}</h4>
+        <p class="ArticleInfoText">
+            {!$Label.Article_Number}<apex:outputField value="{!Media_Presentation__kav.ArticleNumber}"/>                
+        </p>
+          
+        <p class="ArticleInfoText">
+            {!$Label.Article_Type} <apex:outputField value="{!Media_Presentation__kav.ArticleType}"/>                
+        </p>   
+        <p class="ArticleInfoText">
+            {!$Label.Article_Version} <apex:outputField value="{!Media_Presentation__kav.VersionNumber}"/>                
+        </p>   
+        <p class="ArticleInfoText">
+            {!$Label.Last_Published_Date} <apex:outputField value="{!Media_Presentation__kav.LastPublishedDate}"/>                
+        </p> 
+        
+        
+        </div>
+    </body>
+</apex:page>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Answer</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Answer</shortDescription>
+        <value>Answer</value>
+    </labels>
+    <labels>
+        <fullName>Article_Number</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article Number</shortDescription>
+        <value>Article Number:</value>
+    </labels>
+    <labels>
+        <fullName>Article_Type</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article Type</shortDescription>
+        <value>Article Type:</value>
+    </labels>
+    <labels>
+        <fullName>Article_Version</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article Version</shortDescription>
+        <value>Article Version:</value>
+    </labels>
+    <labels>
+        <fullName>Article_information</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Article information</shortDescription>
+        <value>Article information</value>
+    </labels>
+    <labels>
+        <fullName>Channel_Names</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Channel Names</shortDescription>
+        <value>PPC;
+PPCUK;
+PTC;
+NCLEX TTC;
+PVTC;
+PVTC Select;
+PVTC GED Only;
+PVTC GED DOC;
+PVTC Registration Only (RO);
+PVTC Government;
+PVTC IHTTC;
+Paper and Pencil Delivery;
+Practice Test Centers;
+Temporary Test Center;
+Zero Foot Print (ZFP);
+Anywhere Proctor;
+Non Procotored;
+Online Proctoring;</value>
+    </labels>
+    <labels>
+        <fullName>Details</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>Last_Published_Date</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last Published Date</shortDescription>
+        <value>Last Published Date:</value>
+    </labels>
+    <labels>
+        <fullName>More_information</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>More information</shortDescription>
+        <value>More information</value>
+    </labels>
+    <labels>
+        <fullName>Overview</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Overview</shortDescription>
+        <value>Overview</value>
+    </labels>
+    <labels>
+        <fullName>Question</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Question</shortDescription>
+        <value>Question</value>
+    </labels>
+    <labels>
+        <fullName>Resolution</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resolution</shortDescription>
+        <value>Resolution</value>
+    </labels>
+    <labels>
+        <fullName>Steps</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Steps</shortDescription>
+        <value>Steps</value>
+    </labels>
+    <labels>
+        <fullName>Symptoms</fullName>
+        <categories>Labels knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Symptoms</shortDescription>
+        <value>Symptoms</value>
+    </labels>
+    <labels>
+        <fullName>Visible_to</fullName>
+        <categories>Labels Knowledge sections</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Visible to</shortDescription>
+        <value>visible to:</value>
+    </labels>
+</CustomLabels>
