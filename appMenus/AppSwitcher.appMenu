@@ -40,4 +40,8 @@
         <name>copado__Copado_Continuous_Integration</name>
         <type>CustomApplication</type>
     </appMenuItems>
+    <appMenuItems>
+        <name>ServiceDirect</name>
+        <type>CustomApplication</type>
+    </appMenuItems>
 </AppMenu>
