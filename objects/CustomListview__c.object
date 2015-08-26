@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Custom_Buttons__c</fullName>
+        <description>Buttons that should appear on this Custom List View.</description>
+        <externalId>false</externalId>
+        <label>Custom Buttons</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Assign to myself</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Default__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FieldSet_Name__c</fullName>
+        <defaultValue>&quot;External_list_view&quot;</defaultValue>
+        <description>field to hold the name of a fieldset for building tables</description>
+        <externalId>false</externalId>
+        <label>FieldSet Name</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fields_String__c</fullName>
+        <externalId>false</externalId>
+        <label>Fields String</label>
+        <length>1000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Closed_View__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Closed View</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>List_Order__c</fullName>
+        <description>This is used by the Custom_case_listview to set the custom listviews into the correct order</description>
+        <externalId>false</externalId>
+        <label>List Order</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>List_Size_Options__c</fullName>
+        <externalId>false</externalId>
+        <label>List Size Options</label>
+        <picklist>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>50</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>List_view_name__c</fullName>
+        <externalId>false</externalId>
+        <label>List view name</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Cases awaiting pickup</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>My closed cases</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>My open cases</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open cases</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed case</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Comments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Object__c</fullName>
+        <description>This is the API name of the object which the listview is for</description>
+        <externalId>false</externalId>
+        <label>Object</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Case</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Knowledge</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>CaseComment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attachment</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Order_by__c</fullName>
+        <externalId>false</externalId>
+        <label>Order by</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Parent_Field_API_Name__c</fullName>
+        <description>This is the API or Developer name for the parent field.  The component looks for the ID of the parent record in this field as part of a dynamic query</description>
+        <externalId>false</externalId>
+        <label>Parent Field API Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Search_Criteria__c</fullName>
+        <description>This field is used by Custom_Case_Listview to build the dynamic SOQL Query string.  Visibility is currently set for System Administrators only.  It has to be in legitimate SOQL language</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field currently is to be filled out in SOQL language and is the WHERE Clause for the search</inlineHelpText>
+        <label>Search Criteria</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Then_by__c</fullName>
+        <externalId>false</externalId>
+        <label>Then by</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Use_Fieldset__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>some related lists don&apos;t have the ability to user field sets.  This allows for bypass of fieldset and use of a delimited String</description>
+        <externalId>false</externalId>
+        <label>Use Fieldset</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>CustomListview</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>List_view_name__c</columns>
+        <columns>FieldSet_Name__c</columns>
+        <columns>Search_Criteria__c</columns>
+        <columns>Order_by__c</columns>
+        <columns>Then_by__c</columns>
+        <columns>List_Size_Options__c</columns>
+        <columns>List_Order__c</columns>
+        <columns>Is_Closed_View__c</columns>
+        <columns>Default__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>LV-{0000}</displayFormat>
+        <label>Listview_Option Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>CustomListviews</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

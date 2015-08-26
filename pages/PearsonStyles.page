@@ -1,0 +1,550 @@
+<apex:page contentType="text/css;charset=UTF-8">
+
+   html .brandQuaternaryBgr, body.hasMotif, html, body {
+    background: #2d3237 none !important;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    font-family: 'Open Sans',times;
+  }
+  
+  body label, body .labelCol{
+      color: #000 !important;
+      font-weight: 400 !important;
+  }
+    
+  body .bPageBlock{
+    margin-top: 5px;
+  }
+  body.caseTab .bPageBlock{
+    margin-top: 0px;  
+  }
+    
+  body .bPageBlock .pbHeader, body .bPageBlock .pbBody{
+    padding: 10px;
+    border-color: #ddd;
+    background: #fff !important;
+  }
+    
+  body.homepage .bPageBlock .pbBody{
+    background-image: none !important;  
+  }
+  
+  #bodyCell table .headerRow a{
+      color: #000 !important;
+  }
+  
+  #bodyCell a{
+      color: #428bca !important;
+  }
+  
+  #bodyCell a:hover{
+      color: #2a6496 !important;
+      text-decoration: none;
+  }
+  
+  #bodyCell .select2-container a{
+      color: #000 !important;
+  }
+
+  .bPageHeader{
+      display: none;
+  }
+  
+  .bodyDiv{
+      background: #EEEEEE;
+  }
+  
+  #bodyCell{
+      padding-top: 10px;
+  }
+  
+  #sidebarDiv{
+      background: #EEEEEE;
+  }
+  
+  #sidebarDiv .recentItemModule a:hover, #sidebarDiv .recentItemModule .chatter-hover-highlight{
+      text-decoration: none !important;
+      color: #2a6496 !important;
+  }
+  
+  #sidebarDiv .sidebarModule, body .bPageBlock{
+      background: #ffffff !important;
+      overflow: hidden;
+      border-radius: 3px !important;
+      -moz-border-radius: 3px !important;
+      -webkit-border-radius: 3px !important;
+      border: 1px solid #DDD !important;
+  }
+    
+  .caseTab #sidebarDiv .sidebarModule .bPageBlock.secondaryPalette{
+        background: transparent url(/img/alohaSkin/hover_arrow.png) -1px 3px no-repeat !important;
+        width: 385px !important;
+        border: 0 !important;
+        margin: 0 !important;
+    
+  }
+    
+  .caseTab.overviewPage .overviewHeaderDescription{
+    display: none;  
+  }
+    
+  .caseTab.overviewPage .bPageTitle{
+    margin-bottom: 0px !important;  
+  }
+    
+  #sidebarCell{
+  	display: none;  
+  }
+  
+  #sidebarDiv .sidebarModuleHeader h2, body .bPageBlock .pbHeader{
+      background: #ffffff;
+      border-bottom: 1px solid #e7e7e7;
+      padding: 9px;
+      font-weight: 600;
+      font-size: 14px;
+  }
+  
+  #sidebarDiv .createNewModule{
+      display: none;
+  }
+  
+  #sidebarDiv .recentItemModule .sidebarModuleHeader h2::before{
+      content: "My ";
+  }
+  
+  #sidebarDiv .linksModule .sidebarModuleHeader h2{
+      position: relative;
+  }
+  
+  #sidebarDiv .linksModule .sidebarModuleHeader h2::after{
+      display: block;
+      content: "Helpful Links";
+      position: absolute;
+      top: 9px;
+      background: #fff;
+      width: 90%;
+  }
+  
+  #sidebarDiv .linksModule a:link{
+      color: #428bca;
+  }
+  
+  #sidebarDiv .linksModule a:link:hover{
+      text-decoration: none;
+      color: #2a6496;
+  }
+  
+  body .bPageBlock .pbHeader{
+ 
+  }
+  
+  .bPageBlock .pbTitle{
+      width: 50% !important;
+  }
+  
+  .bPageBlock .pbTitle h2.mainTitle{
+      font-size: 14px;
+  }
+  
+  body .bPageBlock .detailList tr th, .bPageBlock .detailList tr td{
+      border-bottom: none !important;
+  }
+  
+  html body .bPageBlock.brandSecondaryBrd{
+      border: 1px solid #DDD !important;
+  }
+  
+  body .bPageBlock .pbTitle, body .bPageBlock .pbButton{
+      padding-top: 0px !important;
+      padding-bottom: 0px !important;
+  }
+  
+  body .bPageBlock .pbButton{
+      text-align: right;
+  }
+  
+  body .bPageBlock .pbButton .btn{
+      background: #EEE;
+      border-color: #CCC;
+      font-weight: 400;
+  }
+  
+  body .bPageBlock .pbButton .btn:hover{
+      background: #DADADA;
+      border-color: #ADADAD;
+  }
+  
+  body .bPageBlock .pbTitle h2, body .bPageBlock .pbTitle h3{
+      font-weight: 600;
+      font-size: 16px;
+  }
+  
+  #createNewButton{
+      background: #fff !important;
+      border: none !important;
+      box-shadow: none !important;
+  }
+  
+  h1, .h1, h2, .h2, h3, .h3{
+      margin: 0px !important;
+  }
+  
+  .zen #search{
+      background: #fff;
+  }
+
+  .pull-left{
+      float: left;
+  }  
+  .pull-right{
+      float: right;
+  }
+  .pearson-header, .pearson-footer{
+      background: #2d3237;
+      width: 100%;
+      display: inline-block;
+  }
+  .pearson-header .logo{
+      float: left;
+      margin-right: 20px;
+      padding: 19px 0px;
+  }
+  .pearson-header .logo h1{
+      color: #fff;
+      font-size: 16px;
+  }
+  
+  .pearson-header .global-search{
+      margin: 15px 30px 0px 0px; 
+      display: inline-block;
+      float: left;
+      
+  }
+  .pearson-header .global-search input{
+      width: 200px;
+      height: 25px;
+      border-radius: 3px 0px 0px 3px;
+      border: none;
+      padding: 2px 5px;
+  }
+  
+  .pearson-header .global-search button{
+      background: #e5e5e5;
+      border-radius: 0px 3px 3px 0px;
+      height: 25px;
+      padding: 7px 10px;
+      margin: 0px 0px 0px -3px;
+      border: none;
+  }
+  
+  .pearson-header .user-profile{
+      display: block;
+      float: right;
+      padding: 10px 0px;
+      
+  }
+  
+  .pearson-header .user-profile a{
+      color: #fff;
+      font-weight: 400;
+  }
+  
+  .pearson-header .user-profile .dropdown-toggle{
+      cursor: pointer;
+  }
+  
+  .pearson-header .dropdown-menu{
+     padding: 0px;
+     overflow: hidden; 
+  }
+  
+  .pearson-header .dropdown-menu li{
+      margin: 0px;
+  }
+  
+  .pearson-header .dropdown-menu li a{
+      font-size: 14px;
+      padding: 10px 20px;
+  }
+  
+  .pearson-header .user-profile .dropdown-menu li a:hover{
+      background: #0089b7;
+      color: #fff;
+  }
+  
+  .pearson-header .dropdown-menu li.active a{
+      background: #0089b7;
+  }
+  
+  .pearson-header .community-navigation{
+      padding: 5px 10px;
+      background: #e5e5e5;
+      border-top: 5px solid #0089b7;
+      border-bottom: 1px solid #ddd;
+  }
+  
+  .pearson-header .community-navigation #navigation-breadcrumb{
+      display: inline-block;
+      padding-top: 6px;
+      margin-left: 20px;
+      font-size: 12px;
+      font-family: Arial,Helvetica,sans-serif;
+  }
+  
+  .pearson-header .community-navigation .dropdown{
+      display: inline-block;
+  }
+  
+  .pearson-header .community-navigation .btn{
+      font-size: 12px;
+      font-weight: 400;
+      background: #eee;
+      width: 100px;
+      padding: 5px;
+      border-color: #ccc;
+  }
+  
+  .pearson-header .community-navigation .btn.dropdown-toggle:hover{
+      background: #dadada;
+      border-color: #ADADAD;
+  }
+  
+  .pearson-header .community-navigation .new-case-container .btn{
+      background: #0089b7;
+      color: #ffffff;
+      border: 1px solid #308cac;
+  }
+  
+  .pearson-header .community-navigation .new-case-container .btn:hover{
+      background: #2c83a1;
+      border-color: #22657d;
+  }
+  
+  .profile-details{
+      display: table;
+  }
+  
+  .profile-details p, .profile-details a{
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+  }
+  
+  .user-profile #user-name{
+      margin-top: 10px;
+      margin-bottom: 0px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+  }
+    
+  .user-profile .dropdown-toggle{
+      color: #fff;
+  }
+    
+  .user-profile .dropdown-toggle:hover{
+      text-decoration: none;  
+  }
+  
+  .user-profile .dropdown-menu{
+      background: #2d3237;
+      border-radius: 1px;
+      left: -41px;
+      top: 33px;
+      min-width: 200px;
+  }
+  
+  .user-profile .dropdown-menu li{
+      color: #fff;
+  }
+  
+  .pearson-header #test-center-name, .pearson-header #test-center-id {
+        font-size: 14px;
+        padding: 10px 20px;
+        display: block;
+    }
+  
+  .profile-details a:hover{
+      color: #fff;
+      cursor: pointer;
+  }
+  
+  #profile-image-container{
+      float: left;
+      margin-right: 20px;
+  }
+  
+  #profile-image-container .fa-user{
+      color: #fff;
+      font-size: 16px;
+      margin-right: 10px;
+  }
+  
+  #profile-image-container .caret{
+      border-top: 6px solid;
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      margin-top: -24px;
+  }
+  
+  .pearson-footer .logo img{
+      width: 200px
+  }
+   
+  .networkMsgsWithCustomHeader .zen-pageMessages{
+      display: none !important;
+  }
+  
+  .knowledgeTab .dispatcher li a, 
+  .knowledgeTab .zen .filterItem a.filterItemMenu{
+      height: 32px;
+  }
+  
+  .knowledgeTab img.articleListIcon{
+      height: 25px;
+  }
+  
+  .knowledgeTab #knowledge2HomePage{
+      background: #ffffff;
+  }
+  
+  input[value="Create New Case"], input[value="New Case"]{
+      display: none;
+  }
+    
+  .caseTab #sidebarDiv .sidebarModule{
+    overflow: visible;  
+  }
+    
+  .waitingSearchDiv{
+    background-color: rgba(0,0,0,0.2);
+    height: 100%;
+    width:100%;  
+  }
+             
+  .waitingHolder{
+    padding: 10px !important;
+    background: #ffffff !important;
+    border: 1px solid #333 !important;
+    border-radius: 3px !important;
+    top: 250px; 
+    width: 91px;
+    opacity: 1;
+  }
+    
+  .waitingDescription{
+    color: #333;  
+  }
+  
+  input[type="text"]{
+      min-height: 25px;
+  }
+    
+  .relatedListIcon{
+    display: none !important;  
+  }
+    
+  .pbHeader .pbTitle h3{
+    font-size: 14px !important;
+    padding-left: 10px !important;
+  }
+    
+  .pbHeader .pbButton .btn{
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header{
+      position: relative;
+      z-index: 1 !important;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header #phSearchButton{
+      height: 33px !important;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header .col-md-12{
+      z-index: 2 !important;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header .dropdown-menu{
+      position: absolute;
+      z-index: 1001;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header .community-navigation.col-md-12{
+      z-index: -1 !important;
+  }
+  
+  html .ext-ie.ext-ie7 .pearson-header .community-navigation .dropdown,
+  html .ext-ie.ext-ie7 .pearson-header .community-navigation #navigation-breadcrumb
+  {
+      float: left;
+  }
+    
+  /* Data Tables Override */ 
+  .dataTables_wrapper .dataTable{
+    	border: 1px solid #e0e3e5 !important;
+  }
+  .dataTables_wrapper .dataTable thead th{  
+      background-color: #f2f3f3;
+      border-width: 0 0 1px 1px;
+      border-color: #e0e3e5;
+      border: 1px solid #ededed;
+      color: #000;
+      font-size: .9em;
+      font-weight: bold;
+      padding: 5px 2px 4px 5px;
+  }
+  .dataTables_wrapper .dataTable tbody td{
+  	  background-color: #fff !important;  
+  }
+ 
+  table.dataTable thead .sorting_desc {
+    background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_desc.png') }") #f2f3f3 no-repeat center right !important;
+  } 
+  table.dataTable thead .sorting_asc {
+    background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_asc.png') }") #f2f3f3 no-repeat center right !important;
+  } 
+  /* css for grey arrows on sort columns  
+  table.dataTable thead .sorting {
+  	background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_both.png') }") #f2f3f3 no-repeat center right !important;
+  } 
+  */
+  table.dataTable thead .sorting {
+  	background: #f2f3f3 !important;
+  }    
+  .message{
+    background: #fff;
+    border: 1px solid #dadada;
+    border-left: 10px solid #dadada !important;
+    margin: 0px 0px 10px;
+  }
+    .message.error-message{
+    	border-color: #e04854 !important;
+    }
+    .message.success-message{
+    	border-color: #61ac5b !important;
+    }
+    .message.warning-message{
+    	border-color: #fbaa19 !important;
+    }
+    .message.info-message{
+    	border-color: #359DC0 !important;
+    }
+    button.close-alert {
+        -webkit-appearance: none;
+        padding: 0;
+        cursor: pointer;
+        background: transparent;
+        border: 0;
+        position: relative;
+        top: -7px;
+        color: #b5b5b5;
+        font-size: 21px;
+    }  
+  
+
+
+</apex:page>

@@ -1,0 +1,18 @@
+<apex:page >
+    <head>
+        <style>
+            body{
+                background: #fff;
+                height: 30px;
+            }
+            h1{
+                display: block;
+                font-size: 24px;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+         <h1>Welcome, {! $User.FirstName }</h1>
+    </body>
+</apex:page>

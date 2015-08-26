@@ -1,0 +1,292 @@
+<apex:page standardController="Case" extensions="CaseListViewController" recordSetVar="cases" standardStylesheets="false"
+           sidebar="{!NOT(ISPICKVAL($User.UserType, 'Standard'))}" id="pg"> 
+
+    <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, '/css/bootstrap.css') }"/>
+    <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/>       
+    <apex:includeScript value="{! URLFOR($Resource.Bootstrap, '/js/bootstrap.js')}"/>
+    <style> 
+        h1, h2, h3{
+            margin: 0px !important;
+        }
+        
+        body{
+            padding: 10px;
+            font-size: 100%;
+        }
+        
+        body input.btn{
+        font-size: 10px !important;
+        padding: 4px 3px !important;
+        }    
+            
+    .loader
+    {
+        display:block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+        
+    .loader span{
+        margin-left: 8px;
+        vertical-align: top;
+        padding-top: 2px;
+        display: inline-block;
+    }
+        
+    .caseList
+    {
+        display:none;
+    }
+        
+    table.list td.actionColumn a.newLink{
+        padding:0px 3px 0px 7px;        
+        margin:0px 3px 0px 3px;
+        border-left:1px solid #222222;
+    }
+        
+    .modal-dialog{
+        width: 800px;
+    }
+            
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //add querystring param to handle sort direction
+            var myurl = document.location.search;
+            if(myurl.indexOf("&pg%3alv%3alsi")==-1){
+            myurl = myurl +'&pg%3alv%3alsi=-1';
+           
+            document.location.search = myurl;
+                  }
+            //Manually add action to show dropdown of 'Cases' and Logged in user
+            $('#dropdownNav, #dropdownMenu1').click(function(){
+                if(!$(this).parent().hasClass('open')){
+                    $(this).parent().addClass('open');
+                }else{
+                    $(this).parent().removeClass('open');
+                }
+            });
+
+            //Getting the caseIds
+            var caseIds = '';
+            $('.caseBlock table.list tr.dataRow td.actionColumn a[title^="Edit"]').each(function(){
+                if($(this).attr("href").indexOf('500') >= 0){
+                    caseIds += $(this).attr("href").substring($(this).attr("href").indexOf('500'), parseInt($(this).attr("href").indexOf('500')) + 15) + ',';
+                }
+            }); 
+            //alert(caseIds);
+            if(caseIds != ''){
+                caseIds = caseIds.slice(0,-1);
+            }
+
+            var viewName = $('select[id$=fcf] option:selected').text();
+            $('.bPageTitle h2.pageDescription').html(viewName);
+            if( viewName.toLowerCase().indexOf('close') != -1 || viewName == 'My open cases' ){
+                $('.btn[name=accept_case]').hide();
+                $('.btn[name=assign]').hide();
+                $('.pbHeader .listHeader').height('27px');
+
+            if(viewName == 'My open cases')
+                    {
+                         $(this).find('input:checkbox').attr("disabled", true).css('visibility', 'hidden');
+                    }   
+            if(viewName == 'My team\'s closed cases')
+                {
+                        $(".actionColumn").remove();
+                }                     
+                //alert( 'Here' );
+            }
+
+
+            //Calling remote function
+            getUserCaseAccess(caseIds);
+         
+            
+            var fcf = getUrlParameter('fcf');
+            //alert(fcf);
+            //Removing all links in action column
+            $('.caseBlock table.list tr.dataRow td.actionColumn a').each(function(){
+                $(this).remove();
+            });
+            
+            
+            
+            //Removing PIPES
+            $('.caseBlock table.list tr.dataRow td.actionColumn').each(function(){
+                $(this).contents().filter(function(){
+                    return this.nodeType === 3;
+                }).remove();
+            });
+            
+            //Disable opening new tab when click on next filter/show more record
+            $('.withFilter a, .fewerMore a, table.list tr.headerRow th a').each(function(){
+                var href = $(this).attr('href').replace('javascript:srcUp', 'javascript:srcSelf');
+                $(this).attr("href", href);
+            });
+
+            //Hide 'Assign' button where needed
+            if ( !{!showAssignButton} ) {
+                $('input[name="assign"]').hide();
+            } else {
+                $('input[name="accept_case"]').hide();
+            }
+        });
+    
+        
+    
+        function getUserCaseAccess(cases) {
+
+            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CaseListViewController.getUserCaseAccess}',
+                cases, 
+                function(result, event){
+
+                    if(event.status){
+                        $('.caseBlock table.list tr.dataRow td.actionColumn').each(function(index){
+
+                            //console.log($( this ).find('input:checkbox'));
+                            if ( event.result[index].isClosed == true ) {
+                                $(this).find('input:checkbox').attr("disabled", true).css('visibility', 'hidden');
+                            }
+
+                            if ( event.result[index].canEdit == true ) {
+                                $(this).append('<a href="/'+event.result[index].caseId+'/e?retURL=/apex/CaseListView" class="actionLink newLink">Edit</a>'); 
+                                $(this).find('input:checkbox').attr("disabled", true).css('visibility', 'hidden');
+                               
+                                                       
+                              /*  if ( event.result[index].isClosed == false ) {
+                                    $(this).append('<a href="javascript:void(0)" onClick="closeCase(\''+event.result[index].caseId+'\')" class="actionLink newLink">Close</a>');                        
+                                } */
+                            }
+                            /*
+                            if ( event.result[index].canAccept == true ) {
+                                $(this).append('<a href="javascript:void(0)" onClick="acceptCase(\''+event.result[index].caseId+'\')" data-id="'+event.result[index].caseId+'" class="actionLink newLink accept">Accept</a>');                        
+                            }
+                            */
+                            /*
+                            if ( event.result[index].canClose == true ) {
+                                $(this).append('<a href="javascript:void(0)" onClick="closeCase(\''+event.result[index].caseId+'\')" class="actionLink newLink">Close</a>');                        
+                            } 
+                            */
+                        });
+                        $('.loader').hide();
+                        $('.caseList').show();                    
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+
+        var selectedCaseIds;
+        function doAssignCasesToMyself(selCaseIds) {
+            if ( selCaseIds.length != 0 ) {
+                selectedCaseIds = selCaseIds;
+                processReassignCases('{!$User.Id}');
+            } else {
+                alert('Please select one or more cases.');
+            }
+        }
+
+        function doReassignCases() {
+            if ( $('input:radio[name=assigneeType]:checked').val() == 'other' ) {
+                var selAssigneeId = document.getElementById('{!$Component.assignForm.pbAssign.pbsAssign.pbsiAssignToMe.selAssigneeId}_lkid').value;
+                if ( selAssigneeId != null && selAssigneeId != '' && selAssigneeId != '000000000000000' ) {
+                    processReassignCases(selAssigneeId);
+                } else {
+                    alert('Please select assignee.');
+                }
+            } else {
+                doAssignCasesToMyself(selectedCaseIds);
+            }
+        }
+
+        function processReassignCases(selAssigneeId) {
+
+
+            selectedCaseIds = selectedCaseIds.toString().replace('[', '').replace(']', '');
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.CaseListViewController.reassignCases}',
+                    selectedCaseIds, 
+                    selAssigneeId,
+                    function(result, event){
+                        if(event.status){
+                            $('.loader').hide();
+                            window.location.reload();
+                        } else {
+                            alert('Unable to process your request at this time.  Please contact your System Administrator.');
+                        }
+                    }, 
+                    {escape: true}
+            );
+        }
+
+        function openReassignModal(selCaseIds) {
+            if ( selCaseIds.length != 0 ) {
+                selectedCaseIds = selCaseIds;
+                $('#assignModal').modal('show');
+            } else {
+                alert('Please select one or more cases.');
+            }
+        }
+
+        function closeReassignModal() {
+            $('#assignModal').modal('hide');
+        }
+    
+        function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) 
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) 
+                {
+                    return sParameterName[1];
+                }
+            }
+        }
+    </script>
+    <apex:form >
+        <apex:actionFunction action="{!acceptCase}" name="acceptCase" reRender="">
+            <apex:param name="caseId" assignTo="{!updateableCaseId}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction action="{!closeCase}" name="closeCase" reRender="">
+            <apex:param name="caseId" assignTo="{!updateableCaseId}" value="" />
+        </apex:actionFunction>
+    </apex:form>
+    
+    <div class="loader"><img class="waitingImage" src="/img/loading.gif" title="Please Wait..." /><span>{!$label.Loading}</span></div>
+    
+        <apex:sectionHeader title="Case" subtitle="Home" id="case_title"/>
+        <apex:listViews type="Case" id="lv"/>
+    <div class="caseList"></div>    
+
+    <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id="as-modal-body" class="modal-body">
+                    <apex:form id="assignForm">
+                    <apex:pageBlock title="Change Case owner" id="pbAssign">
+                        <apex:pageBlockButtons location="bottom">
+                            <input value=" Save " class="btn" title="Save" name="save" type="button" onclick="doReassignCases();" /> 
+                            <input value="Cancel" class="btn" title="Cancel" name="cancel" type="button" onclick="closeReassignModal();" />
+                        </apex:pageBlockButtons>
+                        <apex:pageBlockSection title="Select new owner" columns="1" id="pbsAssign">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel ><input type="radio" name="assigneeType" value="self" />{!$label.Assign_to_myself}</apex:outputPanel>
+                                <apex:outputText value="&nbsp;" escape="false" />
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem id="pbsiAssignToMe">
+                                <apex:outputPanel ><input type="radio" name="assigneeType" value="other" checked="checked" />{!$Label.Assign_to}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</apex:outputPanel>
+                                <apex:inputField id="selAssigneeId" value="{!dummyCase.OwnerId}"  />
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
+    </div> <!-- @end Attachment Modal Box -->
+</apex:page>

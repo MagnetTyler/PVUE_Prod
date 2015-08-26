@@ -1,0 +1,80 @@
+<apex:component >
+	<!-- IMPORTANT! Must include jQuery, bootstrap.css to the page in order to use component -->
+  	<style>
+  		.message{
+		    background: #fff;
+		    border: 1px solid #dadada;
+		    border-left: 10px solid #dadada !important;
+		    margin: 0px 0px 10px;
+	  	}
+		.message.error-message{
+	  		border-color: #e04854 !important;
+	  	}
+	  	.message.success-message{
+	  		border-color: #61ac5b !important;
+	  	}
+	  	.message.warning-message{
+	  		border-color: #fbaa19 !important;
+	  	}
+	  	.message.info-message{
+	  		border-color: #359DC0 !important;
+	  	}
+	  	button.close-alert {
+	      	-webkit-appearance: none;
+	      	padding: 0;
+	      	cursor: pointer;
+	      	background: transparent;
+	      	border: 0;
+	      	position: relative;
+	      	top: -7px;
+	      	color: #b5b5b5;
+	      	font-size: 21px;
+	  	}  
+  	</style>
+  	<script>
+
+  		var $j = jQuery.noConflict();
+
+	  	function NotificationMessage(id ,type, text){
+
+	  		if(!type || !text){
+	  			return false;
+	  		}
+
+	  		var messagehtml = '<div id="' + id + '-notification-message" class="message ' + type + '-message alert alert-dismissible" role="alert">';
+	  		messagehtml += '<button type="button" class="close" onclick="removeMessage(\'' + id + '\')" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+	  		messagehtml += '<p>' + text + '</p>';
+	  		messagehtml += '</div>';
+
+	  		$j('#' + id + '').html(messagehtml);
+	  		$j(window).scrollTop(0); //Scroll to top after message is outputted
+
+	  	}
+
+	  	function removeMessage(id){
+	  		$j('#' + id + '-notification-message').remove();
+	  	}
+
+  	</script>
+
+  	<!-- Attribute Definition -->
+  	<apex:attribute name="elementid" description="Id of the message holder element to where message will appear" 
+	                    type="string" required="true"/>
+	<apex:attribute name="type" description="Type of message to be created (info, warning, or error)" 
+	                    type="string" required="false"/>
+	<apex:attribute name="text" description="text to be displayed in the message" 
+	                    type="string" required="false"/>
+
+	<apex:componentBody >	                    
+  		<div id="{! elementid }">
+  			<apex:outputPanel rendered="{! type != null && text != null }" layout="none">
+  				<div id="{! elementid }-notification-message" class="message {! type }-message alert alert-dismissible" role="alert">
+                    <button type="button" class="close" onclick="removeMessage('{! elementid }')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <p>
+                        {! text }
+                    </p>
+                </div>
+  			</apex:outputPanel>
+  		</div>
+	</apex:componentBody>
+</apex:component>

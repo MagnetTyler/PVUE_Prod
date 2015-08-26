@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Assist_Auth_Provider_ID__c</fullName>
+        <description>This field saves the id for the auth provider for Assist Users</description>
+        <externalId>false</externalId>
+        <label>Assist Auth Provider ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CAS_Auth_Provider_ID__c</fullName>
+        <description>ID of the Auth Provider record for CAS</description>
+        <externalId>false</externalId>
+        <label>CAS Auth Provider ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Case_Mass_Assign_Profiles__c</fullName>
+        <description>Comma-separated list of Profiles/Permission Set names that should be able to see the mass assign button on Case list view.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Comma-separated list of Profiles/Permission Set names that should be able to see the mass assign button on Case list view.</inlineHelpText>
+        <label>Case Mass Assign Profiles</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Max_File_Attach_Size__c</fullName>
+        <description>This number is used for setting the max file size that will be allowed to upload as an attachment on the VF pages.  It is used by apex and is in bytes.</description>
+        <externalId>false</externalId>
+        <label>Max File Attach Size</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Production_Org_Id__c</fullName>
+        <description>Org Id for the production Org.  This is used in determining the default for integration retrieves that include date</description>
+        <externalId>false</externalId>
+        <label>Production Org Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UAT_Org_Id__c</fullName>
+        <description>Similar to the Production Org ID, this setting allows for the UAT environment to have a default search with dates of today - 7</description>
+        <externalId>false</externalId>
+        <label>UAT Org Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VTS_Reg_Data_Fresh_Life__c</fullName>
+        <description>Time (in minutes) during which the VTS Reg data is considered fresh in Salesforce. After the interval has elapsed, data should be refreshed from VTS.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time (in minutes) during which the VTS Reg data is considered fresh in Salesforce.</inlineHelpText>
+        <label>VTS Reg Data Fresh Life</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Org Settings</label>
+    <visibility>Protected</visibility>
+</CustomObject>

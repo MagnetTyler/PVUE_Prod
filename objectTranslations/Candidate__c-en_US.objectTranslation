@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Candidate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Candidates</value>
+    </caseValues>
+    <fields>
+        <label><!-- Address line 1 --></label>
+        <name>Address_Line_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address line 2 --></label>
+        <name>Address_Line_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Address Line 3 --></label>
+        <name>Address_Line_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- CCID --></label>
+        <name>CCID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Candidate ID --></label>
+        <name>Candidate_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- City --></label>
+        <name>City__c</name>
+    </fields>
+    <fields>
+        <label><!-- Client --></label>
+        <lookupFilter>
+            <errorMessage><!-- Selected Account is not a Client. --></errorMessage>
+        </lookupFilter>
+        <name>Client__c</name>
+        <relationshipLabel><!-- Candidates --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Country Name --></label>
+        <name>Country_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Country --></label>
+        <name>Country__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email --></label>
+        <name>Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- First name --></label>
+        <name>First_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Last name --></label>
+        <name>Last_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Middle Name --></label>
+        <name>Middle_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone country code --></label>
+        <name>Phone_Country_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone extension --></label>
+        <name>Phone_Extension__c</name>
+    </fields>
+    <fields>
+        <label><!-- Phone number --></label>
+        <name>Phone_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Postal code --></label>
+        <name>Postal_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- State Name --></label>
+        <name>State_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- State --></label>
+        <name>State__c</name>
+    </fields>
+    <fields>
+        <label><!-- Student ID --></label>
+        <name>Student_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- VTS Candidate ID --></label>
+        <name>VTS_Candidate_ID_FRMLA__c</name>
+    </fields>
+    <fields>
+        <label><!-- VTS candidate ID --></label>
+        <name>VTS_Candidate_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

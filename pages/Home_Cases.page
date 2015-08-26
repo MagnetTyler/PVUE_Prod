@@ -1,0 +1,53 @@
+<apex:page >
+  <head>
+      <style>
+          body.apexPageInline{
+              margin: 0px !important;
+          }
+          .individualPalette{
+              background: #fff;
+              border: 1px solid #DADADA;
+              border-radius: 3px;
+          }
+          .listViewport.caseBlock{
+              padding: 10px;
+          }
+          
+          .listViewport.caseBlock .listBody{
+              overflow: hidden;
+          }
+          input[name="newCase"]{
+              display: none;
+          }
+          .chatterListToggle{
+              display: none !important;
+          }
+      </style>
+      <apex:includeScript value="{! URLFOR($Resource.jQuery) }"/>
+      <script type="text/javascript">
+      
+          var $j = jQuery.noConflict();
+
+          $j(window).ready(function(){
+                   
+              setTimeout(function(){                        
+                      $j("input[name='newCase']").attr('onclick', null);
+                      $j("input[name='newCase']").click(function(){
+                          window.parent.location = 'https://casemgtdev-servicedirect.cs3.force.com/ta/setup/ui/recordtypeselect.jsp?ent=Case&retURL=%2Fta%2F500%2Fo&save_new_url=%2Fta%2F500%2Fe%3FretURL%3D%252Fta%252F500%252Fo';
+                      });
+                      $j("input[name='newCase']").show();
+                      
+                      $j("a").click(function(event){
+                          event.preventDefault();
+                          window.parent.location = $j(this).attr("href");
+                      });
+                 }, 1000);
+
+          });
+      
+      </script>
+  </head>
+  <body>
+      <apex:enhancedList type="Case" customizable="true" height="300" />
+  </body>
+</apex:page>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Error Log</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Error Logs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Error message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process/Function name --></label>
+        <name>Process_Function_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process type --></label>
+        <name>Process_Type__c</name>
+        <picklistValues>
+            <masterLabel>Apex Trigger</masterLabel>
+            <translation><!-- Apex Trigger --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apex Web Service</masterLabel>
+            <translation><!-- Apex Web Service --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Batch Job</masterLabel>
+            <translation><!-- Batch Job --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Future Method</masterLabel>
+            <translation><!-- Future Method --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled Job</masterLabel>
+            <translation><!-- Scheduled Job --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Related data --></label>
+        <name>Related_data__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

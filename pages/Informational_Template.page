@@ -14,7 +14,7 @@
             
             
             <h1>{!$Label.Details}</h1>
-                <apex:outputField value="{!Informational__kav.Details__c}" rendered="{!Informational__kav.Knowledge_Rendering__c == null}"/>
+                <apex:outputfield value="{!Informational__kav.Details__c}" rendered="{!Informational__kav.Knowledge_Rendering__c == null}"/>
             
             <apex:variable value="{!Informational__kav.Knowledge_rendering__r.Details_Channel_Types_1__c}" var="Details1var"/>            
             <apex:outputText rendered="{!uservar == 'Internal' && Not(ISBLANK(Details1var))}" >

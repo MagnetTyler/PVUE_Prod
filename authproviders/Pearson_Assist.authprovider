@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
+    <authorizeUrl>https://assist.pearsonvue.com/Assist/api/v1/openid/authorize</authorizeUrl>
+    <consumerKey>serviceDirect</consumerKey>
+    <consumerSecret>kd/hFnkmFF2kzGSLJmzzTxQcFDNQMEDwMvtRrFhsphdwQRj3Ygtq1w==</consumerSecret>
+    <executionUser>esb.system@pearson.com</executionUser>
+    <friendlyName>Pearson Assist Login</friendlyName>
+    <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
+    <logoutUrl>https://assist.pearsonvue.com/Assist/#/externalAppLogout</logoutUrl>
+    <providerType>OpenIdConnect</providerType>
+    <registrationHandler>AssistRegHandler</registrationHandler>
+    <sendAccessTokenInHeader>true</sendAccessTokenInHeader>
+    <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
+    <tokenUrl>https://assist.pearsonvue.com/Assist/api/v1/openid/token</tokenUrl>
+    <userInfoUrl>https://assist.pearsonvue.com/Assist/api/v1/openid/userinfo</userInfoUrl>
+</AuthProvider>

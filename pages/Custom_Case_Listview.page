@@ -1,0 +1,299 @@
+<apex:page controller="Custom_Case_Listview"  >
+    
+    <apex:stylesheet value="{! URLFOR($Resource.FontAwesome, 'css/font-awesome.css') }"/>
+     <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/> 
+    <script type="text/javascript">
+    	var $j = jQuery.noConflict();
+    	function checkSelection(){
+            var checked = false;
+            $j('table.list .checkbox-input').each(function(){
+            	var isChecked = $j(this).is(':checked');
+                if(isChecked){
+                  checked = true;     
+                }
+            });
+            if(!checked){
+                NotificationMessage('case-list-notifications', 'error', '{! $Label.no_case_selected }' )	
+            }else{
+                removeMessage('case-list-notifications');
+                doAssign();
+            }
+            return checked;
+        }
+    </script>
+    <style type="text/css">
+        
+        body .bodyDiv{
+        min-height: 500px !important;
+        }
+        
+        .bPageBlock .detailList .labelCol {
+        width: 25% !important;
+        }
+        .waitingSearchDiv{
+        background-color: rgba(0,0,0,0.2);
+        height: 100%;
+        width:100%;   
+        }
+        
+        .waitingHolder{
+        top: 250px; 
+        width: 91px;
+        padding: 10px !important;
+        background: #ffffff !important;
+        border: 1px solid #333 !important;
+        border-radius: 3px !important;
+        
+        }
+        .column-header{
+        width: 100%;
+        display: block;
+        }
+        .column-header i{
+        margin-left: 5px;
+        font-size: 16px;
+        }
+        
+        .col1{align="left";}
+        .col2{align="right";}
+        .vcenter{ 
+        vertical-align:middle;
+        }
+        
+        .pagination{
+        padding-top: 10px;
+        display: table;
+        }
+        .pagination .pagination-pages{
+        float: right;
+        }
+        .action-column td{
+        width: 25px;
+        border: none !important;
+        }
+        .custom-case-list{
+        position: relative;
+        }
+        
+        #displaymessage{
+        border: 1px solid #61ac5b;
+        background: #fff;
+        border-left: 10px solid #61ac5b;
+        }
+        #displayalert{
+        border: 1px solid #fbaa19;
+        background: #fff;
+        border-left: 10px solid #fbaa19;
+        margin: 0px 0px 10px;
+        
+        }
+        .assign-btn{
+        margin-bottom: 10px !important;
+        font-size: 12px;
+        font-weight: 400 !important;
+        background: #eee !important;
+        width: 100px;
+        padding: 5px;
+        border-color: #ccc !important;
+        margin-right: 10px !important;
+        }
+        .checkbox-input{
+        margin: 0 !important;
+        }
+        .action-column{
+        height: 35px;
+        }
+        .custom-case-list .bPageBlock .detailList .data2Col{
+        padding-left: 0px !important;
+        }
+        
+        
+    </style>
+    
+    
+    
+    <apex:form id="theform" styleClass="custom-case-list">
+        <script type="text/javascript">
+            function appendSelListViewToUrl(isListViewSelection) {
+        
+                var retVal = true;
+                var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?sourcepage=' + $('[id*="viewId"]').val() ;
+                var urlparams = '';
+                //alert(isListViewSelection);
+                if ( isListViewSelection ) {
+                    urlparams = '&sortField='+'{!sortField}'+'&sortDir='+'{!sortDir}'+'&pageNo='+'{!pagenumber}'+'';
+                }
+                //console.log('{!sortField}'+' '+'{!sortDir}'+' '+'{!pagenumber}');
+                window.location.href = newUrl + urlparams;
+                //window.history.replaceState("", "",newUrl+urlparams);
+                /*
+                if ( window.history.pushState ) {
+                    window.history.pushState({path:newUrl}, '', newUrl);
+                } else {
+                    //var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '#' + listViewPicklistFld.value;
+                    window.location.href = newUrl;
+                    retVal = false;
+                }
+                return retVal;
+                */
+            }
+    	</script> 
+
+        <c:NotificationMessages elementid="case-list-notifications"></c:NotificationMessages>
+
+        <apex:outputPanel rendered="{! Feedback }">
+            <script>
+                NotificationMessage('case-list-notifications', 'success', '{! comment }');
+            </script>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{! returnnotice }">
+            <script>
+                NotificationMessage('case-list-notifications', 'success', '{!$Label.Page_ownership_return} {!ownername}');
+            </script>
+        </apex:outputPanel>
+        
+        <!-- apex:pageBlock id="optionstab">
+            <apex:pageblockSection columns="1">
+            <apex:panelGrid Columns="2">
+            <apex:panelGroup >
+            {! $Label.view} &nbsp;&nbsp;
+            <apex:selectList value="{!viewId}"  size="1">
+            <apex:selectOptions value="{!List_choices}"/>                      
+            <apex:actionSupport event="onchange" action="{!dofilter}" rerender="optionstab,thetable,pagination,nocases" status="refreshstatus"/>
+            </apex:selectList>
+            </apex:panelGroup>
+            </apex:panelGrid>
+            
+            
+            <apex:commandButton value="Assign to myself" action="{!Assign}" rendered="{!CONTAINS(Selectedview.Custom_Buttons__c&';', 'Assign to myself;')}" reRender="thetable,pagination,optionstab,nocases"/>
+            
+            
+            </apex:pageblockSection>
+            
+            
+            <apex:actionstatus id="refreshstatus" startStyleClass="searchstatus">
+            <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading"> 
+            <div class="waitingHolder">
+            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+            <span class="waitingDescription">Loading...</span>
+            </div>
+            </div>
+            </apex:facet>
+            </apex:actionstatus> 
+		</apex:pageBlock -->  
+        <apex:pageBlock id="thetable">
+            <apex:pageblockSection id="optionstab" columns="1">
+                <apex:panelGrid Columns="2">
+                    <apex:panelGroup >
+                        {! $Label.view} &nbsp;&nbsp;
+                        <apex:selectList value="{!viewId}" id="viewId"  size="1">
+                            <apex:selectOptions value="{!List_choices}"/>                      
+                           <!---onsubmit="appendSelListViewToUrl(ture);"--->
+                            <apex:actionSupport event="onchange" action="{!dofilter}" status="refreshstatus"/>
+                        </apex:selectList>
+                    </apex:panelGroup>
+                </apex:panelGrid>
+                
+                <apex:commandButton styleClass="btn assign-btn" value="Assign to myself" onclick="return checkSelection()" action="{!Assign}" status="refreshstatus"  
+                                    rendered="{!AND(CONTAINS(Selectedview.Custom_Buttons__c&';', 'Assign to myself;'), totalpages > 0)}" />
+                <apex:actionFunction name="doAssign" action="{! Assign }" status="refreshstatus" reRender="thetable,pagination,optionstab,nocases" rendered="{!AND(CONTAINS(Selectedview.Custom_Buttons__c&';', 'Assign to myself;'), totalpages > 0)}"/>
+                
+            </apex:pageblockSection>
+            
+            <!-- START Ajax Status  -->  
+            
+            <apex:actionstatus id="refreshstatus" startStyleClass="searchstatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading"> 
+                        <div class="waitingHolder">
+                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus> 
+            <!--  END Ajax Status  -->             
+            <apex:pageblockTable Value="{!table_rows}" var="row" >
+                <apex:column styleClass="action-column" rendered="{!Selectedview.Is_Closed_View__c == false}">
+                    <apex:facet name="header">
+                        Action
+                    </apex:facet>
+                    <apex:panelgrid columns="2">
+                        <apex:panelgroup >
+                            <apex:inputCheckbox styleClass="checkbox-input" selected="{!row.selected}" value="{!row.selected}"  rendered="{!row.showselect}"/>
+                        </apex:panelgroup>
+                        <apex:panelgroup >
+                            <apex:commandLink rendered="{!row.showedit}" value="Edit" action="{!Editrecord}">
+                                <apex:param assignTo="{!EditId}" value="{!row.myrecord.id}" name="EditId"/>
+                                <apex:param assignTo="{!prevstat}" value="{!row.myrecord['Status__c']}" name="PreviousStatus"/>
+                                <apex:param assignTo="{!prevown}" value="{!row.myrecord['ownerid']}" name="PreviousOwner"/>
+                                
+                                <apex:param assignTo="{!int_c}" value="{!row.myrecord['new_internal_comment__c']}" name="InternalComment"/>
+                                <apex:param assignTo="{!int_e}" value="{!row.myrecord['new_internal_email__c']}" name="InternalEmail"/>
+                                <apex:param assignTo="{!Ext_c}" value="{!row.myrecord['new_external_comment__c']}" name="ExternalEmail"/>
+                                <!--apex:param assignTo="{!Ext_c}" value="{!sortField}" name="SortField"/>
+                                <apex:param assignTo="{!Ext_c}" value="{!sortDir}" name="SortDir"/>
+                                <apex:param assignTo="{!Ext_c}" value="{!pagenumber}" name="PageNo"/-->
+                                
+                            </apex:commandlink>
+                            
+                        </apex:panelgroup>
+                    </apex:panelgrid>    
+                </apex:column>  
+                <apex:repeat value="{!tablecolumns}" var="Col">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <apex:commandLink styleClass="column-header" value="{!Col.label}" action="{!toggleSort}" rerender="theform,optionstab,thetable,pagination,nocases"  status="refreshstatus">
+                                <apex:param name="sortField" value="{!Col.fieldpath}" assignTo="{!sortField}"/>
+                                <apex:outputPanel layout="none" rendered="{! Col.fieldpath == sortField }">
+                                    <apex:outputPanel layout="none" rendered="{! sortDir == 'asc'}">
+                                        <i class="fa fa-caret-up"></i>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{! sortDir == 'desc'}">
+                                        <i class="fa fa-caret-down"></i>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </apex:commandLink>
+                        </apex:facet>
+                        <apex:outputField value="{!row.myrecord[Col.fieldpath]}"/>
+                    </apex:column>
+                </apex:repeat>            
+            </apex:pageblockTable>
+            <apex:outputText rendered="{!totalpages == 0}" id="nocases">No cases</apex:outputText>  
+            <!-- BEGIN Pagination Controls    -->
+            <apex:panelGrid columns="2" id="pagination" styleClass="pagination" width="100%" columnClasses="col1,col2">
+                <apex:panelGroup >
+                    <apex:selectList value="{!returnsize}" size="1">
+                        <apex:selectOptions value="{!ListSizes}"/>
+                        <apex:actionSupport event="onchange" action="{!dofilter}"   status="refreshstatus"/>
+                    </apex:selectList>
+                    <!--                      <apex:outputtext value="   {!Label.Page_line}  "/>            -->
+                    <apex:outputtext value=" {!currentmin} - {!currentmax} of {!totalreturns}" styleclass="vcenter" />
+                </apex:panelGroup>
+                <apex:panelGroup styleClass="pagination-pages">
+                    
+                    <apex:commandButton value="|< First" action="{!dofirst}"  disabled="{!hasprevious==false}" 
+                                       status="refreshstatus"/>
+                    
+                    
+                    <apex:commandButton value=" < " action="{!doPrevious}"  disabled="{!hasprevious==false}" 
+                                         status="refreshstatus"/>
+                    
+                    <apex:commandButton value="{!pagenumber}" disabled="True"/>
+                    
+                    <apex:commandButton value=" > " action="{!doNext}"  disabled="{!hasnext==false}" 
+                                        status="refreshstatus"/>
+                    
+                    <apex:commandButton value="Last >|" action="{!doLast}"  disabled="{!hasnext==false}" 
+                                         status="refreshstatus"/>                
+                </apex:panelGroup>
+                
+                <!-- END Pagination Controls  --> 
+                
+            </apex:panelGrid>
+            
+        </apex:pageBlock> 
+    </apex:form>   
+</apex:page>

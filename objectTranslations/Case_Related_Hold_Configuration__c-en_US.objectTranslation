@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Client level overrides</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Client level overrides</value>
+    </caseValues>
+    <fields>
+        <label><!-- Routing --></label>
+        <name>Case_Type__c</name>
+        <relationshipLabel><!-- Client level overrides --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Account --></label>
+        <name>Client__c</name>
+        <relationshipLabel><!-- Client level overrides --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Process State Codes --></label>
+        <name>Process_State_Codes__c</name>
+        <picklistValues>
+            <masterLabel>Canceled</masterLabel>
+            <translation><!-- Canceled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ClientAcknowledged</masterLabel>
+            <translation><!-- ClientAcknowledged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ClientRejected</masterLabel>
+            <translation><!-- ClientRejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denied</masterLabel>
+            <translation><!-- Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>New</masterLabel>
+            <translation><!-- New --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open</masterLabel>
+            <translation><!-- Open --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready</masterLabel>
+            <translation><!-- Ready --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reserved</masterLabel>
+            <translation><!-- Reserved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ResultAccepted</masterLabel>
+            <translation><!-- ResultAccepted --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ResultRejected</masterLabel>
+            <translation><!-- ResultRejected --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ResultSent</masterLabel>
+            <translation><!-- ResultSent --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ResultUploaded</masterLabel>
+            <translation><!-- ResultUploaded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Scheduled</masterLabel>
+            <translation><!-- Scheduled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ScorePending</masterLabel>
+            <translation><!-- ScorePending --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Results Hold --></label>
+        <name>Results_Hold__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -60,6 +60,22 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>Can_Reassign_Cases__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Can Reassign Cases</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Cannot_reassign_to_users__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Cannot reassign to users</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Channel_type__c</fullName>
         <externalId>false</externalId>
         <formula>if(isblank(ContactId),&quot;Internal&quot;, Contact.Account.Channel_type__c +&apos;;&apos;)</formula>
@@ -73,6 +89,66 @@
         <fullName>ManagerId</fullName>
         <trackFeedHistory>true</trackFeedHistory>
         <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Primary_team_persona__c</fullName>
+        <externalId>false</externalId>
+        <label>Primary team (persona)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Test_center_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.AccountId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Test center ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Testing_Center_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.Name</formula>
+        <label>Testing Center Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Testing_Center__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact.Account.VTS_Test_Center_ID__c</formula>
+        <label>Testing Center</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VSS_Team_Member__c</fullName>
+        <externalId>false</externalId>
+        <formula>CONTAINS( Primary_team_persona__c, &apos;VSS&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>VSS Team Member</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>VTS_Agent_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This field is completed as part of the user provisioning process.  It is the unique identifier from VTS.  It is saved on both the contact and user record.  It is also passed when a hold is pushed from salesforce</description>
+        <externalId>true</externalId>
+        <label>VTS Agent ID</label>
+        <length>21</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>true</unique>
     </fields>
     <fields>
         <fullName>copado__API_URL__c</fullName>

@@ -1,0 +1,1853 @@
+<apex:page StandardController="Case" extensions="CreatePoc" tabStyle="Case" showHeader="{!pagetype == 'Community'}" 
+                           action="{!redirect}" sidebar="{!pagetype == 'Community'}">
+    
+    <head>
+        <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, '/css/bootstrap.css') }"/>
+        <link rel="stylesheet" href="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.css') }"/>
+        <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/> 
+           
+        <script src="../../soap/ajax/33.0/connection.js"
+          type="text/javascript"></script>
+             
+        <apex:includeScript value="{! URLFOR($Resource.Bootstrap, '/js/bootstrap.js')}"/>
+        <apex:includeScript value="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.js') }"/>
+        <apex:includeScript value="/support/console/33.0/integration.js"/>
+
+        <apex:includeScript value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.js')}"/>
+        <apex:includescript value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/js/jquery.dataTables.min.js')}" />
+        
+        <apex:stylesheet value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.css')}"/>
+        <apex:stylesheet value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/css/jquery.dataTables.css')}" />
+        <apex:stylesheet value="{! URLFOR($Resource.FontAwesome, 'css/font-awesome.css')}"/>
+
+        <script type="text/javascript">
+            
+              var overridewarning = false;
+              var disabler = null;
+              var closedvariable = {!case.isclosed};
+              $j = jQuery.noConflict();
+
+              function setuptable(){
+                var contactTable = $j('table.history-table').DataTable({
+                    "paging":   false,
+                    "scrollCollapse": true,
+                    "searching": false,
+                    "order": [[3, 'desc']],
+                    "info":     false
+                } );
+              }
+              
+              $j(document).ready(function() {
+                  
+                  if({!showSiteIdError})
+                  {
+                      var siteID = $j('[id*="casetype"]');
+                      if( siteID.val().length > 0 )
+                      {
+                          siteID.after('<span id="siteIdValidation" class="required-label">{!$Label.No_Site_Error}</span>');
+                      }
+                  }
+                  
+                  if(closedvariable == true)
+                      {
+                          $j( 'a[title|="Detach "], input[type="button"][value="Find Articles"]').hide();
+                      }
+                  $j("#navigatortabaddTabButton").hide();
+                  
+                  //check create case selection
+                  var initval = $j('[id*="PBlock1Section1"] select').val();
+                  if(!initval){
+                      $j('#as-btn').addClass("disabled");
+                        $j('#as-regbtn').addClass("disabled");
+                  }
+                                 
+                  $j('[id*="PBlock1Section1"] select').change(function(){
+                      var value = $j(this).val();
+                      var asbtn = $j('#as-btn');
+                      var asregbtn=$j('#as-regbtn');
+                      if(!value){
+                          asbtn.addClass("disabled");
+                           asregbtn.addClass("disabled");
+                          
+                      }else{
+                          asbtn.removeClass("disabled");
+                           asregbtn.removeClass("disabled");
+                      }
+                  });
+
+                  
+               });
+               
+         function openPrimaryTab() {
+            alert('open primary tab');
+            sforce.console.openPrimaryTab(undefined, 
+               '/apex/consoletoolkit', true);
+        }
+        function hideErrorSiteId()
+            {
+                $j('[id*="siteIdValidation"]').hide();
+                ///  $j('.site-id-error').hide();
+                
+            }
+
+        function openAttachmentNewTab(url){
+          console.log('this is the url ' + url);
+          // sforce.console.openSubtab(primaryTabId, url, true, 'Attachment', null);
+          var label = '{!$Label.Attachment_console_tab}';
+          sforce.console.openPrimaryTab(undefined, url, true, label);
+        }
+        
+        
+        function validateSiteId(type)
+            {
+                var retVal = true;
+                var siteID = $j('[id*="casetype"]');
+                var siteIdRegex = /^\d+$/;
+                var iderror = $j('.site-id-error').find('#siteIdValidation');
+                //console.log(type);
+                if ( !siteIdRegex.test(siteID.val()) && siteID.val() !== null ) {
+                    var label = '{!$Label.Site_ID_Invalid}';
+                    if(type ==  'Registration ID' ){
+                        label = '{!$Label.Reg_Id_Invalid}';
+                    }
+                    if(type == 'Candidate name'){
+                        label = '{!$Label.Candidate_Id_Invalid}';
+                    }
+                    //console.log(iderror.length);
+                    if(iderror.length !==null ){
+                        $j('.site-id-error').html('');
+                        $j('.site-id-error').append('<span id="siteIdValidation" class="required-label">' + label + '</span>');
+                    }
+                    retVal = false;
+                }
+                //console.log(retVal);
+                return retVal;
+            }
+        
+        //The callback function that openSubtab will call once its got the ID for its primary tab
+        var callOpenSubtab=function callOpenSubtab(result) {          
+            
+              
+            if(myreg==null && myreg == ''&& tc == null && tc ==  '')
+                {
+                    alert('{!$Label.No_Details_Error}');
+                }
+            else
+                {    
+            sforce.console.openSubtab(result.id, 
+               '/apex/detailspage?myreg='+ myreg+'&mysite='+tc, true, tc);
+                }
+        };
+        
+         var callgenericSubtab =function callgenericSubtab(result) {          
+            
+             sforce.console.openSubtab(result.id, 
+               '/'+myid, true, myname);
+                }
+        
+            var myreg;
+            var tc;
+            var mypage;
+            var myid;
+            var myname;
+            var callbuttontab = function callbuttontab(result) {
+            var caseid = '{!case.id}';
+            sforce.console.openSubtab(result.id, 
+               '/apex/'+mypage+'?id='+caseid, true,'importtool' );
+                };
+        
+        
+        
+        function openSubtab(reg,mytc) {
+            myreg = reg;
+            tc = mytc;
+            sforce.console.getEnclosingPrimaryTabId(callOpenSubtab);
+            
+        }
+        
+        function recordsubtab(item_id, tabname){
+            myid = item_id;
+            myname = tabname;
+            sforce.console.getEnclosingPrimaryTabId(callgenericSubtab);
+        }
+        function openbutton(page){
+            mypage = page;
+            sforce.console.getEnclosingPrimaryTabId(callbuttontab);
+        }
+
+        var recipientEmail;
+        var openSendEmailSubtab = function openSendEmailSubtab(result) {
+            var primaryTabId = result.id;
+            var url = '_ui/core/email/author/EmailAuthor?p3_lkid={!Case.Id}&p24=' + recipientEmail + '&saveURL=%2Fapex%2FCaseSendEmailConfirm&isdtp=vw';
+            sforce.console.openSubtab(primaryTabId , url, true, 'Send Email', null, null, 'sendEmailSubtab');
+        };
+
+        function openNewEmailTab(caseId, candidateEmail) {
+            recipientEmail = candidateEmail;
+            sforce.console.getEnclosingPrimaryTabId(openSendEmailSubtab);
+        }
+
+        var emailId;
+        var replyAll;
+        var openReplyEmailSubtab = function openReplyEmailSubtab(result) {
+            var primaryTabId = result.id;
+            var url = '_ui/core/email/author/EmailAuthor?email_id=' + emailId + '&replyToAll=' + (replyAll ? 1 : 0) + '&saveURL=%2Fapex%2FCaseSendEmailConfirm&isdtp=vw';
+            sforce.console.openSubtab(primaryTabId , url, true, 'Send Email', null, null, 'sendEmailSubtab');
+        };
+
+        function openReplyEmailTab(emid, repAll) {
+            emailId = emid;
+            replyAll = repAll;
+            sforce.console.getEnclosingPrimaryTabId(openReplyEmailSubtab);
+        }
+
+        var openViewEmailSubtab = function openViewEmailSubtab(result) {
+            var primaryTabId = result.id;
+            var url = '/' + emailId;// + '&saveURL=%2Fapex%2FCaseSendEmailConfirm&isdtp=vw';
+            sforce.console.openSubtab(primaryTabId , url, true, 'View Email', null, null, 'sendEmailSubtab');
+        };
+
+        function openViewEmail(emid, repAll) {
+            emailId = emid;
+            replyAll = repAll;
+            sforce.console.getEnclosingPrimaryTabId(openViewEmailSubtab);
+        }
+
+        function setTitle() {
+            sforce.console.setTabTitle('{!$Label.Create_case}');
+        }
+        
+        //The callback function that closeTab will call once its got the ID for its tab
+        var callCloseTab= function callCloseTab(result) {
+            
+            sforce.console.closeTab(result.id);
+        }
+        
+        function closeTab() {
+         
+            sforce.console.getEnclosingTabId(callCloseTab);
+        }
+
+         var newWin=null;
+     
+        function openLookupPopup(id, value,Reg)
+        {
+          
+              var url="/apex/Advanced_Search?dataentry=" + value + "&idfield=" + id+ "&Reg=" + Reg;
+              newWin=window.open(url, 'Popup','height=500,width=600,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no');
+          
+              if (window.focus) 
+                {
+                  newWin.focus();
+                }
+            
+              return false;
+            
+        }     
+                        
+         function closeLookupPopup()
+         {
+            if (null!=newWin)
+            {
+               newWin.close();
+            }  
+         }
+        
+        function fillIn(id,fieldid,searchtype) 
+           {    
+              
+              var winMain = window.opener;
+              var id = id;
+              if (null==winMain)
+              {
+                 winMain=window.parent.opener;
+              }
+              var ele = document.getElementById(fieldid);
+              ele.value=id;
+              
+              
+              var ele2 = document.getElementById('{!$Component.j_id0.theform.PBlock1.PBlock1Section1.searchtype}');
+              
+              ele2.value = searchtype;
+              
+               //closeLookupPopup();
+               closeModal();
+               ele.focus();
+               ele.blur();
+           }
+        
+        function addCandidate(fieldid, value, label){
+            var option = '<option value="' + value + '">' + label + '</option>';
+
+          //  alert( fieldid );
+         //   console.log(option);
+            var fieldselect = document.getElementById(fieldid);
+         //   console.log(fieldid);
+            /* TODO Research selecting value inside select2 picklist (different than standard picklist)*/
+            $j(fieldselect).append(option);
+            $j('[id*="typeahead"]').select2("val", value).change();
+          //  $j(fieldselect).val(value);
+          //  setValueToRegistrationID( value );
+            closeModal();
+            
+        }
+
+        function closePopup2(){
+            closeModal();
+        }        
+        
+          function fillInreg(id,fieldid) 
+           {    
+              
+              var winMain=window.opener;
+              var id = id;
+             setValueToRegistrationID( id );
+             
+              if (null==winMain)
+              {
+               
+                  winMain=window.parent.opener;
+                
+              }
+           
+               closeModal();
+              
+           }
+         
+           function CloseWindow()
+           {    
+              alert('close window call'); 
+              var winMain=window.opener;
+              if (null==winMain)
+              {
+                 winMain=window.parent.opener;
+              }
+              winMain.closeLookupPopup();
+           }
+             
+        function initSearchIframe(id, id2,value,Reg, mytype) {
+            var url="/apex/Advanced_Search?idfield=" + id + "&dataentry=" + value + "&Reg=" + Reg+"&mytype="+mytype+"&searchfield="+id2;
+            var iframe = '<iframe id="advancedSearchIframe" name="advancedSearchIframe" src="' + url + '" width="100%" height="500px"></iframe>';
+            if(!$j('#advancedSearchIframe').length){
+                $j('#as-modal-body').append(iframe);
+                $j('#advancedSearchIframe').ready(function(){
+                    $j('#iframe-loading').hide();
+                });
+            }
+             
+        }    
+ 
+        function initSearchIframe2(id,mytype,siteid) {
+            var url="/apex/Advanced_Search?idfield=" + id + "&mytype="+mytype +"&mysite="+siteid;
+            var iframe = '<iframe id="candidateSearchIframe" name="candidateSearchIframe" src="' + url + '" width="100%" height="500px"></iframe>';
+            
+            if(!$j('#candidateSearchIframe').length){
+                $j('#acs-modal-body').append(iframe);
+                $j('#candidateSearchIframe').ready(function(){
+                    $j('#iframe2-loading').hide();
+                });
+            }
+        }
+                       
+        function closeModal() {
+            $j('#advancedSearch').modal('hide');
+            $j('#candidateSearch').modal('hide');
+            $j('#routing').modal('hide');
+         }
+        
+        function closeAttachmentModal(){
+            $j('#attachment').modal('hide');    
+        }
+        
+        function showroutingmodal()  {
+            $j('#submitdialog').modal('hide');
+            $j('#routing').modal('show'); 
+        }
+        
+        function setupcommenttable(){
+                var contactTable = $j('table.case-comment-table').DataTable({
+                    "paging":   false,
+                    "scrollCollapse": true,
+                    "searching": false,
+                    "order": [[1, 'desc']],
+                    "info":     false
+                } );
+        }
+        
+        function validateform(){
+            var canreassign = {!$User.Can_Reassign_Cases__c};
+            var forkedlogic = true;
+            var passed = true;
+            $j('.myrequiredtrue,input.saverequiredtrue, select.saverequiredtrue').each(function(){
+                var fieldvalue = $j(this).val();
+                var ele = $j(this).parent().find(".required-label");
+                if(fieldvalue == null || fieldvalue == ''){
+                    if(!ele.length){
+                        var reqel ='<span class="required-label">{!$Label.Required}</span>';
+                        $j(this).parent().append(reqel);
+                    }
+                    passed = false;
+                }else if(ele.length){
+                    ele.remove();
+                }
+            });
+            
+            
+            if(passed){ 
+                getforkedlogic();
+                enableoverride();
+            }else{
+                NotificationMessage('main-messager', 'error', '{! $Label.Submit_Validation_Error }')
+                $j(window).scrollTop(0);
+                disableoverride();
+            }
+        }
+        
+        function validateform_save(){
+                var passed = true;
+                $j('input.saverequiredtrue, select.saverequiredtrue').each(function(){
+                    var fieldvalue = $j(this).val();
+                    var ele = $j(this).parent().find(".required-label");
+                    if(fieldvalue == null || fieldvalue == ''){
+                        if(!ele.length){
+                            var reqel ='<span class="required-label">{!$Label.Required}</span>';
+                            $j(this).parent().append(reqel);
+                        }
+                        passed = false;
+                    }else if(ele.length){
+                        ele.remove();
+                    }
+                });
+                if(passed){
+                    savecase();    
+                }else{ 
+                    NotificationMessage('main-messager', 'error', '{! $Label.Save_Validation_Error }');
+                }
+         }
+        
+        function resetrouting(){
+            var ownerFldId = '{!$Component.routingForm.pbRouting.routingmodal.selectrouting.routingCaseOwner}';
+            $j('[id*="selectrouting"] select').val('005');
+            lookupPick('{!$Component.routingForm}', ownerFldId + '_lkid', ownerFldId,'','{!$User.Id}','{!$User.FirstName} {!$User.LastName}','','');
+            closemodal();
+            cancelmodal();
+        }
+             
+        function dosubmit(){
+            
+            var ownerFldId = '{!$Component.routingForm.pbRouting.routingmodal.selectrouting.routingCaseOwner}';
+            $j('[id*="selectrouting"] select').val('005');
+            lookupPick('{!$Component.routingForm}', ownerFldId + '_lkid', ownerFldId,'','{!$User.Id}','{!$User.FirstName} {!$User.LastName}','','');
+            
+            submitcase();
+        } 
+        
+        function setroutingtoqueue(){
+            $j('[id*="selectrouting"] select').val('case_queue').change();
+            $j('[id*="selectrouting"] input').val('').change();
+        }
+        
+        function scrollTop(){
+            $j("html, body").animate({ scrollTop: 0 }, "fast");   
+        }
+        function validateAndSearch(type, e){
+            var retValue = true; 
+            hideErrorSiteId();
+            if ( e.keyCode == 13 ) 
+            {
+                if(validateSiteId(type)){
+                    RetrieveRegorSite();
+                }
+                retValue = false;
+            }
+            return retValue;
+        }
+        function checkval(){
+            var initval = $j('[id*="PBlock1Section1"] select').val();
+            if(!initval){
+                $j('.advanced-search-btn').addClass("disabled");
+            }else{
+                $j('.advanced-search-btn').removeClass("disabled");
+            }
+        }
+
+        function initDescCounter(){
+            var description = $j('.Description-input');
+            if(description.length){
+                var limit = 25000;
+                description.removeAttr('maxLength');
+                var initialcount = description.val().length;
+                var initialremaining = limit - initialcount;
+                if(initialremaining >= 0){
+                    var counter = '<div id="text-counter">' + (limit - description.val().length) + ' characters remaining</div>';
+                }else{
+                    var initialamountover = -initialremaining;
+                    var counter = '<div id="text-counter" class="limit-exceeded"><i class="fa fa-exclamation-circle"></i> ' + initialamountover + ' character' + (initialamountover == 1 ? '' : 's') + ' over the limit. The description must be ' + limit + ' characters or less in length.</div>';
+                }
+                description.after(counter);
+                
+                function updateCount(){
+                    var count = description.val().length;
+                    var remaining = limit - count;
+                    if(remaining >= 0){
+                        $j('#text-counter').removeClass('limit-exceeded').html(remaining + ' character' + (remaining == 1 ? '' : 's') + ' remaining');   
+                    }else{
+                        var amountover = -remaining;
+                        var countertext = '<i class="fa fa-exclamation-circle"></i> ' + amountover + ' character' + (amountover == 1 ? '' : 's') + ' over the limit. The description must be ' + limit + ' characters or less in length.'
+                        $j('#text-counter').addClass('limit-exceeded').html(countertext);
+
+                    }
+                }
+                
+                description.keyup(function(){
+                    updateCount();
+                }).change(function(){
+                    updateCount();
+                });
+            }       
+        }
+
+        function initSelect(){
+          $j('select option').each(function(){
+                var html = $j(this).html();
+                if(html == "--None--"){
+                    $j(this).html('{! $Label.Select_One }');
+                }
+            });         
+        }
+
+        </script>
+        <apex:outputPanel rendered="{!pagecontext != 'view'}">
+            <script>
+            
+                var cancel = false;
+                var cancelformvalues = '';
+                var intialvalues = '';
+                var overridewarning = false;
+            
+                function enableoverride(){
+                    //console.log('override enabled');
+                    overridewarning = true;    
+                }
+                function disableoverride(){
+                    //console.log('override disabled');
+                    overridewarning = false;
+                }
+                        
+                 $j(window).ready(function(){
+                     /* Intial Values */
+                     
+                     var form = $j('form[id*="theform"]');
+                     initialvalues = form.serialize();
+                               
+                     /* TODO: Logic to see if form fields have been filled, not triggered by Submit button */        
+                    
+                     $j(window).bind('beforeunload', function(){ 
+                        var valuesonexit = $j('form[id*="theform"]').serialize();
+                         //console.log(overridewarning); 
+                        if((initialvalues !== valuesonexit) && (cancel == false) && (overridewarning == false)){
+                            return 'Data not Saved!';
+                        }else if((cancel == true) && (initialvalues !== cancelformvalues) && (overridewarning == false)){
+                            cancel = false; // resetting in case they stay on page;
+                            return 'Data not Saved!';
+                        }
+                     });
+                     
+                     $j('form[id*="theform"] select, form[id*="theform"] input, form[id*="theform"] textarea').not('input[type="hidden"]').change(function(){
+                        var valuesonchange = form.serialize();
+                        if(initialvalues !== valuesonchange){
+                            sforce.console.setTabUnsavedChanges(true, null); // Set tab to unsaved on any input change if form is different
+                        }else{
+                            sforce.console.setTabUnsavedChanges(false, null);    
+                        }
+                     });
+          
+                 });
+                 
+                 /* Function for cancel button before it calls submit and changes form data            
+                  * Cancel Button seems to change form data, causing the alert to fire in all cases.
+                  */
+                 function cancelclicked(){
+                     cancel = true;
+                     cancelformvalues = $j('form[id*="theform"]').serialize();                    
+                 } 
+                 
+                 
+                                    
+            </script>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!pagecontext == 'view'}">
+            <script>
+                sforce.console.setTabUnsavedChanges(false, null);
+                sforce.console.setTabTitle('{!$Label.View_Case}');
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{! pagecontext == 'create'}">
+            <script>
+                sforce.console.setTabTitle('{!$Label.Create_case}');
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{! pagecontext == 'edit' && Case.isclosed == false}">
+            <script>
+                sforce.console.setTabTitle('{!$Label.Edit_case}' + ' ' + '{!Case.CaseNumber}');
+            </script>
+        </apex:outputPanel>
+       
+        <style type="text/css">
+        
+            h1, h2, h3{
+                margin: 0px !important;
+            }
+            
+            body{
+                padding: 10px;
+            }
+            
+            body input.btn{
+                font-size: 10px !important;
+                padding: 4px 3px !important;
+            }    
+            
+            .knowledgeBlock .bPageBlock{
+                border-color: #b7a752;
+            }
+            
+            .advanced-search-btn{
+                color: #428bca !important;
+                display: block;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                cursor: pointer;
+            }
+            
+            body .modal .modal-body iframe{
+                border: none !important;
+            }
+
+            .searchstatus {
+                color:Red; 
+                background-color:white; 
+                text-align:center;
+                margin-right: 100px;
+                margin-left: 300px;
+             }
+             
+             .modal .modal-dialog{
+                 width: 750px;
+             }
+             #candidateSearchIframe{
+                    border: none !important;
+                }           
+             
+             a.disabled {
+               pointer-events: none;
+               cursor: default;
+               color: #dadada !important;
+            }
+            /*
+            .note{
+                color:#FF0000;
+            }
+            */
+            .note a{
+                color: #428bca !important;
+            }
+            .required-label{
+                margin-left: 5px;
+                color: red !important;
+            }
+            #required-error{
+                border: 1px solid #e04854;
+                background: #fff;
+                border-left: 10px solid #e04854;
+            }
+            #required-error-save{
+                border: 1px solid #e04854;
+                background: #fff;
+                border-left: 10px solid #e04854;
+            }
+            
+            .attachment_block .waitingSearchDiv{
+                position:fixed !important;
+                top: 0px;
+            }
+            
+            span.sep{
+                font-size:13px;
+            }
+            .select2-container{
+                min-width: 250px;
+            }
+            
+            .select2-results li{
+                margin-left: 0px;
+                font-size: 12px;
+            }
+            
+            .select2-choice{
+                height: 18px !important;
+                font-size: 12px !important;
+                line-height: 16px !important;
+            }
+            .select2-choice span{
+                color: #333 !important;
+            }
+            .select2-container .select2-choice .select2-arrow b{
+                background-size: 60px 22px !important;
+            }
+            .acs-btn{
+                cursor: pointer;
+                display: block;
+                margin-top: 5px;
+            }
+            
+            textarea{
+                min-width: 50%;
+                height: 150px;
+            }
+            html.ext-strict body form ul{
+                border-color: #ff8700;
+                border-style: solid;
+                border-width: 1px 1px 1px 10px;
+                float: left;
+                list-style: outside none none;
+                padding: 5px 30% 5px 10px;
+            }
+            .id-enter{
+                margin-right: 10px;
+                padding: 2px 3px !important;
+            }
+            .pbSubsection a{
+                color: #428bca !important;
+            }
+            
+              /* Data Tables Override */ 
+          .dataTables_wrapper .dataTable{
+                border: 1px solid #e0e3e5 !important;
+          }
+          .dataTables_wrapper .dataTable thead th{  
+              background-color: #f2f3f3;
+              border-width: 0 0 1px 1px;
+              border-color: #e0e3e5;
+              border: 1px solid #ededed;
+              color: #000;
+              font-size: .9em;
+              font-weight: bold;
+              padding: 5px 2px 4px 5px;
+          }
+          .dataTables_wrapper .dataTable tbody td{
+              background-color: #fff !important;  
+          }
+         
+          table.dataTable thead .sorting_desc {
+            background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_desc.png') }") #f2f3f3 no-repeat center right !important;
+          } 
+          table.dataTable thead .sorting_asc {
+            background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_asc.png') }") #f2f3f3 no-repeat center right !important;
+          } 
+          /* css for grey arrows on sort columns  
+          table.dataTable thead .sorting {
+            background: url("{! URLFOR($Resource.DataTables, '/DataTables-1.10.4/media/images/sort_both.png') }") #f2f3f3 no-repeat center right !important;
+          } 
+          */
+          table.dataTable thead .sorting {
+            background: #f2f3f3 !important;
+          } 
+          .waitingSearchDiv{
+            position: fixed !important;
+            background-color: rgba(0,0,0,0.2);
+            height: 100%;
+            width:100%;  
+          }
+          .waitingHolder{
+            padding: 10px !important;
+            background: #ffffff !important;
+            border: 1px solid #333 !important;
+            border-radius: 3px !important;
+            top: 250px; 
+            width: 91px;
+            opacity: 1;
+          }
+          .waitingDescription{
+            color: #333;  
+          }
+          #text-counter.limit-exceeded{
+              color: red;
+          }
+          #attach-btn{
+              font-size: 10px !important;
+              padding: 4px 3px !important;
+          }
+          .knowledgeBlock .relatedListIcon{
+              display: none !important;
+          }
+          .knowledgeBlock .pbTitle {
+              padding: 5px 12px !important;
+          }
+        </style>
+    </head>
+    <body>
+        
+        
+        <apex:sectionHeader title="{!$Label.Case}" subtitle="{!if(Case.CaseNumber==null, $Label.Create_case, Case.CaseNumber)}" />
+             
+        <apex:form id="theform" >
+           
+            <script>
+            $j(document).ready(function(){
+                $j('input[value="Save"],  input[value="Save and return"]').click(function(event){
+                    $j(window).unbind('beforeunload');
+                    //overridewarning = true;
+                });
+
+                //SK: Moved the 'flagging' code to a function b/c it is to be called for dynamic sub-sections, too.
+                flagRequiredFields();
+            });
+
+function getforkedlogic(){
+                
+               var forkedlogic = {!Case.Step__r.Has_forked_logic__c};
+   
+                            if(forkedlogic){                  
+                                getnextstep();
+                              }
+                            else{
+                                submitcase();
+                              }                      
+                
+         }
+
+            function flagRequiredFields() {
+                $j('.myrequiredtrue').each(function(){
+                    var fieldid = $j(this).attr("id");
+                    if(!fieldid){
+                        fieldid = $j(this).attr("name");    
+                    }
+                    //SK: Added a check to ensure that the '*' is not added repeatedly when this
+                    //    function is called repeatedly b/c of dynamic sub-section rendering.
+                    if ( $j('label[for="' + fieldid + '"]').text().indexOf("*") == -1 ) {
+                        $j('label[for="' + fieldid + '"]').append(" *");
+                    }
+                });
+            }
+
+            var sectionsWithSubSection = [];
+            <apex:repeat value="{!sectionsWithSubSection}" var="sectionName">
+                sectionsWithSubSection["{!sectionName}"] = true;
+            </apex:repeat>
+
+            function resetfieldmap()
+                {   
+                    <apex:variable value="{!sectionswithSubsection}"  var="subsectionlist"/>
+                    sectionsWithSubSection = [];  
+                    <apex:repeat value="{!subsectionlist}" var="sectionName">
+                        sectionsWithSubSection["{!sectionName}"] = true;
+                    </apex:repeat>
+                }
+
+            function onSectionFieldChange(fld, sectionName) {
+                //console.log('Section field changed called!');
+               // resetfieldmap();
+
+               /* Do not want fields to rerender when text fields are updated
+               This is to prevent rerendering when focused on a text box and trying to submit while focused */
+               var type = $j(fld).attr('type')
+               if(type == 'text'){
+                 return false;
+               }
+
+                refreshSectionsWithSubSections();
+                //console.log('retried map: ' + JSON.stringify(sectionsWithSubSection));
+                if (sectionsWithSubSection[sectionName]) {
+                    renderSubSections();
+                }
+            }
+            </script> 
+            <apex:outputPanel id="sectionsArray">
+                <script>
+
+                    var sectionsWithSubSection = {};
+                    <apex:repeat value="{!sectionsWithSubSection}" var="sectionName">
+                        sectionsWithSubSection["{!sectionName}"] = true;
+                    </apex:repeat>
+
+                    //console.log(JSON.stringify(sectionsWithSubSection));
+
+                </script>
+            </apex:outputPanel>
+            <apex:actionFunction id="refreshSections" name="refreshSectionsWithSubSections" status="searching" reRender="sectionsArray"/>  
+            <apex:actionFunction id="myrender" name="renderSubSections" status="searching" oncomplete="flagRequiredFields(); initSelect()"
+                                 reRender="searching,PBlock01,PBlock02,PBlock03,PBlock04,PBlock05,PBlock06,PBlock07,PBlock08,PBlock09,PBlock10,PBlock11,initDesc,buttons" />
+            
+
+           <!-- <apex:messages /> -->
+
+            <c:NotificationMessages elementid="main-messager"></c:NotificationMessages>
+
+            <apex:outputPanel rendered="{! Feedback == true }">
+                <script>
+                    $j(document).ready(function(){
+                        NotificationMessage('main-messager', 'success', '{!$Label.Case} {!case.casenumber} {!comment}');   
+                    })
+                </script>
+            </apex:outputPanel>
+            <apex:outputPanel id="commentSavedNotif">
+                <apex:outputPanel rendered="{! commentsaved }">
+                    <script>
+                        $j(document).ready(function(){
+                            NotificationMessage('main-messager', 'success', '{!$Label.Comment_Saved}');
+                        });
+                    </script>
+                </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! ownerchange == true}">
+                <script>
+                    $j(document).ready(function(){
+                       
+                        NotificationMessage('main-messager', 'warning', '{!$Label.Page_Ownership_Change}');
+                    });
+                </script>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! ownereturn == true }">
+                <script>
+                    $j(document).ready(function(){
+                        NotificationMessage('main-messager', 'success', '{!$Label.Page_ownership_return} {!ownername}');
+                    });
+                </script>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! hasnotificationmessage }">
+                <script>
+                    $j(document).ready(function(){
+                        NotificationMessage('main-messager', '{!messagetype}', '{! notificationmessage }');
+                    });
+                </script>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! haswarningmessage }">
+                <script>
+                    $j(document).ready(function(){
+                        NotificationMessage('main-messager', '{!messagetype}', '{! warningmessage }');
+                    });
+                </script>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{! emailadded }">
+                <script>
+                    $j(document).ready(function(){
+                        NotificationMessage('main-messager', 'success', '{! $Label.Email_Sent }');
+                    });
+                </script>
+            </apex:outputPanel>
+
+            <apex:pageBlock rendered="{! pagecontext == 'view'}"> 
+                <div style="text-align: right">    
+                    
+                 <!--   <apex:commandButton value="Clone" action="{!URLFOR($Action.case.clone, case.id)}"/>  -->
+                 
+                  <!-- Make sure case is saved ( id not null ) and the current user owns the case. -->
+
+                  <!-- 
+
+                  DELETE BUTTON DISPLAYED : For Created Cases, Submitted Cases, Closed Cases
+
+                  if( NOT submitted  and  NOT CLOSED  AND  NOT created ( STATUS  != 'Being Created' )
+
+                    Open_closed__c 
+
+                    IF(Case.Open_closed__c != 'Closed', , 'false')
+
+                    IF(Case.Status != 'Being Created', , 'false')
+
+                    IF(Case.Is_Submitted__c != true, , 'false')
+
+                    IF(Case.Routing__c.) // might need to take a look at the routing step to make sure it is still in milestone one.
+
+                    IF(Case.OwnerId=$User.Id, , 'false')  // only current users cases. 
+
+
+
+                    IF(Case.OwnerId=$User.Id, IF(Case.Is_Submitted__c != true, IF(Case.Status != 'Being Created', IF(Case.Open_closed__c != 'Closed','true', 'false') , 'false') , 'false') , 'false')
+
+                    IF(Case.id!=null, IF(Case.OwnerId=$User.Id, 'true', 'false'), 'false')
+
+
+                   -->
+                 <apex:commandButton value="{!$Label.Delete}" action="{!deleteCase}" styleClass="create-action" rendered="{!IF(Case.OwnerId=$User.Id, IF(Case.Is_Submitted__c != true, IF(Case.Status != 'Being Created', IF(Case.Open_Closed__c != 'Closed','true', 'false') , 'false') , 'false') , 'false')}" 
+                                                onclick="return confirm('{!$Label.Confirm_Delete}');"/>
+
+                    <apex:commandButton value="{!$Label.Edit}" Action="{!Edit}" rendered="{!Case.isclosed == false}"/>
+                    <apex:commandButton Value="{!$Label.Reopen}" action="{!Reopen}" rendered="{!case.isclosed == true && NOT(Contains($User.Primary_team_persona__c,$Label.CSR))}" />
+                    
+                </div>
+            </apex:pageBlock>
+            <apex:pageBlock tabStyle="Case" id="PBlock1" rendered="{!notnew==false}">
+                <apex:pageBlockSection columns="1" id="PBlock1Section1">
+                    <apex:selectList Label="{!$Label.Create_Case_Using}" multiselect="false" size="1" value="{!CaseType}" id="searchtype" styleClass="saverequiredtrue" disabled="{!DisableCaseType == true}">
+                        
+                        <apex:actionSupport event="onchange" rerender="theform,myrender,PBlock1Section2" oncomplete="checkval()" action="{!casetypeclear}" status="searching"/>
+                        
+                        <apex:selectOption itemValue="" ItemLabel="{!$Label.Select_One}"/> 
+                        <apex:selectOption itemValue="{!$Label.Site_ID}" ItemLabel="{!$Label.Site_ID}"/>                   
+                        <apex:selectOption itemvalue="{!$Label.Registration_ID}" ItemLabel="{!$Label.Registration_ID}" />
+                        <apex:selectOption itemvalue="{!$Label.Candidate_Name_pickval}" ItemLabel="{!$Label.Candidate}"/>
+                    </apex:selectList>
+                </apex:pageBlockSection> 
+                <apex:pageBlockSection columns="1" id="PBlock1Section2" rendered="{!notnew==false && Casetype != '' && Casetype != $Label.Select_One}">
+                    <apex:actionFunction name="RetrieveRegorSite" action="{! Retrieve_Reg_or_Site }" status="searching" rerender="theform,myrender" />
+                    <apex:pageBlockSectionItem >
+                       
+                        <apex:outputLabel value="{!$Label.Enter} {!IF(CaseType != null && CaseType != $Label.Select_One, " " + CaseType + ' *', "")}" for="casetype"/>
+                        
+                        <apex:panelGrid columns="4">
+                            <apex:inputtext value="{!EnteredId}" id="casetype" onblur="if(validateSiteId('{! Casetype }')){ RetrieveRegorSite(); }else{ return false; }" onkeydown="return validateAndSearch('{! Casetype }',event)"  disabled="{!CaseType==''}" styleClass="saverequiredtrue"> 
+                                <!--<apex:actionSupport event="onchange" onsubmit="if(!validateSiteId()){return;}" action="{! Retrieve_Reg_or_Site }" status="searching" rerender="theform,myrender"/>-->
+                            </apex:inputtext>
+                            <apex:commandButton styleClass="id-enter" value="{!$Label.Enter}" onclick="if(validateSiteId('{! Casetype }')){ RetrieveRegorSite(); }else{ return false; }" status="searching" rerender="theform,myrender"/>
+                            <apex:outputPanel >
+                                <apex:outputPanel id="siteIdValidation" styleClass="required-label" rendered="{!showSiteIdError}">
+                                    <apex:outputText rendered="{! Casetype == $Label.Site_ID }">
+                                        {!$Label.No_Site_Error}
+                                    </apex:outputText>
+                                    <apex:outputText rendered="{! Casetype == $Label.Registration_ID }">
+                                        {!$Label.No_Reg_Found}
+                                    </apex:outputText>
+                                     <apex:outputText rendered="{! Casetype == $Label.Candidate_name }">
+                                        {!$Label.No_Candidate_Found}
+                                    </apex:outputText>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                            <apex:outputPanel styleClass="site-id-error">
+                            </apex:outputPanel>
+                            <a id="as-btn" class="advanced-search-btn {! IF(CaseType == null, 'disabled', '') }" data-toggle="modal" data-target="#advancedSearch"  onclick="initSearchIframe('{!$Component.casetype}','{!$Component.searchtype}', '{!EnteredId}', null, '{! casetype }'); return false;">{!$Label.Advanced_search}</a>
+                        </apex:panelGrid>
+                    </apex:pageBlockSectionItem>
+                     <apex:pageBlockSectionItem rendered="{!notnew==false && Casetype != '' && Casetype != '-Select one-'}" >
+                         <apex:inputHidden id="regid" value="{!RegistrationID}"/>
+                    </apex:pageBlockSectionItem>
+                   <apex:actionFunction Name="setValueToRegistrationID" action="{!setValueToRegistrationID}"  reRender="PBlock1Section2,regcan" >
+                       <apex:param name="firstparam" value="" assignTo="{!RegistrationID}"/> 
+                    </apex:actionFunction>
+                   
+                </apex:pageBlockSection> 
+               
+                <apex:actionstatus id="searching" startStyleClass="searchstatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv"> 
+                            <div class="waitingHolder">
+                                <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.loading}" />
+                                <span class="waitingDescription">{!$Label.loading}</span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                
+                </apex:actionstatus>  
+<!--       Section moved 5-17 per Request  BW           
+                <apex:pageblockSection columns="1" id="PBlock1Section3" rendered="{!notnew==false}">             
+                        <apex:selectList value="{!myTopic}" multiselect="false" size="1" label="Topic" title="Select Topic" Rendered="{!Casetype != '' && Casetype != '-Select one-'}" styleClass="myrequiredtrue">
+                            <apex:selectOptions value="{!Topics}"/>
+                            <apex:actionsupport event="onchange" rerender="theform,myrender" action="{!clearfinalcat}" status="searching"/>
+                        </apex:selectList>
+                        <apex:selectList value="{!myCategory}" multiselect="false" size="1" label="Category"  title="Select Category"  rendered="{!mytopic != ''&& mytopic != '-Select one-'}" styleClass="myrequiredtrue">
+                            <apex:selectOptions value="{!categories}"/>
+                            <apex:actionsupport event="onchange" rerender="theform,knowledgewidget,sampletext,kwSidebar,relatedLists" action="{!clearsubcat}" status="searching"/>
+                        </apex:selectList>
+                        <apex:selectList value="{!mysubCategory}" multiselect="false" size="1" label="Sub Category" title="Select {!mycategory} SubCategory" rendered="{!subcategories!=null}" styleClass="myrequiredtrue">
+                            <apex:selectOptions value="{!subcategories}"/>
+                            <apex:actionsupport event="onchange" rerender="theform,knowledgewidget,sampletext,kwSidebar,relatedLists" status="searching"/>
+                        </apex:selectList>
+                </apex:pageblockSection>
+-->   
+<!--
+                <apex:pageBlockSection rendered="{!notnew == false &&(casetype == 'Site ID' && case.AccountId != null) && Mycaseconfig.Don_t_Require_Candidate__c == false}" columns="1" id="candidatesection">
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Candidate Name" for="typeahead"/>
+                                    <apex:panelGrid columns="2">
+                                        <apex:selectList value="{!selectedcandidate}" title="Candidate Name"  label="Candidate Name" size="1" id="typeahead"> <!-- styleClass="myrequired{!Mycaseconfig.Don_t_Require_Candidate__c == false}" 
+                                            <apex:selectOptions value="{!typeahead}" />                                                                  
+                                            <apex:actionSupport event="onchange" action="{!attachCandidate}" status="searching" reRender="MiddleBlock,candidateDetails,searching,theform,reg,acc"/>
+                                        </apex:selectList>
+                                        <a id="advanced-search-btn" class="acs-btn" data-toggle="modal" data-target="#candidateSearch" onclick="initSearchIframe2('{!$Component.caseinfo.candidatesection.typeahead}','{! casetype }','{!EnteredId}'); return false;">Advanced search</a> 
+                                    </apex:panelGrid>
+                                </apex:pageBlockSectionItem>
+                                
+                                <script>
+                      
+                                  $j(document).ready(function() {
+                                        $j('[id*="typeahead"]').select2();
+                                   });
+                                       
+                                </script>
+      
+                  </apex:pageBlockSection>
+-->                  
+            </apex:PageBlock>
+                        
+
+<!-- EDIT Fieldsets -->
+<!-- section not needed.  replaced below
+            <apex:pageBlock Title="{!$Label.Site_details}" rendered="{!case.Test_Center_Name__c != null && casetype == $Label.site_id }" id="acc">
+                <apex:pageBlockSection columns="1" >
+                    <!-- apex:outputPanel layout="none" rendered="{!Casetype == 'Site ID'}">
+                        <a href="#" onClick="openSubtab('{!Case.Registration_id__c}','{!Case.Test_Center_Name__c}');return false">View {!Casetype} details</a>
+                        <p/>
+                    </apex:outputPanel
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Site_ID}</apex:outputLabel><!---recordsubtab('{!caseSite.Id}','{!caseSite.Id}');return false"
+                        <apex:outputLink value="#" onClick="recordsubtab('{!caseSite.id}','{!$Label.Site_ID_tab_Label} {!caseSite.VTS_Test_Center_ID__c}');return false">
+                            {!caseSite.VTS_Test_Center_ID__c}
+                        </apex:outputLink>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Site_name}" />
+                        <apex:outputText value="{!caseSite.Name}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Channel_type}" />
+                        <apex:outputText value="{!caseSite.Channel_type__c}" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock> -->
+
+            <apex:pageBlock Title="{!$Label.Candidate_Information}" rendered="{! (Mycaseconfig.Show_Candidate_Picklist__c == false || $User.VSS_Team_Member__c == False) && (Case.Registration_id__c != null || case.Candidate_id__c != null) && (casetype != $Label.Site_ID || $User.VSS_Team_Member__c == false)}" id="reg">   
+
+
+      <!--NEW CANDIDATE INFORMATION LAYOUT 8-5 BW STORY 3905 -->                   
+                <apex:pageBlockSection columns="1" rendered="{!Case.Registration_id__c != null }" >
+
+                                    
+                    <apex:outputText value="{!case.Candidate_First_Name__c & IF(case.Candidate_Middle_Name__c != '', ' '& case.Candidate_Middle_Name__c &' ', ' ') & case.Candidate_Last_Name__c}" label="{!$Label.AS_Candidate_name}" />
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Client_Candidate_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!case.Candidate_id__c}','{!$Label.Candidate} {!Case.Candidate_CCID__c}');return false">{!Case.Candidate_CCID__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputtext value="{!IF(case.Candidate_Phone_Country_Code__c!= null, '(' & case.Candidate_Phone_Country_Code__c & ')','') &' '& case.Candidate_Phone_Number__c}" label="{!$Label.Candidate_phone_number}" />
+                    <apex:outputtext value="{!case.Candidate_Email__c}" label="{!$Label.Candidate_email}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Candidate_mailing_address}" />
+                        <apex:outputPanel >
+                            {!case.Candidate_Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_1__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_2__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_3__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_3__c))}"><br /></apex:outputText>
+                            {!case.Candidate_City__c} {!case.Candidate_State_Name__c} {!case.Candidate_Postal_Code__c}
+                            
+                            <apex:outputText rendered="{!OR(NOT(ISNULL(caseRegistration.Candidate__r.State__c)), NOT(ISNULL(caseRegistration.Candidate__r.Postal_Code__c)))}"><br />
+                            </apex:outputText>
+                            <apex:outputText value="{!case.Candidate_Country_Name__c}" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Registration_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!caseRegistration.Id}','{!$Label.Registration_ID_Tab_label} {!caseRegistration.VTS_Registration_ID__c}');return false">{!caseRegistration.VTS_Registration_ID__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputfield value="{!Case.Registration_Date_and_Time_of_Exam__c}" label="{!$Label.Exam_date_and_time}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Exam_name}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!case.Exam_id__c}','{!$Label.Exam_name} {!case.Exam_Name__c}');return false">{!case.Exam_Name__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+      
+
+
+
+      <!--NEW CANDIDATE INFORMATION LAYOUT FOR Create case by Candidate -->
+
+                <apex:pageBlockSection columns="1" rendered="{!(casetype == $Label.Candidate_Name_pickval && case.Candidate_id__c != null )|| (case.id!= null && case.Registration_id__c == null && case.Candidate_id__c != null)}" >
+
+                 
+                 <apex:outputText value="{!case.Candidate_First_Name__c & IF(case.Candidate_Middle_Name__c != '', ' '& case.Candidate_Middle_Name__c &' ', ' ') & case.Candidate_Last_Name__c}" label="{!$Label.AS_Candidate_name}" />
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Client_Candidate_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!case.Candidate_id__c}','{!$Label.Candidate} {!Case.Candidate_CCID__c}');return false">{!Case.Candidate_CCID__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputtext value="{!IF(case.Candidate_Phone_Country_Code__c!= null, '(' & case.Candidate_Phone_Country_Code__c & ')','') &' '& case.Candidate_Phone_Number__c}" label="{!$Label.Candidate_phone_number}" />
+                    <apex:outputtext value="{!case.Candidate_Email__c}" label="{!$Label.Candidate_email}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Candidate_mailing_address}" />
+                        <apex:outputPanel >
+                            {!case.Candidate_Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_1__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_2__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_3__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_3__c))}"><br /></apex:outputText>
+                            {!case.Candidate_City__c} {!case.Candidate_State_Name__c} {!case.Candidate_Postal_Code__c}
+                            
+                            <apex:outputText rendered="{!OR(NOT(ISNULL(caseRegistration.Candidate__r.State__c)), NOT(ISNULL(caseRegistration.Candidate__r.Postal_Code__c)))}"><br />
+                            </apex:outputText>
+                            <apex:outputText value="{!case.Candidate_Country_Name__c}" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <apex:pageBlock Title="{!$Label.Site_details}" rendered="{!case.Test_Center_Name__c != null}" id="acc2">
+                <apex:pageBlockSection columns="1" >
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Site_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!caseSite.Id}','{!$Label.Site_ID_tab_Label} {!caseSite.VTS_Test_Center_ID__c}');return false">
+                            {!caseSite.VTS_Test_Center_ID__c}
+                        </apex:outputLink>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Site_name}" />
+                        <apex:outputText value="{!case.Site_Name_Static__c}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Channel_type}" />
+                        <apex:outputText value="{!case.Site_Type_static__c}" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+<!--  BW changed rendered statement 6-30 
+            <apex:pageBlock Title="{!$Label.VF_Section_Header_Type}" rendered="{!AND( Not( ISNULL(Case.Test_Center_Name__c) ), casetype = $Label.Site_ID_tab_Label) || AND( Not( ISNULL(Case.AccountId)), casetype = $Label.Registration_ID_Tab_label) || AND( Not( ISNULL(Case.Candidate_id__c) ), casetype = $Label.Candidate_Name_pickval )}">  -->
+            <apex:pageBlock Title="{!$Label.VF_Section_Header_Type}" Rendered="{!Casetype != '' && Casetype != $Label.Select_One && Casetype != null && (Case.Test_Center_Name__c!= null || Case.Candidate_id__c!=null || Case.Registration_id__c!=null)}"> 
+
+               <apex:pageblockSection columns="1" id="PBlock1Section3" rendered="{!notnew==false}">             
+                        <apex:selectList value="{!myTopic}" multiselect="false" size="1" label="{!$Label.Topic}" title="Select Topic" Rendered="{!Casetype != '' && Casetype != '-Select one-'}" styleClass="saverequiredtrue">
+                            <apex:selectOptions value="{!Topics}"/>
+                            <apex:actionsupport event="onchange" rerender="theform,myrender" action="{!clearfinalcat}" status="searching"/>
+                        </apex:selectList>
+                        <apex:selectList value="{!myCategory}" multiselect="false" size="1" label="{!$Label.Type}"  title="Select Category"  rendered="{!mytopic != ''&& mytopic != $Label.Select_One}" styleClass="saverequiredtrue">
+                            <apex:selectOptions value="{!categories}"/>
+                            <apex:actionsupport event="onchange" rerender="theform,knowledgewidget,sampletext,kwSidebar,relatedLists" action="{!clearsubcat}" oncomplete="resetfieldmap()" status="searching"/>
+                        </apex:selectList>
+                        <apex:selectList value="{!mysubCategory}" multiselect="false" size="1" label=" " title="Select {!mycategory} SubCategory" rendered="{!subcategories!=null}" styleClass="saverequiredtrue">
+                            <apex:selectOptions value="{!subcategories}"/>
+                            <apex:actionsupport event="onchange" rerender="dynamic,theform,knowledgewidget,sampletext,kwSidebar,relatedLists" status="searching"/>
+                        </apex:selectList>
+                </apex:pageblockSection>
+            </apex:pageBlock>
+
+          <apex:pageBlock Title="{!$Label.Candidate_Information}" rendered="{!(Mycaseconfig.Show_Candidate_Picklist__c == true && case.AccountId != null) && $User.VSS_Team_Member__c == true}" id="regcan">  
+            <apex:pageBlockSection rendered="{!notnew == false &&(casetype == $Label.Site_ID && case.AccountId != null && $User.VSS_Team_Member__c == true) && Mycaseconfig.Show_Candidate_Picklist__c == true}" columns="1" id="candidatesection">
+                                <apex:pageBlockSectionItem id="candlistitem">
+                                    <apex:outputLabel value="{!$Label.Candidate_Name + if(mycaseconfig.Require_Candidate_Picklist__c, ' *' , '')}" for="typeahead"/>
+
+                                    <apex:panelGrid columns="1">
+                                        <apex:selectList value="{!selectedcandidate}" title="{!$Label.Candidate_Name}"  label="{!$Label.AS_Candidate_name}" size="1" id="typeahead" styleclass="saverequired{!mycaseconfig.Require_Candidate_Picklist__c}"> <!-- styleClass="myrequired{!Mycaseconfig.Don_t_Require_Candidate__c == false}" -->
+                                            <apex:selectOptions value="{!typeahead}" />                                                                  
+                                            <apex:actionSupport event="onchange" action="{!attachCandidate}" status="searching" reRender="MiddleBlock,candidateDetails,searching,theform,reg,regcan,acc"/>
+                                        </apex:selectList>
+                                    <!--    <a id="advanced-search-btn" class="acs-btn" data-toggle="modal" data-target="#candidateSearch" onclick="initSearchIframe2('{!$Component.caseinfo.candidatesection.typeahead}','{! casetype }','{!EnteredId}'); return false;">$Label.Advanced_search</a> -->
+                                    
+                                    <a id="advanced-search-btn" class="acs-btn" data-toggle="modal" data-target="#candidateSearch" onclick="initSearchIframe2('{!$Component.regcan.candidatesection.candlistitem.typeahead}','{! casetype }','{!EnteredId}'); return false;">{!$Label.Advanced_search}</a> 
+                                
+                                    </apex:panelGrid>
+                                </apex:pageBlockSectionItem>
+                                 <script>
+                      
+                                  $j(document).ready(function() {
+                                        $j('[id*="typeahead"]').select2();
+                                   });
+                                       
+                                </script>
+                </apex:pageBlockSection> 
+                <!--NEW CANDIDATE INFORMATION LAYOUT 8-5 BW STORY 3905 -->                   
+                <apex:pageBlockSection columns="1" rendered="{!Case.Registration_id__c != null }" >
+
+                                    
+                    <apex:outputText value="{!case.Candidate_First_Name__c & IF(case.Candidate_Middle_Name__c != '', ' '& case.Candidate_Middle_Name__c &' ', ' ') & case.Candidate_Last_Name__c}" label="{!$Label.AS_Candidate_name}" />
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Client_Candidate_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!case.Candidate_id__c}','{!$Label.Candidate} {!Case.Candidate_CCID__c}');return false">{!Case.Candidate_CCID__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputtext value="{!IF(case.Candidate_Phone_Country_Code__c!= null, '(' & case.Candidate_Phone_Country_Code__c & ')','') &' '& case.Candidate_Phone_Number__c}" label="{!$Label.Candidate_phone_number}" />
+                    <apex:outputtext value="{!case.Candidate_Email__c}" label="{!$Label.Candidate_email}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$Label.Candidate_mailing_address}" />
+                        <apex:outputPanel >
+                            {!case.Candidate_Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_1__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_2__c))}"><br /></apex:outputText>
+                            {!case.Candidate_Address_Line_3__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_Address_Line_3__c))}"><br /></apex:outputText>
+                            {!case.Candidate_City__c} {!case.Candidate_State_Name__c} {!case.Candidate_Postal_Code__c}
+                            
+                            <apex:outputText rendered="{!OR(NOT(ISNULL(caseRegistration.Candidate__r.State__c)), NOT(ISNULL(caseRegistration.Candidate__r.Postal_Code__c)))}"><br />
+                            </apex:outputText>
+                            <apex:outputText value="{!case.Candidate_Country_Name__c}" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Registration_ID}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!caseRegistration.Id}','{!$Label.Registration_ID_Tab_label} {!caseRegistration.VTS_Registration_ID__c}');return false">{!caseRegistration.VTS_Registration_ID__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:outputfield value="{!Case.Registration_Date_and_Time_of_Exam__c}" label="{!$Label.Exam_date_and_time}" />
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >{!$Label.Exam_name}</apex:outputLabel>
+                        <apex:outputLink value="#" onClick="recordsubtab('{!case.Exam_id__c}','{!$Label.Exam_name} {!case.Exam_Name__c}');return false">{!case.Exam_Name__c}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+              </apex:pageblock>
+ 
+            
+            <apex:PageBlock title="{!mycaseconfig.Section_1_header__c}" rendered="{!(finalcat!=null && showcase==true) && pagecontext == 'create' && Rendermap['Section 1']&&((mycaseconfig.Section_1_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_1_create_only__c == false)}" id="PBlock01">
+                    <apex:pageBlockSection columns="1" id="Section1">
+                        <apex:repeat value="{!Section1FS}" var="S1FS" id="S1FS">
+                            
+                            <apex:inputfield value="{!Case[S1FS.fieldpath]}" rendered="{!(pagecontext == 'create')}" styleclass="myrequired{!S1FS.required} {! S1FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 1');" />
+                        <!--apex:inputfield value="{!Case[S2FS.fieldpath]}" rendered="{!(pagecontext == 'edit' || pagecontext == 'create') && S2FS.required == false}" styleclass="isreq{!S2FS.required}"/-->
+              
+                      <!--  <apex:outputfield value="{!Case[S1FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>  -->
+                        </apex:repeat>
+                        <apex:repeat value="{!sectionToDynamicFieldsMap['Section 1']}" var="subsectionFld" id="S1_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 1');" />
+                        <!--<apex:outputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> -->
+                    </apex:repeat>
+                    </apex:pageBlockSection>
+            </apex:pageBlock>
+            <apex:pageBlock title="{!mycaseconfig.Section_2_header__c}" rendered="{!(pagecontext == 'edit' || pagecontext == 'view') && Rendermap['Section 2'] &&((mycaseconfig.Section_2_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_2_create_only__c == false)}" id="PBlock02">
+                <apex:pageBlockSection columns="1" id="Section2">
+                    <apex:repeat value="{!Section2FS}" var="S2FS" id="S2FS">
+                        <apex:outputfield value="{!Case[S2FS.fieldpath]}" />
+                        <!--apex:inputfield value="{!Case[S2FS.fieldpath]}" rendered="{!(pagecontext == 'edit' || pagecontext == 'create') && S2FS.required == false}" styleclass="isreq{!S2FS.required}"/-->
+              
+                    <!--    <apex:outputfield value="{!Case[S2FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>  -->
+                    </apex:repeat>
+              <!--      <script>
+                        $j = jQuery.noConflict();
+              
+                          $j(document).ready(function() {
+                              
+                             var status = $j('option[value="Being Created"]').parent(); 
+                              
+                             if(status.val() == "Being Created"){ 
+                                 status.attr('disabled', 'disabled');
+                             }
+                            
+                           });
+                        </script>   -->
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 2']}" var="subsectionFld" id="S2_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 2');" />
+                        <!--<apex:outputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> -->
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock> 
+            
+            <apex:pageBlock title="{!mycaseconfig.Section_3_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 3']&&((mycaseconfig.Section_3_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_3_create_only__c == false)}" id="PBlock03">
+                <apex:pageBlockSection columns="1" id="Section3">
+                    <apex:repeat value="{!Section3FS}" var="S3FS" id="S3FS">
+                        <apex:inputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S3FS.required} {! S3FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 3');" />
+                        <apex:outputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 3']}" var="subsectionFld" id="S3_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 3');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!mycaseconfig.Section_4_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 4']&&((mycaseconfig.Section_4_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_4_create_only__c == false)}"  id="PBlock04">
+                <apex:pageBlockSection columns="1" id="Section4">
+                    <apex:repeat value="{!Section4FS}" var="S4FS" id="S4FS">
+                        <apex:inputfield value="{!Case[S4FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S4FS.required} {! S4FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 4');" /> 
+                        <apex:outputfield value="{!Case[S4FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 4']}" var="subsectionFld" id="S4_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 4');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!mycaseconfig.Section_5_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 5']&&((mycaseconfig.Section_5_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_5_create_only__c == false)}" id="PBlock05">
+                <apex:pageBlockSection columns="1" id="Section5">
+                    <apex:repeat value="{!Section5FS}" var="S5FS" id="S5FS">
+                        <apex:inputfield value="{!Case[S5FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S5FS.required} {! S5FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 5');" /> 
+                        <apex:outputfield value="{!Case[S5FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 5']}" var="subsectionFld" id="S5_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 5');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!mycaseconfig.Section_6_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 6']&&((mycaseconfig.Section_6_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_6_create_only__c == false)}" id="PBlock06">
+                <apex:pageBlockSection columns="1" id="Section6">
+                    <apex:repeat value="{!Section6FS}" var="S6FS" id="S6FS">
+                        <apex:inputfield value="{!Case[S6FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S6FS.required} {! S6FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 6');" /> 
+                        <apex:outputfield value="{!Case[S6FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 6']}" var="subsectionFld" id="S6_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 6');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                
+            </apex:pageBlock>                                    
+
+            <apex:pageBlock title="{!mycaseconfig.Section_7_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 7']&&((mycaseconfig.Section_7_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_7_create_only__c == false)}"  id="PBlock07">
+                <apex:pageBlockSection columns="1" id="Section7">
+                    <apex:repeat value="{!Section7FS}" var="S7FS" id="S7FS">
+                        <apex:inputfield value="{!Case[S7FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S7FS.required} {! S7FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 7');" /> 
+                        <apex:outputfield value="{!Case[S7FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 7']}" var="subsectionFld" id="S7_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 7');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                
+            </apex:pageBlock>
+
+            <apex:pageBlock title="{!mycaseconfig.Section_8_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 8']&&((mycaseconfig.Section_8_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_8_create_only__c == false)}"  id="PBlock08">
+                <apex:pageBlockSection columns="1" id="Section8">
+                    <apex:repeat value="{!Section8FS}" var="S8FS" id="S8FS">
+                        <apex:inputfield value="{!Case[S8FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S8FS.required} {! S8FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 8');" /> 
+                        <apex:outputfield value="{!Case[S8FS.fieldpath]}" rendered="{!pagecontext == 'view'}" />
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 8']}" var="subsectionFld" id="S8_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 8');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}"  rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>            
+
+            <apex:pageBlock title="{!mycaseconfig.Section_9_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 9']&&((mycaseconfig.Section_9_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_9_create_only__c == false)}"  id="PBlock09">
+                <apex:pageBlockSection columns="1" id="Section9">
+                    <apex:repeat value="{!Section9FS}" var="S9FS" id="S9FS">
+                        <apex:inputfield value="{!Case[S9FS.fieldpath]}"  rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S9FS.required} {! S9FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 9');" /> 
+                        <apex:outputfield value="{!Case[S9FS.fieldpath]}" rendered="{!pagecontext == 'view'}" />
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 9']}" var="subsectionFld" id="S9_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 9');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>  
+
+            <apex:pageBlock title="{!mycaseconfig.Section_10_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 10']&&((mycaseconfig.Section_10_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_10_create_only__c == false)}"  id="PBlock10">
+                <apex:pageBlockSection columns="1" id="Section10">
+                    <apex:repeat value="{!Section10FS}" var="S10FS" id="S10FS">
+                        <apex:inputfield value="{!Case[S10FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S10FS.required} {! S10FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 10');" /> 
+                        <apex:outputfield value="{!Case[S10FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                    </apex:repeat>
+
+                    <apex:repeat value="{!sectionToDynamicFieldsMap['Section 10']}" var="subsectionFld" id="S10_Subsection_FS">
+                        <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required} {! subsectionFld.fieldpath }-input" 
+                                         onchange="onSectionFieldChange(this, 'Section 10');" />
+                        <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                    </apex:repeat>
+                </apex:pageBlockSection> 
+            </apex:pageBlock> 
+            <apex:outputPanel layout="none" id="initSelect">
+                <script>
+                  initSelect(); // TODO move or add to place where dynamic sections can call
+                </script>                          
+            </apex:outputPanel> 
+            <apex:outputPanel id="initDesc">
+                <script>
+                    initDescCounter();
+                </script>
+            </apex:outputPanel>  
+            <apex:pageBlock rendered="{! (pagecontext == 'create' && finalcat !=null)|| pagecontext == 'edit' }"  id="PBlock11">
+                 <div class="note">             
+                  <!--  {!$Label.Routed_to}  -->
+                     <apex:outputText rendered="{!case.step__r != null && case.Casemgt_lateral_routing__c!=true}">
+                        {!$Label.Will_Route_to}&nbsp;{!case.step__r.Next_Team__c} 
+                            <apex:outputPanel rendered="{!$User.Can_Reassign_Cases__c && (case.step__r.Step_Number__c>1 || case.Further_research_required__c == true)}"> |&nbsp; 
+                                <apex:outputLink onclick="refreshroutingselect(); return false">{!$Label.Change_Routing}</apex:outputLink>
+                            </apex:outputPanel>    
+                     </apex:outputText>
+                     
+                     <apex:outputText rendered="{!case.step__r != null && case.Casemgt_lateral_routing__c == true}">
+                         {!$Label.Manual_route}&nbsp;{!case.CaseMgt_Delayed_Routing_Name__c}                  
+                            <apex:outputPanel rendered="{!$User.Can_Reassign_Cases__c}"> |&nbsp;
+                                <apex:outputLink onclick="refreshroutingselect(); return false">{!$Label.Change_Routing}</apex:outputLink>
+                            </apex:outputPanel>
+
+                    </apex:outputText>                     
+                     
+                     <apex:outputText rendered="{!case.step__r == null}" >
+                        {!$Label.Determine_routing}
+                     </apex:outputText>
+                </div> 
+            <!--  section added BW for warning-->    
+                <script>
+                  $j(document).ready(function(){
+                  $j('input[value="Save"], input[value="Ok"], input[value="Save and return"]').click(function(event)  {
+                      $j(window).unbind('beforeunload');
+                      //overridewarning = true;
+                    });
+
+                  //SK: Moved the 'flagging' code to a function b/c it is to be called for dynamic sub-sections,  too.
+                  flagRequiredFields();
+                  });
+                </script>
+            </apex:pageBlock>
+              
+            <apex:pageBlock rendered="{! pagecontext == 'create' || pagecontext == 'edit'}" id="buttons"> 
+                <div style="text-align: right"> 
+                    
+                <!--    <apex:commandButton value="Clone" action="{!URLFOR($Action.case.clone, case.id)}" rendered="{!pagecontext == 'view'}" /> -->
+                    <apex:commandButton value="Cancel" onclick="cancelclicked();" Action="{!Cancelbutton}" rendered="{!pagecontext == 'edit'}"/>
+                    <apex:commandButton value="Cancel" onclick="cancelclicked();" Action="{!Cancel}" rendered="{!pagecontext == 'create'}"/>
+               <!--     <apex:commandButton value="Save"  Action="{!savecase}" rendered="{!pagecontext == 'create' || case.Casemgt_lateral_routing__c == true}"/>  -->
+                    <apex:commandButton value="{!$Label.Save}" onclick="validateform_save(); return false" styleClass="create-action save-action" rendered="{!(pagecontext == 'edit' || pagecontext == 'create') && (case.step__r.Step_Number__c ==1 || case.step__r.Step_Number__c == null || case.Casemgt_lateral_routing__c == true)}" status="searching"/>
+                    <apex:commandButton value="Submit" onclick="enableoverride(); validateform(); return false;" rendered="{!(pagecontext == 'edit' || pagecontext == 'create')&& (case.Casemgt_lateral_routing__c != true && case.Further_research_required__c != true)}" status="searching"/>
+               <!-- Removed per new AC 5-6 BW -->
+               
+               <!--     <apex:commandButton value="Save and return" action="{!Returntoteam}" rendered="{!(pagecontext == 'edit' || pagecontext == 'create')&& case.Casemgt_lateral_routing__c == true}" />    -->               
+                    
+                    <apex:commandButton value="Edit" Action="{!Edit}" rendered="{!pagecontext == 'view' && case.isclosed == false}"/>
+                    <apex:commandbutton value="Case import tool" onclick="openbutton('ImportTool');return false" rendered="{!newbuttonmap['Importbutton']== true}"/>
+                    <apex:commandbutton value="Mass Reschedule tool" onclick="openbutton('Mass_reschedule_page');return false" rendered="{!newbuttonmap['Reschedulebutton']== true}"/>
+                    <apex:actionFunction action="{!submitcase}" name="submitcase" status="searching"/>
+                    <apex:actionFunction name="getnextstep" oncomplete="refreshrouting();"/>
+                    <apex:actionFunction name="refreshrouting" oncomplete="$j('#routing').modal('show'); $j('.changedialog').hide(); $j('.routingdialog').hide(); $j('.submitchangedialog').hide();$j('.submitchangeonly').hide(); $j('.submitdialog').show();" reRender="routingmessage"/>
+                    <apex:actionfunction name="showroutingdialog" oncomplete="$j('.routingdialog').show(); $j('.routingdialog').show();  $j('.submitdialog').hide(); $j('.submitchangedialog').show();" reRender="routing,routingmodal"/>
+                    <apex:actionFunction name="refreshroutingselect" oncomplete="$j('#routing').modal('show'); $j('.submitchangeonly').hide(); $j('.submitdialog').hide(); $j('.submitchangeonly').show(); $j('.submitchangedialog').hide();" reRender="routing,routingmodal"/>
+                    <apex:actionFunction name="cancelmodal" action="{!cancelmodal}" reRender="theform"/>
+                    <apex:actionFunction action="{!savecase}" name="savecase"/>
+                    <apex:actionFunction name="changeonly" oncomplete="closemodal()"  action="{!selectmanualrouting}" reRender="theform,routingdialog"/>
+                </div>    
+            </apex:pageBlock>
+<!-- BEGIN MODAL details -->                        
+            <div class="modal fade" id="advancedSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Find a Registration or Site ID</h4>
+                  </div>
+                  <div id="as-modal-body" class="modal-body">
+                    <div id="iframe-loading">
+                        <div class="waitingSearchDiv"> 
+                            <div class="waitingHolder">
+                                <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.loading}" />
+                                <span class="waitingDescription">Loading...</span>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal fade" id="candidateSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.Find_a_candidate}</h4>
+                            </div>
+                            <div id="acs-modal-body" class="modal-body">
+                                <div id="iframe2-loading">
+                                    <div class="waitingSearchDiv"> 
+                                        <div class="waitingHolder">
+                                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.loading}" />
+                                            <span class="waitingDescription">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--h4>TODO Add in Candidate Search Iframe</h4 -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!-- END MODAL details -->
+
+        
+        </apex:form>
+
+       <apex:pageBlock id="kwSidebar" rendered="false">
+            <div id="knowledge-sidebar" class="col-md-4">
+                <c:KnowledgeSearch id="kw" parentSObjectId="{!case.id}" myfinal="{!finalcat}" showCheckboxes="false" />
+            </div>
+        </apex:pageBlock>
+
+
+
+<!-- BEGIN RELATED LISTS SECTION -->
+        <apex:outputPanel id="relatedLists" rendered="{! Rendermap['Case Comments'] || Rendermap['Attachments'] || Rendermap['Activity History'] || Rendermap['Articles'] || Rendermap['Contact Roles'] }"> 
+            <c:HistoryComponent Case_id="{!case.id}" caseisclosed="{!case.isclosed}" mypagetype="{!pagetype}" rendered="{!Rendermap['Case Comments']}"/>
+            <apex:outputPanel rendered="{! Rendermap['Case Comments'] }">
+                <script>
+                    setupcommenttable()
+                </script>
+            </apex:outputPanel>
+           
+            <!--<apex:relatedList list="CombinedAttachments" rendered="{!Rendermap['Attachments']}"/>-->
+            <!-- Related List Attachment -->
+            <apex:outputPanel rendered="{!AND(Rendermap['Attachments'], OR(pagecontext != 'create', finalcat != null))}" styleClass="attachment_block">
+
+                <apex:actionstatus id="attachmentBlockStatus" startStyleClass="searchstatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv"> 
+                            <div class="waitingHolder">
+                                <img class="waitingImage" src="/img/loading.gif" title="{!$Label.loading}" />
+                                <span class="waitingDescription">{!$Label.loading}</span>
+                            </div>
+                    </div> <!-- @end Loader -->
+                    </apex:facet>
+                    
+                </apex:actionstatus> 
+                
+                <apex:pageBlock id="attachmentBlock" title="{!if(case.Step__r.Attachment_Required__c, 'Attachments *','Attachments')}" >
+                    <apex:pageBlockButtons location="top" rendered="{!case.isclosed == false}">
+                        <a id="attach-btn" data-toggle="modal" data-target="#attachment" class="btn">Add attachment</a>
+                        <span >
+                          <input class="myrequired{!case.step__r.attachment_required__c}" type="hidden" value="{!IF(attachmentadded, 'true', '')}"/>
+                        </span>
+                        
+
+                    </apex:pageBlockButtons>
+                    
+                    <apex:form >
+                        <apex:pageBlockTable value="{!attachments}" var="att" rendered="{!attachments.size > 0}">
+                            <apex:column styleClass="actionColumn" rendered="{!Contains($User.Primary_team_persona__c,'Mgmt')}">
+                                <apex:facet name="header">Action</apex:facet>
+                                <a class="actionLink" href="/servlet/servlet.FileDownload?file={!att.record.Id}" target="_blank">View</a>
+                                <span class="sep">|&nbsp;</span>
+                                <apex:commandLink immediate="true" value="Del" action="{!deleteAttachment}"
+                                                  status="attachmentBlockStatus" reRender="attachmentBlock" styleClass="actionLink" rendered="{!case.isclosed == false}"
+                                                  oncomplete="NotificationMessage('main-messager', 'success', '{! $Label.Attachment_Deleted }')">
+                                    <apex:param assignTo="{!deleteAttachmentId}" value="{!att.record.Id}" name="deleteAttachmentId"/>
+                                </apex:commandLink>
+                            </apex:column>
+                            
+                            <apex:column >
+                                <apex:facet name="header">File Name</apex:facet>
+                               <!--  <apex:outputLink value="/{!att.record.Id}" rendered="{!Case.isclosed == false}">{!SUBSTITUTE(att.record['Name'], 'CaseCreateTemp_', '')}</apex:outputLink> -->
+                               <apex:outputText rendered="{!Case.isclosed == false}" > 
+                               <!-- href="/servlet/servlet.FileDownload?file={!att.record.id}" -->
+                               <!-- <a  onclick="openAttachmentNewTab('/servlet/servlet.FileDownload?file={!att.record.id}')" > {!att.record['Name']} </a>  -->
+                               <a  onclick="openAttachmentNewTab('/servlet/servlet.FileDownload?file={!att.record.id}')" > {!SUBSTITUTE(att.record['Name'], 'CaseCreateTemp_', '')} </a> 
+                               </apex:outputText>
+                                
+                                <apex:outputText rendered="{!Case.isclosed== true}">{!SUBSTITUTE(att.record['Name'], 'CaseCreateTemp_', '')}</apex:outputText>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Size</apex:facet>
+                                <apex:outputText value="{!CEILING(att.record['BodyLength']/1000)}KB" />
+                            </apex:column> 
+                            <apex:column >
+                                <apex:facet name="header">Uploaded</apex:facet>
+                                <apex:outputText value="{0,date, MM/dd/yyyy HH:mm}" style="display: none">
+                                    <apex:param value="{!att.record['LastModifiedDate']}"/>
+                                </apex:outputText>
+                                <apex:outputField value="{!att.record['LastModifiedDate']}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Created By</apex:facet>
+                                <apex:outputText value="{!att.record['CreatedBy']['Name']}"/>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:form>
+                </apex:pageBlock>
+            </apex:outputPanel>
+            <!-- @end Attachment Related List -->
+            <!-- begin Emails related list -->
+            <apex:form >            
+            <apex:actionFunction rerender="emailsRelatedList" name="refreshEmailsList" />
+            <apex:pageBlock title="Emails" id="emailsRelatedList" rendered="{!Rendermap['Emails'] && (Finalcat!=null|| case.id != null)}">
+
+                <apex:pageBlockButtons location="top" rendered="{!case.isclosed == false}">
+                    <input value="Send Email" class="btn" onClick="openNewEmailTab('{!Case.Id}','{!caseRegistration.Candidate__r.Email__c}'); return false;" title="Send Email" type="button" />
+                </apex:pageBlockButtons>
+
+                <apex:pageBlockTable value="{!emailMessages}" var="em">   
+                  
+                    <apex:column headerValue="Action" styleClass="actionColumn">
+                        <apex:outputText rendered="{!Case.isclosed==false}"><a href="#" onclick="openReplyEmailTab('{!em.Id}', false); return false" class="actionLink" >Reply</a> | </apex:outputText>
+                        <apex:outputText rendered="{!Case.isclosed==false}"><a href="#" onclick="openReplyEmailTab('{!em.Id}', true); return false" class="actionLink">To All</a> </apex:outputText>
+                    </apex:column>
+                    <apex:column value="{!em.Status}" headerValue="Status"/>
+                    <apex:column >
+                        <a href="#" onclick="openViewEmail('{!em.Id}'); return false">{!em.Subject}</a><br />
+                        <span style="font-size: 80%;">{!LEFT(em.TextBody, 80) & IF(LEN(em.TextBody) > 80, '...', '')}</span>
+                    </apex:column>
+                    <apex:column value="{!em.ToAddress}" headerValue="Email Address"/>
+                    <apex:column value="{!em.MessageDate}" headerValue="Message Date"/>
+               </apex:pageBlockTable>    
+            </apex:pageBlock>                                                   
+            </apex:form>
+            <!-- ENd Emails related list -->            
+            <apex:relatedList list="ActivityHistories" rendered="{!Rendermap['Activity History']}"/>
+
+            <apex:relatedList list="Cases" rendered="{!Rendermap['Cases']}"/>            
+            <apex:relatedList list="CaseArticles" rendered="{!Rendermap['Articles']}"/>
+            <apex:relatedList list="CaseContactRoles" rendered="{!Rendermap['Contact Roles']}"/>                              
+        </apex:outputPanel>
+      <apex:outputPanel id="knowledgewidget">
+
+      </apex:outputPanel>
+        <apex:pageBlock rendered="{!Rendermap['Case History']}">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td class="pbTitle">
+                            <h3>{!$Label.History}</h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+                 
+
+        <table id="thetable" class="history-table" >
+                        <thead>
+                            <tr>                               
+                                <th>{!$Label.Field}</th>
+                                <th>{!$Label.Current_value}</th>
+                                <th>{!$Label.Former_value}</th>
+                                <th>{!$Label.Modified_date}</th>
+                                <th>{!$Label.Modified_by}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!case.Histories}" var="c" >
+                                <apex:outputPanel Rendered="{!IF(OR(c['NewValue'] == true,c['NewValue'] == false),true,(NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))))}">         
+                                    <tr>
+                                        <td>{!c.field}</td>                                   
+                                        <td>{!c.NewValue}</td>                                    
+                                        <td>{!c.OldValue}</td>
+                                        <td>
+                                          <apex:outputText value="{0,date, MM/dd/yyyy HH:mm}" style="display: none">
+                                              <apex:param value="{!c.createddate}"/>
+                                          </apex:outputText>
+                                          <apex:outputfield value="{!c.createddate}"/>
+                                        </td>
+                                        <td>{!c.createdby.name}</td>
+                                    </tr>
+                                </apex:outputPanel>        
+                            </apex:repeat>
+                        </tbody>
+                   </table>            
+
+<!--  REMOVED BW 7-8 due enable rendered for ID changes
+        <apex:pageBlockTable styleClass="history-table" value="{!case.Histories}" var="c">
+                  
+                  <apex:column value="{!c.field}" headerValue="{!$Label.Field}" Rendered="{!NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))}"/>                 
+                  <apex:column value="{!c.NewValue}" headerValue="{!$Label.Current_value}" Rendered="{!NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))}"/>
+                  <apex:column value="{!c.OldValue}" headerValue="{!$Label.Former_value}" Rendered="{!NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))}"/>                 
+                  <apex:column value="{!c.createddate}" headerValue="{!$Label.Modified_date}" Rendered="{!NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))}"/>
+                  <apex:column value="{!c.createdby.name}" headerValue="{!$Label.Modified_by}" Rendered="{!NOT(BEGINS(c['NewValue'],'005')) && NOT(BEGINS(c['NewValue'],'00G'))}"/>
+           </apex:pageBlockTable>
+-->           
+        </apex:pageBlock> 
+           
+        <script>
+            $j(document).ready(function(){
+                setuptable();  
+            });  
+        </script> 
+        
+        <!-- Attachment modal box -->
+        <div class="modal fade" id="attachment" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Add attachments</h4>
+                    </div>
+                    <div id="as-modal-body" class="modal-body">
+                        <iframe src="{!$Page.CaseAttachFile}?{!IF(pagecontext = 'create', '', 'cid='&Case.Id)}" width="100%" height="300px" />
+                    </div>
+                </div>
+            </div>
+        </div> <!-- @end Attachment Modal Box -->
+        <apex:form >
+            <apex:actionFunction name="processNewAttachments" action="{!processNewAttachments}" reRender="attachmentBlock" status="attachmentBlockStatus" />
+        </apex:form>
+        
+        <!--Routing and owner modal box-->
+        <div class="modal fade" id = "routing" tabindex ="-2" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class = "modal-dialog">
+               <apex:form id="routingForm"> 
+                <apex:pageBlock id="pbRouting" title="{!$Label.Change_Assignment_Header}">
+             
+                <apex:pageBlockSection id="routingmessage" columns="1" >
+                    <apex:outputtext rendered="{!case.Casemgt_lateral_routing__c!=true}">
+                        {!$Label.Popup_routing}&nbsp;<b>{!NextStep.Next_Team_display__c}</b>&nbsp;{!$Label.Popup_routing_end}
+                    </apex:outputtext>                                       
+                    <apex:outputText rendered="{!case.Casemgt_lateral_routing__c==true}">                     
+                        {!$Label.Popup_routing}&nbsp;<b>{!SUBSTITUTE(case.CaseMgt_Delayed_Routing_Name__c,'_',' ')}</b> {!$Label.Popup_Manual_Routing_End}
+                    </apex:outputText>
+                </apex:pageBlockSection>
+                
+                <div class="routingdialog" aria-hidden="true">
+                <apex:pageBlockSection columns="1" id="routingmodal">                 
+                       
+                       <apex:pageBlockSectionItem id="selectrouting" >
+                           <apex:outputLabel value="Select Alternate Routing"/>                           
+                           <apex:inputField value="{!Case.OwnerId}" id="routingCaseOwner" />
+                       </apex:pageBlockSectionItem>
+                  <script>
+                      disabler = (disabler == true || {!$User.Cannot_reassign_to_users__c});
+                          
+                      $j('[id*="selectrouting"] input').val('').change();
+                      $j('[id*="selectrouting"] select').attr('disabled',disabler).val('case_queue').change();
+                      
+                  </script> 
+               </apex:pageBlockSection>
+                </div>
+                  <div class="submitdialog" align="center">
+                    <apex:commandButton onclick="dosubmit(); return false" value="Confirm" />
+                  <!-- BW removed 4-29 based on PSNVSC-3328  
+                    <apex:commandbutton onclick="showroutingdialog(); return false" value="Manually Change Routing" id="rdbutton"/>                    
+                  -->
+                    <apex:commandbutton onclick="resetrouting(); return false" value="Cancel"/>
+                  </div>
+                  <!--  BW removed 4-29 based on PSNVSC-3328 
+                  <div class="submitchangedialog" align="center">
+                      <apex:commandButton action="{!Manual_route}" value="Confirm" />
+                      <apex:commandbutton onclick="resetrouting(); return false" value="Cancel"/>
+                  </div>
+                  -->
+                  
+                  <div class="submitchangeonly" align="center">
+                      <apex:commandButton value="Ok"  action="{!selectmanualrouting}" onclick="cancelclicked()" />
+                      <apex:commandbutton onclick="resetrouting(); return false" value="Cancel" styleClass="assignment-cancel"/>
+                      
+                  </div>
+                    <script>
+                      $j(document).ready(function(){
+                      $j('input[value="Confirm"], input[value="Ok"], .assignment-cancel').click(function(event){
+                          $j(window).unbind('beforeunload');
+                          //overridewarning = true;
+                          });
+                      });    
+                    </script>
+               </apex:pageBlock>
+              </apex:form>
+            </div>
+        </div>    <!-- end routing Modal box -->
+        
+    </body>
+    
+    <script>
+    function closePopUp(){
+        $j('#attachment').modal('hide');
+    }
+    </script>
+</apex:page>

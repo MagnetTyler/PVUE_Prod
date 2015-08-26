@@ -1,0 +1,102 @@
+<apex:page controller="importDataFromCSVController">
+
+        <apex:includescript value="//code.jquery.com/jquery-1.11.1.min.js" / >
+        <apex:includescript value="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js" />
+        <apex:stylesheet value="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css" />
+        <apex:includeScript value="/support/console/22.0/integration.js"/>
+
+ <script type="text/javascript">
+            var contactTable;
+            j$ = jQuery.noConflict();
+            j$(document).ready( function () {
+            contactTable = j$('[id$="returntable"]').DataTable({
+                    order: [[1,'asc'],[2, 'asc']]});
+           });
+         
+    
+        function openPrimaryTab(id) {
+            sforce.console.openPrimaryTab(undefined, 
+               '/'+id, true);
+        }
+             
+        //The callback function that closeTab will call once its got the ID for its tab
+        var callCloseTab= function callCloseTab(result) {           
+            var mytabid = result.id
+            sforce.console.closeTab(mytabid);
+            
+        }
+        
+        function closeTab() {
+         
+            sforce.console.getEnclosingTabId(callCloseTab);
+        }
+</script>
+
+<style type="text/css">
+    .empty-column-content {
+        display: none;
+    }
+</style>
+
+
+
+    <apex:form >
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}"/>
+                  <apex:commandButton value="Import File" action="{!importCSVFile}"/>
+                  <apex:commandbutton value="Return to Case" onclick="closeTab(); return false"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock >
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Create Cases" action="{!createcases}" rendered="{!csvFileBody!=null}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}" rendered="{!csvFileBody!=null}"/>
+            <apex:commandButton value="Attach to Parent" action="{!attachtocase}" rendered="{!csvFileBody!=null}" />
+        </apex:pageBlockButtons>          
+
+<apex:outputLink onclick="openPrimaryTab(); return false" >
+                                testing                                 
+                                </apex:outputLink>
+
+             <table id="returntable" class="display" >
+                <thead>
+                   <tr>
+                        <th>Select</th>
+                        <th>Test Center Name</th>                    
+                        <apex:repeat value="{!headers}" var="h">
+                            <th>{!h}</th>
+                        </apex:repeat>
+                        <th>Details</th>
+                        <th>Created</th>                                      
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <apex:repeat value="{!rowswithselect}" var="r">
+                        <tr>
+                            <td>
+                               <apex:inputcheckbox value="{!r.selected}"  disabled="{!r.testcenter.name ==null}" styleClass="regCheckbox" />                                
+                            </td>
+                            
+                            <td>
+                                <apex:outputLink onclick="openPrimaryTab('{!r.testcenter.id}'); return false" >
+                                {!r.testcenter.name}                                  
+                                </apex:outputLink>
+                            </td>
+                            <apex:repeat value="{!r.fieldlist}" var="fl">
+                                <td>{!fl}</td>
+                            </apex:repeat>
+                            <td>{!r.details}</td>
+                            <td><apex:inputcheckbox value="{!r.created}" disabled="true" /></td>
+                        </tr>
+                    </apex:repeat> 
+
+                </tbody>
+            </table>
+    
+        </apex:pageBlock>
+   </apex:form>
+</apex:page>

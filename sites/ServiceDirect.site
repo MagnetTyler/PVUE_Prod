@@ -9,6 +9,7 @@
     <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
     <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
     <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <favoriteIcon>favicon</favoriteIcon>
     <fileNotFoundPage>FileNotFound</fileNotFoundPage>
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>CommunitiesLogin</inMaintenancePage>
@@ -19,6 +20,12 @@
     <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
     <siteAdmin>tyler.rendleman2@magnet360.com</siteAdmin>
+    <siteRedirectMappings>
+        <action>Permanent</action>
+        <isActive>true</isActive>
+        <source>/home/home.jsp</source>
+        <target>500/o</target>
+    </siteRedirectMappings>
     <siteType>ChatterNetwork</siteType>
     <subdomain>servicedirect</subdomain>
 </CustomSite>

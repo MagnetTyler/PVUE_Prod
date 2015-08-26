@@ -97,6 +97,22 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
+        <fullName>Internal_Team</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Internal Team</label>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers></allInternalUsers>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
         <fullName>Regulatory_Users_See_Regulatory_Accounts</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>
@@ -110,6 +126,40 @@
         </sharedTo>
         <sharedFrom>
             <role>Regulatory_Americas_BusDev_Prog_Mgmt_Sales</role>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>ServiceDirect_External_to_Internal</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Allow account sharing between external owners and ServiceDirect internal users</description>
+        <label>ServiceDirect - External to Internal</label>
+        <sharedTo>
+            <group>Pearson_service_cloud_internal_users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Pearson_service_cloud_external_users</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>ServiceDirect_Internal_to_Internal</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Edit</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <description>Allow account sharing between internal ServiceDirect users</description>
+        <label>ServiceDirect - Internal to Internal</label>
+        <sharedTo>
+            <group>Pearson_service_cloud_internal_users</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Pearson_service_cloud_internal_users</group>
         </sharedFrom>
     </sharingOwnerRules>
 </SharingRules>

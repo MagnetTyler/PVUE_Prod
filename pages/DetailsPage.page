@@ -1,0 +1,43 @@
+<apex:page controller="DetailsPage" showHeader="{!NOT(ISPICKVAL($User.UserType, 'Standard'))}" action="{!initData}">
+    
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Refresh" action="{!refreshVtsData}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+
+    <!-- Begin Default Content REMOVE THIS -->
+    <apex:pageBlock title="Candidate Details" rendered="{!mycandidate != null}">
+        <apex:pageBlockSection columns="1">
+            <apex:repeat value="{!$ObjectType.Candidate__c.FieldSets.detailspage}" var="c"> 
+                <apex:outputField value="{!mycandidate[c]}" label="{!c.label & IF(CONTAINS(c.label, ':'), '', ':')}" />
+            </apex:repeat>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Registration Information" rendered="{!myreg!=null}">
+        <apex:pageBlockSection columns="1">
+            <apex:repeat value="{!$ObjectType.Registration__c.FieldSets.detailspage}" var="r"> 
+                <apex:outputField value="{!myreg[r]}" label="{!r.label & IF(CONTAINS(r.label, ':'), '', ':')}" />
+            </apex:repeat>
+        </apex:pageBlockSection>
+    </apex:pageBlock> 
+    
+    <apex:pageBlock title="Exam Information" rendered="{!myexam!=null}">
+        <apex:pageBlockSection columns="1">
+            <apex:repeat value="{!$ObjectType.Exam__c.FieldSets.detailspage}" var="e"> 
+                <apex:outputField value="{!myexam[e]}" label="{!e.label & IF(CONTAINS(e.label, ':'), '', ':')}" />
+            </apex:repeat>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="Test Center Information" >
+        <apex:pageBlockSection columns="1">
+            <apex:repeat value="{!$ObjectType.Account.FieldSets.tcdetailspage}" var="tc"> 
+                <apex:outputField value="{!mytestcenter[tc]}" label="{!tc.label & IF(CONTAINS(tc.label, ':'), '', ':')}" />
+            </apex:repeat>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

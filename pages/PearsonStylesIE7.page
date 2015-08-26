@@ -1,0 +1,32 @@
+<apex:page contentType="text/css;charset=UTF-8">
+  
+  html body .pearson-header{
+      position: relative;
+      z-index: 1 !important;
+  }
+  
+  html body .pearson-header #phSearchButton{
+      height: 33px !important;
+  }
+  
+  html body .pearson-header .col-md-12{
+      z-index: 2 !important;
+  }
+  
+  html body .pearson-header .dropdown-menu{
+      position: absolute;
+      z-index: 1001;
+  }
+  
+  html body .pearson-header .community-navigation.col-md-12{
+      z-index: -1 !important;
+  }
+  
+  html body .pearson-header .community-navigation .dropdown,
+  html body .pearson-header .community-navigation #navigation-breadcrumb
+  {
+      float: left;
+  }
+  
+  
+</apex:page>

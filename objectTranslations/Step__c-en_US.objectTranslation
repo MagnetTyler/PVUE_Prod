@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Step</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Step</value>
+    </caseValues>
+    <fields>
+        <label><!-- Attachment Required --></label>
+        <name>Attachment_Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Go to step --></label>
+        <name>Go_to_step__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Dynamic Sections --></label>
+        <name>Has_Dynamic_Sections__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has forked logic --></label>
+        <name>Has_forked_logic__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Team --></label>
+        <name>Next_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Next Team display --></label>
+        <name>Next_Team_display__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma-separated list of personas who can Accept the Case at this step. --></help>
+        <label><!-- Personas - Can accept --></label>
+        <name>Personas_Can_Accept__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma-separated list of personas who can Close the Case at this step. --></help>
+        <label><!-- Personas - Can close --></label>
+        <name>Personas_Can_Close__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma-separated list of personas who can Edit the Case at this step. --></help>
+        <label><!-- Personas - Can edit --></label>
+        <name>Personas_Can_Edit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Routing --></label>
+        <name>Routing__c</name>
+        <relationshipLabel><!-- Steps --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- SLA - Pickup (Days) --></label>
+        <name>SLA_Pickup_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- SLA - Working (Days) --></label>
+        <name>SLA_Working_Days__c</name>
+    </fields>
+    <fields>
+        <label><!-- Section Visible --></label>
+        <name>Section_Visible__c</name>
+        <picklistValues>
+            <masterLabel>Section 1</masterLabel>
+            <translation><!-- Section 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 10</masterLabel>
+            <translation><!-- Section 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 2</masterLabel>
+            <translation><!-- Section 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 3</masterLabel>
+            <translation><!-- Section 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 4</masterLabel>
+            <translation><!-- Section 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 5</masterLabel>
+            <translation><!-- Section 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 6</masterLabel>
+            <translation><!-- Section 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 7</masterLabel>
+            <translation><!-- Section 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 8</masterLabel>
+            <translation><!-- Section 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 9</masterLabel>
+            <translation><!-- Section 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Step Number --></label>
+        <name>Step_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Who is doing the Work --></label>
+        <name>Who_is_doing_the_Work__c</name>
+        <picklistValues>
+            <masterLabel>Accomodations</masterLabel>
+            <translation><!-- Accomodations --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Any Internal User</masterLabel>
+            <translation><!-- Any Internal User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Candidate_Issue</masterLabel>
+            <translation><!-- Candidate_Issue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Channel_Quality</masterLabel>
+            <translation><!-- Channel_Quality --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Channel_Sales</masterLabel>
+            <translation><!-- Channel_Sales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Channel_Security</masterLabel>
+            <translation><!-- Channel_Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed</masterLabel>
+            <translation><!-- Closed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Defect_Queue</masterLabel>
+            <translation><!-- Defect_Queue --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fulfillment</masterLabel>
+            <translation><!-- Fulfillment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NOC</masterLabel>
+            <translation><!-- NOC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPC_Support</masterLabel>
+            <translation><!-- PPC_Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program_Coordinator</masterLabel>
+            <translation><!-- Program_Coordinator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Program_Manager</masterLabel>
+            <translation><!-- Program_Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Regional_test_center_manager</masterLabel>
+            <translation><!-- Regional_test_center_manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Results_Processing</masterLabel>
+            <translation><!-- Results_Processing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Same owner</masterLabel>
+            <translation><!-- Same owner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test_Center</masterLabel>
+            <translation><!-- Test_Center --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Test_Publishing</masterLabel>
+            <translation><!-- Test_Publishing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VSS_Level_1</masterLabel>
+            <translation><!-- VSS_Level_1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VSS_Level_2</masterLabel>
+            <translation><!-- VSS_Level_2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VSS_Manager</masterLabel>
+            <translation><!-- VSS_Manager --></translation>
+        </picklistValues>
+    </fields>
+    <recordTypes>
+        <label><!-- Routing Step --></label>
+        <name>Routing_Step</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Section Sub-Step --></label>
+        <name>Section_Sub_Step</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

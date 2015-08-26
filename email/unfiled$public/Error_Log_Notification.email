@@ -1,0 +1,5 @@
+Process {!Error_Log__c.Process_Function_Name__c} in your Salesforce application has encountered the following error:
+{!Error_Log__c.Error_Message__c}
+
+Please click the following link to view details of the error:
+{!Error_Log__c.Link}

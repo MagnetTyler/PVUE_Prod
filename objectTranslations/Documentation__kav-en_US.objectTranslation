@@ -19,6 +19,11 @@
         <name>Attachment_2__c</name>
     </fields>
     <fields>
+        <help><!-- Browse to a file. --></help>
+        <label><!-- Attachment --></label>
+        <name>Attachment__c</name>
+    </fields>
+    <fields>
         <label><!-- Case topic --></label>
         <name>Case_topic__c</name>
         <picklistValues>

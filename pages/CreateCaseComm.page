@@ -1,0 +1,1456 @@
+<apex:page sidebar="false" StandardController="Case" extensions="CreatePoc" tabStyle="Case" action="{!deleteTempDocuments}">
+    <head>        
+        <apex:stylesheet value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.css')}"/>
+        <apex:stylesheet value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/css/jquery.dataTables.css')}" />
+        <link rel="stylesheet" href="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.css') }"/>
+
+        <apex:includeScript value="{! URLFOR($Resource.jQuery) }"/>
+        <script type="text/javascript" src="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.js')}"></script>
+        <apex:includeScript value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.js')}"/>
+        <apex:includescript value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/js/jquery.dataTables.min.js')}" />
+        
+        <script src="../../soap/ajax/33.0/connection.js"
+          type="text/javascript"></script>
+        
+        <script type="text/javascript">
+        
+         var $j = jQuery.noConflict();
+
+        //Select knowledge articles checkboxes
+        function setSelKArticles(){
+            var selectedIds = $('input[id$=KW_selectedKnowledgeArticleIds]').val();
+            $('input[id$=selKnowledgeArticleIds]').val(selectedIds);
+        }
+        
+        //new items added for advanced search
+
+        function fillIn(id,fieldid) 
+        {    
+            
+            var winMain=window.opener;
+            var id = id;
+            if (null==winMain)
+            {
+                winMain=window.parent.opener;
+            }
+            var ele = document.getElementById(fieldid);
+            ele.value=id;
+            
+            var event = new Event('change');
+
+            // Dispatch it.
+            ele.dispatchEvent(event);
+            
+            //closeLookupPopup();
+            closeModal();
+            ele.focus();
+        }
+        
+        function addCandidate(fieldid, value, label){
+            var option = '<option value="' + value + '">' + label + '</option>';
+            //console.log(option);
+            var fieldselect = document.getElementById(fieldid);
+            //console.log(field);
+            /* TODO Research selecting value inside select2 picklist (different than standard picklist)*/
+            $j(fieldselect).append(option);
+            $j('[id*="typeahead"]').select2("val", value).change();
+            
+            closeModal();
+            
+        }
+
+        function initSearchIframe(id) {
+            var url="/ta/Advanced_Search?idfield=" + id;
+            var iframe = '<iframe id="candidateSearchIframe" name="candidateSearchIframe" src="' + url + '" width="100%" height="500px"></iframe>';
+            if(!$j('#candidateSearchIframe').length){
+                $j('#acs-modal-body').append(iframe);
+                $j('#candidateSearchIframe').load(function(){
+                    $j('#iframe-loading').hide();
+                    
+                });
+            }
+        }
+        
+        // new javascript remoting section to get around user CRUD rights
+        
+          function insertReg() {
+            var output = $j('[id*="acs"]').val();
+            
+
+             try {
+                var queryResult = sforce.apex.execute("RemoteServices","UpsertReg",{VTS_Reg_id:output});
+                layoutResults(queryResult, output);
+            } catch(error) {
+                queryFailed(error, output);
+            }
+        }
+ 
+        function queryFailed(error, out) {
+            out.innerHTML = "<font color=red>An error has occurred:</font> <p>" + error;
+        }
+       
+        function closeModal() {
+            /* Modal function not working for Safari 
+                TypeError: undefined is not a function (evaluating '$j('#candidateSearch').modal('hide')')
+                Need to investigate, closeAttachmentModal which contains the same hide modal function seems to work in Safari
+            */
+            //$j('#candidateSearch').modal('hide');
+            $j('#candidateSearch .close').click(); // Temporary Hack for Safari 
+         }
+        
+        function closeAttachmentModal(){
+            closeCommentPopUp();
+            $j('#attachment').modal('hide');    
+        }
+                
+        function validateform(){
+                var passed = true;
+                $j('.submitstatus').show();
+                $j('input.saverequiredtrue, select.saverequiredtrue, input.myrequiredtrue, select.myrequiredtrue, textarea.myrequiredtrue').each(function(){
+                    var fieldvalue = $j(this).val();
+                    var ele = $j(this).parent().find(".required-label");
+
+                    if(fieldvalue == null || fieldvalue == ''){
+                        if(!ele.length){
+                            var reqel ='<span class="required-label">{!$Label.Required}</span>';
+                            $j(this).parent().append(reqel);
+                        }
+                        passed = false;
+                    }else if(ele.length){
+                        ele.remove();
+                    }
+
+                    if($j(this).hasClass('Description-input')){
+                          var characters = fieldvalue.length;
+                          if(characters > 25000){
+                            passed = false;
+                          }
+                    }
+
+                });
+                if(passed){
+                    submitcase();    
+                }else{
+                    $j('.submitstatus').hide();
+                    NotificationMessage('main-messager', 'error', '{!$Label.Submit_Validation_Error}'); 
+                }
+         }
+        
+        /*
+        $(document).ready(function(){
+            $("button").click(function(){
+            $("#displaymessage").toggle();
+            });
+        });
+        */
+        
+        function validateform_save(){
+                var passed = true;
+                $j('input.saverequiredtrue, select.saverequiredtrue').each(function(){
+                    var fieldvalue = $j(this).val();
+                    var ele = $j(this).parent().find(".required-label");
+                    if(fieldvalue == null || fieldvalue == ''){
+                        if(!ele.length){
+                            var reqel ='<span class="required-label">{!$Label.Required}</span>';
+                            $j(this).parent().append(reqel);
+                        }
+                        passed = false;
+                    }else if(ele.length){
+                        ele.remove();
+                    }
+                });
+                var description = $j('.Description-input');
+                if(description.length){
+                    var characters = description.val().length;
+                      if(characters > 25000){
+                        passed = false;
+                      }
+                }
+
+                if(passed){
+                    savecase();    
+                }else{ 
+                    NotificationMessage('main-messager','error', '{!$Label.save_Validation_Error}')
+                }
+         }
+        
+        function refreshDefaultSelectOption(){
+            $j('select option').each(function(){
+                    var html = $j(this).html();
+                    if(html == "--None--"){
+                        $j(this).html('{! $Label.Select_One }');
+                    }
+            });    
+        }
+        
+        function initDescCounter(){
+            var description = $j('.Description-input');
+            var textcontainer = $j('#text-counter');
+            if(textcontainer.length){
+                textcontainer.remove();
+            }
+            if(description.length){
+                var limit = 25000;
+                description.removeAttr('maxLength');
+                var initialcount = description.val().length;
+                var initialremaining = limit - initialcount;
+                if(initialremaining >= 0){
+                    var counter = '<div id="text-counter">' + (limit - description.val().length) + ' characters remaining</div>';
+                }else{
+                    var initialamountover = -initialremaining;
+                    var counter = '<div id="text-counter" class="limit-exceeded"><i class="fa fa-exclamation-circle"></i> ' + initialamountover + ' character' + (initialamountover == 1 ? '' : 's') + ' over the limit. The description must be ' + limit + ' characters or less in length.</div>';
+                }
+                description.after(counter);
+                
+                function updateCount(){
+                    var count = description.val().length;
+                    var remaining = limit - count;
+                    if(remaining >= 0){
+                        $j('#text-counter').removeClass('limit-exceeded').html(remaining + ' character' + (remaining == 1 ? '' : 's') + ' remaining');   
+                    }else{
+                        var amountover = -remaining;
+                        var countertext = '<i class="fa fa-exclamation-circle"></i> ' + amountover + ' character' + (amountover == 1 ? '' : 's') + ' over the limit. The description must be ' + limit + ' characters or less in length.'
+                        $j('#text-counter').addClass('limit-exceeded').html(countertext);
+
+                    }
+                }
+                
+                description.keyup(function(){
+                    updateCount();
+                }).change(function(){
+                    updateCount();
+                });
+            }       
+        }
+        
+        function initTypeahead(){
+            //console.log('Typeahead Initialized!');
+            //console.log($j('.candtypeahead'));
+            $j('.candtypeahead').select2({
+                dropdownAutoWidth : true
+            });
+            //console.log('Typeahead Complete');
+        }
+       
+        function setuptable(){
+        var contactTable = $j('table.case-comment-table').DataTable({
+                    "paging":   false,
+                    "scrollCollapse": true,
+                    "searching": false,
+                    "order": [[1, 'desc']],
+                    "info":     false
+                } );
+             }
+        function setupattachtable(){        
+             var table2 = $j(' table.attachment-table').DataTable({
+                    "paging":   false,
+                    "scrollCollapse": true,
+                    "searching": false,
+                    "order": [[2, 'desc']],
+                    "info":     false
+                } );
+        }
+        
+        function scrollTop(){
+            $j("html, body").animate({ scrollTop: 0 }, "fast");   
+        }
+        
+        function initSelect(){
+            $j('select option').each(function(){
+                var html = $j(this).html();
+                if(html == "--None--"){
+                    $j(this).html('{! $Label.Select_One }');
+                }
+            }); 
+        }
+        
+        /*
+        $j(document).ready(function(){
+            $j('.commentList').find("td.pbButton").html('<a data-target="#addComments" data-toggle="modal" id="attach-btn" onClick="showAddComment();" class="btn">{!$Label.Add_comment}</a>');
+            
+        });
+        */
+                     
+        </script>
+        <apex:outputPanel >
+            <style>
+                input[value="Find Articles"]{
+                    display: none;
+                }
+                .listRelatedObject.knowledgeBlock .pbTitle{
+                    height: 32px;
+                }
+                .listRelatedObject.knowledgeBlock .actionColumn, 
+                .listRelatedObject.knowledgeBlock .DateElement,
+                .listRelatedObject.knowledgeBlock .headerRow .zen-deemphasize:nth-child(2),
+                .listRelatedObject.knowledgeBlock .dataRow .dataCell:nth-child(2)
+                {
+                    display: none;
+                }
+            </style>
+            <script>
+                $j(window).ready(function(){
+                    /* Remove items from Knowledge article base related list */
+                    $j('input[value="Find Articles"], .listRelatedObject.knowledgeBlock .actionColumn, .listRelatedObject.knowledgeBlock .DateElement').remove();
+                    
+                    //$j('.knowledgeBlock .list').DataTable();
+                });
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!pagecontext != 'view'}">
+            <script>
+            
+                var cancel = false;
+                var cancelformvalues = '';
+                        
+                 $j(window).ready(function(){
+                     /* Intial Values */
+                     
+                     var form = $j('form[id*="theform"]');
+                     var initialvalues = form.serialize();
+                               
+                     /* TODO: Logic to see if form fields have been filled, not triggered by Submit button */        
+                    
+                     $j(window).bind('beforeunload', function(){ 
+                        var valuesonexit = $j('form[id*="theform"]').serialize();                      
+                        if((initialvalues !== valuesonexit) && (cancel == false)){
+                            return 'Data not Saved!';
+                        }else if((cancel == true) && (initialvalues !== cancelformvalues)){
+                            cancel = false; // resetting in case they stay on page;
+                            return 'Data not Saved!';
+                        }
+                     });
+                     
+                     
+          
+                 });
+                 
+                 /* Function for cancel button before it calls submit and changes form data            
+                  * Cancel Button seems to change form data, causing the alert to fire in all cases.
+                  */
+                 function cancelclicked(){
+                     cancel = true;
+                     cancelformvalues = $j('form[id*="theform"]').serialize();                    
+                 } 
+                                                     
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!pagecontext != 'create'}">
+            <script>
+                $j(document).ready(function() {
+                    $j('#navigation-breadcrumb').html('' + '{! IF(pagecontext == "view", "Case: ", "") }{! IF(pagecontext == "edit", "Edit: ", "") }' +'{! Case.CaseNumber }');
+                });
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel id="kt">
+            <script>
+                $j(document).ready(function() {
+        
+                    $j('#close-knowledge').click(function(){
+                        $j('#knowledge-sidebar').hide();
+                        $j('#main-body').removeClass('col-md-8').addClass('col-md-12');
+                        $j('#knowledge-opener').show();
+                    });
+                    
+                    $j('#open-knowledge').click(function(){
+                        $j('#knowledge-sidebar').show();
+                        $j('#main-body').removeClass('col-md-12').addClass('col-md-8');
+                        $j('#knowledge-opener').hide();
+                    });
+   
+               });
+            </script>
+        </apex:outputPanel>
+        
+        <style type="text/css">
+            
+                body .bodyDiv{
+                    min-height: 500px !important;
+                }
+            
+                .bPageBlock .detailList .labelCol {
+                  width: 25% !important;
+                }
+    
+               .create-action{
+                    font-size: 12px;
+                    font-weight: 400 !important;
+                    background: #eee !important;
+                    width: 100px;
+                    padding: 5px;
+                    border-color: #ccc !important;
+                    margin-right: 10px !important;                
+               }
+               .create-action:hover{
+                    background: #dadada !important;
+                    border-color: #ADADAD !important;
+               }
+               .create-action.save-button{
+                    background: #0089b7 !important;
+                    color: #ffffff;
+                    border: 1px solid #308cac !important;
+               }
+               .create-action.save-button:hover{
+                    background: #2c83a1 !important;
+                    border-color: #22657d;
+               }
+               
+               .select2-container{
+                    //min-width: 250px;
+               }
+               
+               .select2-results li{
+                    margin-left: 0px;
+                    font-size: 12px;
+                }
+                
+               .select2-choice{
+                   height: 18px !important;
+                   font-size: 12px !important;
+                   line-height: 16px !important;
+               }
+               
+               html body .select2-container .select2-choice .select2-arrow b{
+                   background-size: 60px 22px !important;
+               }
+               
+               .acs-btn{
+                    cursor: pointer;
+                    margin-left: 10px;
+                    color: #428bca !important;
+                }
+                
+                #clear-btn{
+                    display: none;
+                }
+            
+                .modal-dialog{
+                    width: 800px;
+                }
+            
+                #candidateSearchIframe{
+                    border: none !important;
+                }
+                
+                .bPageBlock .pbHeader .pbHelp{
+                    display: none !important;
+                }
+                textarea{
+                    width: 50%;
+                }
+                .bRelatedList .bPageBlock .pbHeader{
+                    border-bottom: 1px solid #dbdbdb !important;
+                    padding: 0px !important;
+                }
+                #knowledge-sidebar{
+                    position: relative;
+                }
+                #knowledge-sidebar .knowledge-search{
+                    position: fixed;
+                    right: 2%;
+                    width: 30%;
+                    overflow: hidden;
+                    max-height: 450px;                    
+                }
+                #knowledge-opener{
+                    display: none;
+                    position: fixed;
+                    background: #2d3237;
+                    opacity: 0.8;
+                    right: 0px;
+                    top: 30%;
+                    border-radius: 5px 0px 0px 5px;
+                }
+            
+                #knowledge-opener a{
+                    color: #fff !important;
+                    font-size: 24px;
+                    padding: 20px 10px;
+                    display: block;
+                }
+                #knowledge-opener a:hover{
+                    color: #fff !important;
+                }
+                #knowledge-opener:hover{
+                    opacity: 1;
+                }
+               .required-label{
+                    margin-left: 5px;
+                    color: #e04854;
+                }
+                span.sep{
+                    font-size:13px;
+                    padding-right:3px;
+                }
+                .Commentform .mainTitle{
+                    padding: 8px 5px !important;
+                }
+            
+                .attachment_block .pbBody, .Commentform .pbBody{
+                    margin: 6px !important;
+                    padding: 10px !important;
+                }
+                .attachment_block .pbBody .noRowsHeader, .Commentform .pbBody .noRowsHeader{
+                    font-weight: normal !important;
+                    font-size: 1em !important;
+                    background: #f8f8f8 !important;
+                }
+                .comment-form .pbBody{
+                    padding: 0px !important;
+                    margin: 0px !important;
+                }
+                .comment-form .bPageBlock.apexDefaultPageBlock{
+                    border: none !important;
+                }
+                .comment-form textarea{
+                    width: 90%;
+                    height: 120px;
+                }
+                .comment-form .action-buttons{
+                    padding: 10px 0px 0px;
+                }
+                .comment-form .action-buttons .btn{
+                    width: 100px !important; 
+                    padding: 5px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 12px;
+                    font-weight: 400 !important;
+                    background: #eee !important;
+                    border-color: #ccc !important;
+                }
+                .comment-form .action-buttons .btn:hover{
+                    background: #dadada !important;
+                    border-color: #ADADAD !important;
+                }
+                .comment-form .action-buttons .submit-comment {
+                    color: #ffffff;
+                    border: 1px solid #308cac !important;
+                    background: #0089b7 !important;
+                    font-weight: normal !important;
+                }
+                .comment-form .action-buttons .submit-comment:hover{
+                    background: #2c83a1 !important;
+                    border-color: #22657d;
+                }
+                .comment-form .list{
+                    margin: 10px 0px;
+                }
+                .close.disabled:hover{
+                    opacity: .2 !important;
+                    color: #909090 !important;
+                    cursor: default;
+                }
+                #text-counter.limit-exceeded{
+                    color: red;
+                }
+                .Description-input{
+                    height: 150px;   
+                    width: 80%;
+                }
+        </style>
+        <apex:outputPanel rendered="{! pagecontext != 'view'}">
+            <style>
+                #create-case-btn{
+                    display: none;
+                }
+            </style>
+        </apex:outputPanel>
+    </head>
+    <body>
+        <div class="container-fluid">
+           <div class="row"> 
+               <!-- changes to col-md-12 upon knowledge collapse --> 
+               <div id="main-body" class="{! IF(OR(pagecontext = 'create', pagecontext = 'edit'), 'col-md-8', 'col-md-12') }">
+
+                <apex:sectionHeader rendered="false" title="Case" subtitle="{!if(Case.CaseNumber==null,'Search or Create New Case',Case.CaseNumber)}" />
+                 
+                <apex:form id="theform">
+                    <apex:inputHidden value="{!selKnowledgeArticleIds}" id="selKnowledgeArticleIds" />
+                    <script>
+                        $j(document).ready(function(){
+                            $j('.create-action.save-button, .create-action.save-action').click(function(event){
+                                $j(window).unbind('beforeunload');
+                            });
+
+                            //SK: Moved the 'flagging' code to a function b/c it is to be called for 
+                            //    dynamic sub-sections, too
+                            flagRequiredFields();
+                        });
+                          
+                        function flagRequiredFields() {
+                            $j('.myrequiredtrue, .saverequired').each(function(){
+                                var fieldid = $j(this).attr("id");
+                                if(!fieldid){
+                                    fieldid = $j(this).attr("name");    
+                                }
+                                //SK: Added a check to ensure that the '*' is not added repeatedly when this
+                                //    function is called repeatedly b/c of dynamic sub-section rendering.
+                                if ( $j('label[for="' + fieldid + '"]').text().indexOf("*") == -1 ) {
+                                    $j('label[for="' + fieldid + '"]').append(" *");
+                                }
+                            });
+                      
+                        }
+
+                        function onSectionFieldChange(fld, sectionName) {
+                            refreshSectionsWithSubSections();
+                            //console.log("field changed!");
+                            if (sectionName in sectionsWithSubSection) {
+                                renderSubSections();
+                            }
+                        }
+                    </script> 
+                    <apex:outputPanel id="sectionsArray">
+                        <script>
+
+                            var sectionsWithSubSection = {};
+                            <apex:repeat value="{!sectionsWithSubSection}" var="sectionName">
+                                sectionsWithSubSection["{!sectionName}"] = true;
+                            </apex:repeat>
+
+                        </script>
+                    </apex:outputPanel>
+                    <apex:actionFunction id="refreshSections" name="refreshSectionsWithSubSections" status="searching" reRender="sectionsArray"/>
+                    <apex:actionFunction id="myrender" name="renderSubSections" status="searching" oncomplete="flagRequiredFields(); initSelect();"
+                                         reRender="PBlock01,PBlock02,PBlock03,PBlock04,PBlock05,PBlock06,PBlock07,PBlock08,PBlock09,PBlock10,initDesc" />
+
+                  <!--  <apex:messages /> -->
+        
+                    <c:NotificationMessages elementid="main-messager"></c:NotificationMessages>
+                    <apex:outputPanel rendered="{! Feedback == true }">
+                        <script>
+                            $j(document).ready(function(){
+                                NotificationMessage('main-messager', 'success', '{!$Label.Case} {!case.casenumber} {!comment}');   
+                            })
+                        </script>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="commentSavedNotif">
+                        <apex:outputPanel rendered="{! commentsaved }">
+                            <script>
+                                $j(document).ready(function(){
+                                    NotificationMessage('main-messager', 'success', '{!$Label.Comment_Saved}');
+                                });
+                            </script>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! ownerchange == true}">
+                        <script>
+                            $j(document).ready(function(){
+                                NotificationMessage('main-messager', 'warning', '{! $Label.Page_Ownership_Change }');
+                            });
+                        </script>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! ownereturn == true }">
+                        <script>
+                            $j(document).ready(function(){
+                                NotificationMessage('main-messager', 'success', '{!$Label.Page_ownership_return} {!ownername}');
+                            });
+                        </script>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! hasnotificationmessage }">
+                        <script>
+                            $j(document).ready(function(){
+                                NotificationMessage('main-messager', '{!messagetype}', '{! notificationmessage }');
+                            });
+                        </script>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! haswarningmessage }">
+                        <script>
+                            $j(document).ready(function(){
+                                NotificationMessage('main-messager', '{!messagetype}', '{! warningmessage }');
+                            });
+                        </script>
+                    </apex:outputPanel>
+
+                    <!-- div id="required-error" class="message error-message alert alert-dismissible" role="alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                            {!$Label.Submit_Validation_Error}
+                        </p>
+                    </div>
+                    <div id="required-error-save" class="message error-message alert alert-dismissible" role="alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                            {!$Label.save_Validation_Error}
+                        </p>
+                    </div>
+                    <apex:outputtext rendered="{!Feedback == true}" >
+                    <div id="displaymessage" class="message success-message alert alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                                    {!$Label.Case} {!case.casenumber} {!comment}
+                        </p>
+                    </div>
+                   </apex:outputtext>
+                    <apex:outputPanel id="commentSavedNotif" >
+                        <apex:outputtext rendered="{!commentsaved}" >
+                        <div id="displaymessage" class="message success-message alert alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p>
+                                        {!$Label.Comment_Saved}
+                            </p>
+                            <script>
+                                var notif = $j('#notification-message');
+                                if(notif.length){
+                                    notif.hide();    
+                                }
+                                scrollTop();
+                            </script>
+                        </div>
+                       </apex:outputtext>
+                   </apex:outputPanel>
+                   <apex:outputtext rendered="{!ownerchange == true}" >
+                    <div id="displayalert" class="message warning-message alert alert-dismissible" role="alert" >
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                                    {!$Label.Page_Ownership_Change}
+                        </p>
+                    </div>
+                   </apex:outputtext>
+                   <apex:outputtext rendered="{!ownereturn == true}" >
+                    <div id="displayalert" class="message success-message alert alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                                    {!$Label.Page_Ownership_return} {!ownername}
+                        </p>
+                    </div>
+                   </apex:outputtext>
+                    <apex:outputText >
+                        <div id="attachment-success" class="message success-message alert alert-dismissible" role="alert" style="display: none" >
+                            <button type="button" class="close" onclick="$j('#attachment-success').hide()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p>
+                                    {! $Label.Attachment_uploaded_sucessfully }
+                            </p>
+                        </div>
+                    </apex:outputText>
+                    <apex:outputText rendered="{! hasnotificationmessage }">
+                        <div id="notification-message" class="message info-message alert alert-dismissible" role="alert">
+                            <apex:commandButton styleClass="close command-close" style="display: none" onClick="$j('#notification-message').hide(); return true"  action="{! clearnotification }" value="X"/>
+                            <button type="button" class="close" onClick="$j('.command-close').click();" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <p>
+                                        {! notificationmessage }
+                            </p>
+                        </div>
+                    </apex:outputText -->
+                        
+                    <apex:pageBlock rendered="{! pagecontext == 'view' && case.isclosed != true && communityRenderEditButton}"> 
+                        <div style="text-align: right">    
+                        <!--    <apex:commandButton value="Clone" action="{!URLFOR($Action.case.clone, case.id)}" styleClass="create-action"/> -->
+                            <apex:commandButton value="{!$Label.Delete}" action="{!deleteCase}" styleClass="create-action" rendered="{!Case.Is_Submitted__c==false}" 
+                                                onclick="return confirm('{!$Label.Confirm_Delete}');"/>
+                            <!--<apex:commandButton value="{!$Label.Edit}" Action="{!Edit}" styleClass="create-action" rendered="{!pagecontext == 'view' && case.isclosed == false && (case.External_Test_Center__c == mytestcenterid ||  case.owner.name == 'Test Center' )}"/>-->
+                            <!-- apex:commandbutton value="{!$Label.Dismiss}" action="{!clearnotification}" styleClass="create-action" rendered="{!pagecontext == 'view' && case.isclosed == false && case.New_External_Comment__c == true}" /-->
+                            <apex:commandButton value="{!$Label.Edit}" Action="{!Edit}" styleClass="create-action" rendered="{!communityRenderEditButton}"/>
+                        </div>
+                    </apex:pageBlock>
+                    <apex:pageBlock tabStyle="Case" title="{!$Label.Case_Type}" rendered="{!Pagecontext == 'create' || case.Step__r.Step_Number__c == 1}">  <!-- rendered added BW 6-16 to hide section -->
+                        <apex:pageBlockSection columns="1" >
+                            <apex:selectList value="{!myTopic}" size="1" label="{!$Label.Topic}" styleClass="saverequiredtrue" rendered="{!notnew==false}">
+                                <apex:actionSupport event="onchange" rerender="theform,attachmentBlock,attachmentsRL" action="{!clearfinalcat}" status="searching"/>
+                                <apex:selectOptions value="{!Topics }" />
+                                <!--<apex:selectOption itemValue="Site Case" ItemLabel="Test Center"/>                   
+                                <apex:selectOption itemvalue="Registration Case" ItemLabel="Candidate" />
+                                <apex:selectOption itemvalue="Software Case" ItemLabel="Software/Hardware" />-->
+                            </apex:selectlist>
+                            <apex:outputField value="{!Case.Topic__c}" rendered="{!Case.Topic__c != null && notnew == true}"/>
+                        </apex:pageBlockSection>    
+                        <apex:pageblockSection columns="1" >           
+                            <apex:selectList value="{!myCategory}" label="{!$Label.Type}" multiselect="false" size="1" title="{!$Label.Select_Topic}" disabled="{!myTopic=='-'}" styleclass="saverequiredtrue" rendered="{!notnew==false}">
+                                <apex:selectOptions value="{!categories}"/>
+                                <apex:actionsupport event="onchange" oncomplete="flagRequiredFields(); initTypeahead()" rerender="theform,kw,kt,attachmentsRL,attachmentBlock" action="{!clearsubcat}" status="searching"/>
+                            </apex:selectList>
+                            <apex:outputField value="{!Case.Category__c}" rendered="{!Case.Category__c != null && notnew == true}"/>
+        <!-- added actionstatus feature until spinner can be implemented -->
+                            <apex:actionstatus id="searching" startStyleClass="searchstatus">
+                                <apex:facet name="start">
+                                    <div class="waitingSearchDiv" id="el_loading"> 
+                                        <div class="waitingHolder">
+                                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+                                            <span class="waitingDescription">{!$Label.loading}</span>
+                                        </div>
+                                    </div>
+                                </apex:facet>
+                            </apex:actionstatus>
+                            <apex:actionstatus id="submitStatus" startStyleClass="submitstatus">
+                                <apex:facet name="start">
+                                    <div class="waitingSearchDiv" id="el_submitting"> 
+                                        <div class="waitingHolder">
+                                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+                                            <span class="waitingDescription">Submitting</span>
+                                        </div>
+                                    </div>
+                                </apex:facet>
+                            </apex:actionstatus>
+        
+        
+                            <apex:selectList value="{!mysubCategory}" multiselect="false" size="1" label="{!$Label.Sub_category}" title="{!$Label.Select_Subcategory_Message}" rendered="{!subcategories!=null}" styleClass="saverequiredtrue" >
+                                <apex:selectOptions value="{!subcategories}"/>
+                                <apex:actionsupport event="onchange" rerender="theform,kw,kt,attachmentsRL" status="searching"/>
+                            </apex:selectList>
+                            <apex:outputField value="{!Case.subcategory__c}" rendered="{!Case.subcategory__c != null && notnew == true}"/>
+                        </apex:pageblockSection>  
+                    </apex:pageBlock>
+                    <!--/apex:PageBlock-->    
+                    <apex:pageBlock title="{!mycaseconfig.Section_1_header__c}" rendered="{!((finalcat!=null && showcase==true)) && Rendermap['Section 1'] && mycaseconfig.Section_1_hidden__c != true && pagecontext == 'create'}" id="PBlock1">
+                            
+                            <apex:pageBlockSection columns="1" id="MiddleBlock" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 1']}" collapsible="false">
+                              <!-- removed BW 5-22 per story PSNVSC 3154  -->  
+                              <!--  <apex:outputField value="{!case.Registration_id__c}"/>  -->
+                                
+                                <apex:repeat value="{!Section1FS}" var="S1FS" id="MFS">                        
+                                    <apex:inputfield value="{!Case[S1FS.fieldpath]}" rendered="{!pagecontext == 'create'}" styleclass="myrequired{!S1FS.required} {! S1FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 1');"/>
+                                   
+                                </apex:repeat>
+
+                                <apex:repeat value="{!sectionToDynamicFieldsMap['Section 1']}" var="subsectionFld" id="S1_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" onchange="onSectionFieldChange(this, 'Section 1');" />
+                                
+                            </apex:repeat>
+                            </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!$Label.Candidate_Information}" rendered="{!(FinalCat != null || case.Final_Category__c != null) && (Mycaseconfig.Don_t_Require_Candidate__c == false && (case.Candidate_id__c != null || pagecontext == 'create'))}"  id="caseinfo">
+                        
+                        <apex:pageBlockSection rendered="{!notnew == false }" columns="1" id="candidatesection">
+                            <apex:pageBlockSectionItem id="candidatesectionitem">
+                                <apex:outputLabel value="{!$Label.Candidate_Name +' *'}" for="typeahead"/>
+                                <apex:panelGrid columns="2">
+                                    <apex:selectList value="{!selectedcandidate}" title="Candidate name"  label="Candidate name" size="1" id="typeahead" styleClass="saverequired{!Mycaseconfig.Don_t_Require_Candidate__c == false} candtypeahead">
+                                        <apex:selectOptions value="{!typeahead}" />                                                                  
+                                        <apex:actionSupport event="onchange" action="{!attachCandidate}" status="searching" reRender="MiddleBlock,candidateDetails,searching"/>
+                                    </apex:selectList>
+                                    <a id="acs-btn" class="acs-btn" data-toggle="modal" data-target="#candidateSearch" onclick="initSearchIframe('{!$Component.theform.caseinfo.candidatesection.candidatesectionitem.typeahead}'); return false;">{!$Label.Advanced_search}</a> 
+                                </apex:panelGrid>
+                            </apex:pageBlockSectionItem>
+                            <apex:outputPanel >
+                                <script>
+                                    $j(window).ready(function(){
+                                        initTypeahead();
+                                    });
+                                </script>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+   
+                        <apex:outputPanel layout="none" id="candidateDetails" >
+                            <apex:pageBlockSection columns="1" collapsible="true" rendered="{!SelectedCandidate != null || case.Registration_id__c != null}">
+                                <apex:outputText value="{!caseRegistration.Candidate__r.First_Name__c & IF(caseRegistration.Candidate__r.Middle_Name__c != '' && caseRegistration.Candidate__r.Middle_Name__c != null, ' '& caseRegistration.Candidate__r.Middle_Name__c &' ', ' ') & caseRegistration.Candidate__r.Last_Name__c}" label="{!$Label.AS_Candidate_name}"/>
+                                <apex:outputText value="{!Caseregistration.Candidate__r.CCID__c}"  label="{!$Label.Client_Candidate_ID}" />
+                                <apex:outputtext value="{!IF(caseRegistration.Candidate__r.Phone_Country_Code__c!= null, '(' & caseRegistration.Candidate__r.Phone_Country_Code__c & ')','') &' '& caseRegistration.Candidate__r.Phone_Number__c}" label="{!$Label.Candidate_phone_number}" />                      
+                                <apex:outputtext value="{!case.Candidate_id__r.Email__c}" label="{!$Label.Candidate_email}" />
+                                <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="{!$Label.Candidate_mailing_address}" />
+                                        <apex:outputPanel >
+                                            {!caseRegistration.Candidate__r.Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.Address_Line_1__c))}"><br /></apex:outputText>
+                                            {!caseRegistration.Candidate__r.Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.Address_Line_2__c))}"><br /></apex:outputText>
+                                            {!caseRegistration.Candidate__r.Address_Line_3__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.Address_Line_3__c))}"><br /></apex:outputText>
+                                            {!caseRegistration.Candidate__r.City__c} {!caseRegistration.Candidate__r.State_Name__c} {!caseRegistration.Candidate__r.Postal_Code__c} <br/>
+                                            <apex:outputText value="{!case.Candidate_id__r.Country_Name__c}" />
+                                        </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:outputText value="{!case.Registration_id__r.Display_VTS_Registration_ID__c}" label="{!$Label.Registration_ID}" />                                                             
+                                <apex:outputfield value="{!caseRegistration.Date_and_Time_of_Exam__c}"/>
+                                <apex:outputfield value="{!case.Client_id__r.Name}" label="{!$Label.Client}" rendered="{!Case.Client_id__r.name != null}"/>
+                                <apex:outputfield value="{!case.Client_formula__c}" label="{!$Label.Client}" rendered="{!Case.Client_id__r.name == null}"/>
+                                <apex:outputfield value="{!case.Exam_id__r.Exam_Name__c}" label="{!$Label.Exam_name}"/>
+                                
+                              <!-- end added fields based on PSNVSC-3021 -->        
+                                <!--
+                                SK: Removed per updates to PSNVSC-3183
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel >Registration ID:</apex:outputLabel>
+                                        <apex:outputLink value="/{!case.Registration_id__r.Id}" target="_blank">{!case.Registration_id__r.Display_VTS_Registration_ID__c}</apex:outputLink>
+                                    </apex:pageBlockSectionItem>
+                                    <apex:outputfield value="{!case.Exam_id__r.Exam_Name__c}" label="Exam series name:" />
+                                    <apex:outputfield value="{!case.Candidate_id__r.Email__c}" label="Candidate email:" />
+
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel value="Candidate mailing address:" />
+                                        <apex:outputPanel >
+                                            {!case.Candidate_id__r.Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_id__r.Address_Line_1__c))}"><br /></apex:outputText>
+                                            {!case.Candidate_id__r.Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_id__r.Address_Line_2__c))}"><br /></apex:outputText>
+                                            {!case.Candidate_id__r.City__c}<apex:outputText rendered="{!NOT(ISNULL(case.Candidate_id__r.City__c))}"><br /></apex:outputText>
+                                            {!case.Candidate_id__r.State__c} <apex:outputText rendered="{!AND(NOT(ISNULL(case.Candidate_id__r.State__c)), NOT(ISNULL(case.Candidate_id__r.Postal_Code__c)))}" value=", " />
+                                            {!case.Candidate_id__r.Postal_Code__c}<apex:outputText rendered="{!OR(NOT(ISNULL(case.Candidate_id__r.State__c)), NOT(ISNULL(case.Candidate_id__r.Postal_Code__c)))}"><br /></apex:outputText>
+                                            <apex:outputText value="{!case.Candidate_id__r.Country__c}" />
+                                        </apex:outputPanel>
+                                    </apex:pageBlockSectionItem>
+                                -->
+                            </apex:pageBlockSection>                        
+                        </apex:outputPanel>
+                            <!-- apex:pageBlockSection rendered="{!notnew == false}" columns="1"> 
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Can't find the candidate?" for="acs"/>
+                                    <apex:panelGrid columns="2">                                      
+                                        <a id="acs-btn" class="acs-btn" data-toggle="modal" data-target="#candidateSearch" onclick="initSearchIframe('{!$Component.caseinfo.candidatesection.typeahead}'); return false;">Advanced candidate search</a> 
+                                    </apex:panelGrid>
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection -->                
+                    </apex:pageBlock>
+
+                    <!--
+                    SK: Removed per updates to PSNVSC-3183
+                    <apex:pageBlock Title="Registration details" rendered="{!notnew==true && caseRegistration != null}">
+                        <apex:pageBlockSection columns="1" >
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel >Registration ID:</apex:outputLabel>
+                                <apex:outputLink value="/{!caseRegistration.Id}" target="_blank">{!caseRegistration.VTS_Registration_ID__c}</apex:outputLink>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:outputfield value="{!caseRegistration.Exam__r.Exam_Name__c}" label="Exam series name:" />
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Candidate name" />
+                                <apex:outputText value="{!caseRegistration.Candidate__r.First_Name__c & ' ' & caseRegistration.Candidate__r.Last_Name__c}" />
+                            </apex:pageBlockSectionItem>
+                            <apex:outputfield value="{!caseRegistration.Candidate__r.Email__c}" label="Candidate email:" />
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Candidate mailing address:" />
+                                <apex:outputPanel >
+                                    {!caseRegistration.Candidate__r.Address_Line_1__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.Address_Line_1__c))}"><br /></apex:outputText>
+                                    {!caseRegistration.Candidate__r.Address_Line_2__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.Address_Line_2__c))}"><br /></apex:outputText>
+                                    {!caseRegistration.Candidate__r.City__c}<apex:outputText rendered="{!NOT(ISNULL(caseRegistration.Candidate__r.City__c))}"><br /></apex:outputText>
+                                    {!caseRegistration.Candidate__r.State__c} <apex:outputText rendered="{!AND(NOT(ISNULL(caseRegistration.Candidate__r.State__c)), NOT(ISNULL(caseRegistration.Candidate__r.Postal_Code__c)))}" value=", " />
+                                    {!caseRegistration.Candidate__r.Postal_Code__c}<apex:outputText rendered="{!OR(NOT(ISNULL(caseRegistration.Candidate__r.State__c)), NOT(ISNULL(caseRegistration.Candidate__r.Postal_Code__c)))}"><br /></apex:outputText>
+                                    <apex:outputText value="{!caseRegistration.Candidate__r.Country__c}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    -->
+<!-- moved above candidate information section
+                    <apex:pageBlock title="{!mycaseconfig.Section_1_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 1'] && mycaseconfig.Section_1_hidden__c == false}" id="PBlock1">
+                        <apex:pageBlockSection columns="1" id="MiddleBlock" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 1']}" collapsible="false">
+                          removed BW 5-22 per story PSNVSC 3154  
+                           <apex:outputField value="{!case.Registration_id__c}"/>
+                            <apex:repeat value="{!Section1FS}" var="S1FS" id="MFS">                        
+                                
+                                <apex:outputfield value="{!Case[S1FS.fieldpath]}" /> 
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+ -->                   
+        
+                    <apex:pageBlock title="{!mycaseconfig.Section_2_header__c}" rendered="{!((pagecontext == 'edit' || pagecontext == 'view')|| notnew==true) && Rendermap['Section 2'] && mycaseconfig.Section_2_hidden__c == false &&((mycaseconfig.Section_2_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_2_create_only__c == false)}" id="PBlock02">                
+                        <apex:pageBlockSection columns="1" id="LowerBlock">
+                            <apex:repeat value="{!Section2FS}" var="S2FS" id="S2FS">
+                              <!--  <apex:inputfield value="{!Case[S2FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S2FS.required} {! S2FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 2');"/> -->
+                                <apex:outputfield value="{!Case[S2FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'view'}"/>
+
+                            </apex:repeat>
+                        <!--    <script>
+                                $j = jQuery.noConflict();
+                      
+                                $j(document).ready(function() {
+                                    
+                                    var status = $j('option[value="Being Created"]').parent(); 
+                                    
+                                    if(status.val() == "Being Created"){ 
+                                        status.attr('disabled', 'disabled');
+                                    }
+                                    
+                                });
+                            </script> -->
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 2']}" var="subsectionFld" id="S2_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" onchange="onSectionFieldChange(this, 'Section 2');" />
+                                
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock> 
+        
+                    
+        <!-- added pageblocksections for new automagical case sections -->
+                    
+                    <apex:pageBlock title="{!mycaseconfig.Section_3_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 3'] && mycaseconfig.Section_3_hidden__c == false &&((mycaseconfig.Section_3_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_3_create_only__c == false)}" id="PBlock03">
+                        <apex:pageBlockSection columns="1" id="Section3" >
+                            <apex:repeat value="{!Section3FS}" var="S3FS" id="S3FS">
+                                <apex:inputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S3FS.required} {! S3FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 3');"/>
+                                <apex:outputfield value="{!Case[S3FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>   
+                            </apex:repeat>
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 3']}" var="subsectionFld" id="S3_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 3');" />
+                                 <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>       
+                            </apex:repeat>   
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!mycaseconfig.Section_4_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 4'] && mycaseconfig.Section_4_hidden__c == false &&((mycaseconfig.Section_4_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_4_create_only__c == false)}" id="PBlock04">
+                        <apex:pageBlockSection columns="1" id="Section4">
+                            <apex:repeat value="{!Section4FS}" var="S4FS" id="S4FS">
+                                <apex:inputfield value="{!Case[S4FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S4FS.required} {! S4FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 4');"/> 
+                                <apex:outputfield value="{!Case[S4FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                            </apex:repeat>
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 4']}" var="subsectionFld" id="S4_Subsection_FS">
+                              <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                         onchange="onSectionFieldChange(this, 'Section 4');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!mycaseconfig.Section_5_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 5'] && mycaseconfig.Section_5_hidden__c == false &&((mycaseconfig.Section_5_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_5_create_only__c == false)}" id="PBlock05">
+                        <apex:pageBlockSection columns="1" id="Section5">
+                            <apex:repeat value="{!Section5FS}" var="S5FS" id="S5FS">
+                                <apex:inputfield value="{!Case[S5FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S5FS.required} {! S5FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 5');"/> 
+                                <apex:outputfield value="{!Case[S5FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 5']}" var="subsectionFld" id="S5_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 5');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!mycaseconfig.Section_6_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 6'] && mycaseconfig.Section_6_hidden__c == false &&((mycaseconfig.Section_6_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_6_create_only__c == false)}" id="PBlock06">
+                        <apex:pageBlockSection columns="1" id="Section6">
+                            <apex:repeat value="{!Section6FS}" var="S6FS" id="S6FS">
+                                <apex:inputfield value="{!Case[S6FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S6FS.required} {! S6FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 6');"/> 
+                                <apex:outputfield value="{!Case[S6FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 6']}" var="subsectionFld" id="S6_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 6');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                           </apex:repeat>
+                           
+                        </apex:pageBlockSection>
+                        
+                    </apex:pageBlock>                                    
+                    <apex:pageBlock title="{!mycaseconfig.Section_7_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 7'] && mycaseconfig.Section_7_hidden__c == false &&((mycaseconfig.Section_7_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_7_create_only__c == false)}" id="PBlock07">
+                        <apex:pageBlockSection columns="1" id="Section7">
+                            <apex:repeat value="{!Section7FS}" var="S7FS" id="S7FS">
+                                <apex:inputfield value="{!Case[S7FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S7FS.required} {! S7FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 7');"/> 
+                                <apex:outputfield value="{!Case[S7FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 7']}" var="subsectionFld" id="S7_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 7');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>
+                            
+                        </apex:pageBlockSection>
+                        
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!mycaseconfig.Section_8_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 8'] && mycaseconfig.Section_8_hidden__c == false &&((mycaseconfig.Section_8_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_8_create_only__c == false)}" id="PBlock08">
+                        <apex:pageBlockSection columns="1" id="Section8">
+                            <apex:repeat value="{!Section8FS}" var="S8FS" id="S8FS">
+                                <apex:inputfield value="{!Case[S8FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S8FS.required} {! S8FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 8');"/> 
+                                <apex:outputfield value="{!Case[S8FS.fieldpath]}" rendered="{!pagecontext == 'view'}" />
+                            </apex:repeat>
+                            
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 8']}" var="subsectionFld" id="S8_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 8');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>                           
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>            
+                    <apex:pageBlock title="{!mycaseconfig.Section_9_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 9'] && mycaseconfig.Section_9_hidden__c == false &&((mycaseconfig.Section_9_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_9_create_only__c == false)}" id="PBlock09">
+                        <apex:pageBlockSection columns="1" id="Section9">
+                            <apex:repeat value="{!Section9FS}" var="S9FS" id="S9FS">
+                                <apex:inputfield value="{!Case[S9FS.fieldpath]}"  rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S9FS.required} {! S9FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 9');"/> 
+                                <apex:outputfield value="{!Case[S9FS.fieldpath]}" rendered="{!pagecontext == 'view'}" />
+                            </apex:repeat>
+                            
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 9']}" var="subsectionFld" id="S9_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 9');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>                            
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>  
+                    <apex:pageBlock title="{!mycaseconfig.Section_10_header__c}" rendered="{!((finalcat!=null && showcase==true)|| notnew==true)&& Rendermap['Section 10'] && mycaseconfig.Section_10_hidden__c == false &&((mycaseconfig.Section_10_create_only__c == true && pagecontext == 'create') || mycaseconfig.Section_10_create_only__c == false)}" id="PBlock10">
+                        <apex:pageBlockSection columns="1" id="Section10">
+                            <apex:repeat value="{!Section10FS}" var="S10FS" id="S10FS">
+                                <apex:inputfield value="{!Case[S10FS.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!S10FS.required} {! S10FS.fieldpath }-input" onchange="onSectionFieldChange(this, 'Section 10');"/> 
+                                <apex:outputfield value="{!Case[S10FS.fieldpath]}" rendered="{!pagecontext == 'view'}"/> 
+                            </apex:repeat>
+                            
+                            <apex:repeat value="{!sectionToDynamicFieldsMap['Section 10']}" var="subsectionFld" id="S10_Subsection_FS">
+                                <apex:inputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'edit' || pagecontext == 'create'}" styleclass="myrequired{!subsectionFld.required}" 
+                                                 onchange="onSectionFieldChange(this, 'Section 10');" />
+                                <apex:outputfield value="{!Case[subsectionFld.fieldpath]}" rendered="{!pagecontext == 'view'}"/>
+                            </apex:repeat>                           
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+               <!--   BW Removed per Feedback 5-5   
+                    <apex:pageBlock id="routenote" rendered="{! pagecontext == 'create' || pagecontext == 'edit'}">
+                         <div styleclass="note">             
+                            Case routed to:
+                             <apex:outputText rendered="{!case.step__r != null && case.step__r != ''}">
+                                Will route to {!case.step__r.Next_Team__c} based on your selections above.
+                             </apex:outputText>
+                             <apex:outputText rendered="{!case.step__r == null || case.step__r == ''}">
+                                {!$Label.Routing_Message}
+                             </apex:outputText>
+                         </div>  
+                    </apex:pageBlock>
+                -->    
+                    <apex:pageBlock rendered="{! pagecontext == 'create' || pagecontext == 'edit'}"> 
+                        <div style="text-align: right">    
+                            <apex:commandButton value="{!$Label.Cancel}" onclick="cancelclicked()" Action="{!Cancelbutton}" styleClass="create-action pull-left" rendered="{!pagecontext == 'edit'}"/>              
+                            <apex:commandButton value="{!$Label.Cancel}" onclick="cancelclicked()" Action="{!Cancel}" styleClass="create-action pull-left" rendered="{!pagecontext == 'create'}"/>   
+                            <!-- BW added disabled feature for "save" button so that it's disabled until a topic and category have been selected based on request from Brian H in story review 4-29 -->
+                             <apex:commandButton value="{!$Label.Save}" onclick="validateform_save(); return false" styleClass="create-action save-action" rendered="{!(pagecontext == 'edit' || pagecontext == 'create') && (case.step__r.Step_Number__c ==1 || case.step__r.Step_Number__c == null)}" />
+                             <apex:commandButton value="{!$Label.Submit}" onclick="validateform(); return false;" styleClass="create-action save-button submit-action" rendered="{!(pagecontext == 'edit' || pagecontext == 'create')&& case.Casemgt_lateral_routing__c!=true}"/>
+                             <apex:commandButton value="{!$Label.Submit}"  Action="{!Returntoteam}" styleClass="create-action save-button submit-action" rendered="{!(pagecontext == 'edit' || pagecontext == 'create') && case.Casemgt_lateral_routing__c==true }"/>
+                             
+                             <apex:commandButton value="{!$Label.Edit}" Action="{!Edit}" styleClass="create-action" rendered="{!pagecontext == 'view' && case.isclosed == false && (case.External_Test_Center__c == mytestcenterid ||  case.owner.name == 'Test Center' )}"/>
+                      <!--      <apex:commandButton value="Clone" action="{!URLFOR($Action.case.clone, case.id)}" styleClass="create-action" rendered="{!pagecontext == 'view'}"/>   -->
+                            <apex:actionFunction action="{!submitcase}" name="submitcase"/>
+                            <apex:actionFunction action="{!savecase}" name="savecase"/>
+                        </div>
+                    </apex:pageBlock>
+                    
+         <!-- END New page blocks for automagical page blocks -->           
+      
+                    <apex:outputPanel id="initSelect">
+                        <script>
+                            initSelect();
+                        </script>                          
+                    </apex:outputPanel> 
+                    <apex:outputPanel id="initDesc">
+                        <script>
+                            initDescCounter();
+                        </script>
+                    </apex:outputPanel>
+                     <apex:actionFunction action="{!showAddComment}" name="showAddComment" reRender="newCommentSection"  />
+                </apex:form> 
+                
+                <!-- BEGIN MODAL details -->                        
+                   
+                <div class="modal fade" id="candidateSearch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Advanced Candidate lookup</h4>
+                            </div>
+                            <div id="acs-modal-body" class="modal-body">
+                                <div id="iframe-loading">
+                                    <div class="waitingSearchDiv"> 
+                                        <div class="waitingHolder">
+                                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+                                            <span class="waitingDescription">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--h4>TODO Add in Candidate Search Iframe</h4 -->
+                            </div>
+                            <div class="modal-footer">
+                                <!-- button type="button" class="btn btn-default" data-dismiss="modal">Close</button -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+        <!-- END MODAL details -->
+        
+        
+        <!-- automagical related lists section -->
+        <!-- BEGIN RELATED LISTS SECTION -->
+        
+                   <apex:outputPanel id="commentList" styleClass="commentList">
+                       <c:HistoryComponent id="related1" Case_id="{!case.id}" caseisclosed="{!case.isclosed}" mypagetype="{!pagetype}" rendered="{!Rendermap['Case Comments'] ==true }"/>
+                          
+                        <!-- removed && (pagecontext != 'edit') based on story 3659 -->
+                   </apex:outputPanel>
+                <!--<apex:relatedList list="CombinedAttachments" rendered="{!Rendermap['Attachments'] && (pagecontext != 'edit')}"/>-->
+                <!-- Related List Attachment -->
+                <apex:outputPanel id="attachmentsRL">
+                <apex:outputPanel rendered="{!AND(Rendermap['Attachments'], OR(case.Final_Category__c != null, finalcat != null))}" styleClass="attachment_block">
+                    <apex:actionstatus id="attachmentBlockStatus" startStyleClass="searchstatus">
+                        <apex:facet name="start">
+                            <div class="waitingSearchDiv" id="el_loading"> 
+                                <div class="waitingHolder">
+                                    <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{! $Label.Loading }" />
+                                    <span class="waitingDescription">{! $Label.Loading }</span>
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionstatus> 
+                    
+                    <apex:pageBlock id="attachmentBlock" title="{!if(case.Step__r.Attachment_Required__c, $Label.Attachments_Req,$Label.Attachments)}" rendered="{!finalcat != null || case.Final_Category__c != null}">
+                        <apex:pageBlockButtons location="top" rendered="{!case.isclosed == false}">
+                            <a id="attach-btn" href="#" data-toggle="modal" data-target="#attachment" class="btn">{!$Label.Add_attachment}</a>
+                        <span >
+                          <input class="myrequired{!case.step__r.attachment_required__c}" type="hidden" value="{!IF(attachmentadded, 'true', '')}"/>
+                        </span>
+                        </apex:pageBlockButtons>
+                        
+                        <apex:form >
+                        <apex:outputPanel rendered="{!attachments.size=0}" styleClass="norowsheader">                            
+                            <table  class="list" border="0" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr class="headerRow">
+                                        <th scope="col" class="noRowsHeader">{!$Label.No_attachments}</th>
+                                    </tr>
+                                </tbody>
+                            </table>                            
+                        </apex:outputPanel>    
+                        <apex:pageBlockTable styleClass="attachment-table" id="attachlist" value="{!attachments}" var="att" rendered="{!attachments.size > 0}">
+                           
+                            <!-- added back per mockup BW 6-16 Story 3656 -->
+                           <!-- <apex:column styleClass="actionColumn">
+                                <apex:facet name="header">Action</apex:facet>
+                                <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.record.Id}" target="_blank" styleClass="actionLink">View</apex:outputLink>
+                                <apex:outputText Rendered="{!case.isclosed == false}"> <span class="sep">|</span></apex:outputtext>
+                                
+                                <apex:commandLink immediate="true" value="Del" action="{!deleteAttachment}"
+                                                  status="attachmentBlockStatus" reRender="attachmentBlock" styleClass="actionLink" Rendered="{!case.isclosed == false}">
+                                    <apex:param assignTo="{!deleteAttachmentId}" value="{!att.record.Id}" name="deleteAttachmentId"/>
+                                </apex:commandLink> 
+                                
+                            </apex:column> -->
+                            
+                            <apex:column >
+                                <apex:facet name="header">{!$Label.File_name}</apex:facet>
+                                <apex:outputLink value="/servlet/servlet.FileDownload?file={!att.record.Id}" target="_blank" styleClass="actionLink">
+                                  {!SUBSTITUTE(att.record['Name'], 'CaseCreateTemp_', '')}
+                                </apex:outputLink>
+                              
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$Label.Size}</apex:facet>
+                                <apex:outputText value="{!CEILING(att.record['BodyLength']/1000)}KB" />
+                            </apex:column> 
+                            <apex:column >
+                                <apex:facet name="header">{!$Label.Uploaded}</apex:facet>
+                                <apex:outputText value="{0,date, MM/dd/yyyy HH:mm}" style="display: none">
+                                    <apex:param value="{!att.record['LastModifiedDate']}"/>
+                                </apex:outputText>
+                                <apex:outputField value="{!att.record['LastModifiedDate']}"/>
+                                <!-- <apex:outputText value="{!doc.LastModifiedDate}"/> -->
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$Label.Uploaded_by}</apex:facet>
+                                <apex:variable var="list" value="{!''}{!myagents}" />
+                                <apex:outputText value="{!IF(CONTAINS(list, att.record['createdby.name']), att.Record['createdby.name'],$Label.Pearson_Vue)}">
+                                    
+                                </apex:outputText>
+                                
+                                <!-- <apex:outputText value="{!doc.LastModifiedDate}"/> -->
+                            </apex:column>
+                          
+                        </apex:pageBlockTable>
+                        
+                        <script>
+                            $j(document).ready(function(){
+                            setupattachtable();  
+                            });  
+                        </script> 
+                        
+                         </apex:form>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- @end Attachment Related List -->
+           <!-- Remove Related list per feedback 5-7 BW -->
+           <!--     <apex:relatedList list="ActivityHistories" rendered="{!Rendermap['Activity History'] && (pagecontext != 'edit')}"/>   -->                                                
+                <apex:relatedList list="Cases" rendered="{!Rendermap['Cases'] && (pagecontext != 'edit')}"/>
+                <apex:relatedList id="related2" list="CaseArticles" title="{!$Label.knowledge}" rendered="{!Rendermap['Articles'] }"/> <!-- removed && (pagecontext != 'edit') based on story 3659 BW -->
+                
+                <apex:outputPanel rendered="{!Rendermap['Articles'] }">
+                    <script>
+                        var knowledgetext = $j('.listRelatedObject.knowledgeBlock .noRowsHeader');
+                        if(knowledgetext.length > 0){
+                            if(knowledgetext.html() == 'No Articles Attached'){
+                                knowledgetext.html('{!$Label.No_articles}');
+                                
+                            }
+                        }
+                        setuptable();
+                    </script>
+                </apex:outputPanel>   
+                <apex:relatedList list="CaseContactRoles" rendered="{!Rendermap['Contact Roles'] && (pagecontext != 'edit')}"/>                                             
+                
+                <apex:form >
+                    <apex:commandButton value="{!$Label.Go_to_cases}"  action="{!communityToCases}" rendered="{!case.isclosed == true || pagecontext = 'view'}"/> 
+                </apex:form>
+           <!--     <apex:pageBlock rendered="{!Rendermap['Case History'] && pagecontext != 'edit'}" title="History"> 
+                    <apex:pageBlockTable value="{!case.Histories}" var="c" rendered="{!Rendermap['Case History']}">
+                          <apex:column value="{!c.field}" headerValue="Item changed"/>
+                          <apex:column value="{!c.OldValue}" headerValue="Original value"/>
+                          <apex:column value="{!c.NewValue}" headerValue="New value"/>
+                          <apex:column value="{!c.createdbyid}" headerValue="Created by"/>
+                   </apex:pageBlockTable>
+                </apex:pageBlock> -->
+               </div> <!-- Close Col 8 -->
+               <apex:outputPanel layout="none" rendered="{!pagecontext == 'create' || pagecontext == 'edit'}">
+                   <div id="knowledge-sidebar" class="col-md-4">
+                       <c:KnowledgeSearch id="kw" parentSObjectId="{!case.id}" myfinal="{!FinalCat}" showCheckboxes="false" rendered="{!pagecontext == 'create' || pagecontext == 'edit'}"/>                 
+                   </div>
+                   <div id="knowledge-opener">
+                           <a href="javascript:void(0)" id="open-knowledge"><i class="fa fa-book"></i></a>
+                   </div>
+               </apex:outputPanel>
+            </div> <!-- Close Row -->
+        </div> <!-- Close Container -->    
+        
+                <!-- Attachment modal box -->
+        <div class="modal fade" id="attachment" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{!$Label.Add_attachments}</h4>
+                    </div>
+                    <div id="as-modal-body" class="modal-body">
+                        <iframe src="{!$Page.CaseAttachFile}?{!IF(pagecontext = 'create', '', 'cid='&Case.Id)}" width="100%" height="300px" style="border:none !important;" />
+                    </div>
+                </div>
+            </div>
+        </div> <!-- @end Attachment Modal Box -->
+        
+        <!-- addComments modal box -->
+        <div class="modal fade" id="addComments" data-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button onclick="closeCommentPopUp()" type="button" class="close" aria-label="{!$Label.close}"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{!$Label.Add_comment}</h4>
+                    </div>
+                    <div id="as-modal-body" class="modal-body">
+                        <div class="container-fluid">
+                            <apex:outputPanel id="newCommentSection"   > 
+                                <apex:form id="commentForm" styleClass="comment-form">
+                                    <script>
+                                        $j(document).ready(function() {
+                                            var text_max = 2000;
+                                            $j('#resultCounter').html(text_max + ' characters remaining');
+                                            $j('[id*=commentText]').removeAttr('maxLength');
+                                        
+                                            function updateCommentCount(){
+                                                $j('[id*=CommentValidation]').hide();
+                                                var text_length =  $j('[id*=commentText]').val().length;
+                                                var text_remaining = text_max - text_length;
+
+                                                if(text_remaining >= 0){
+                                                    $j('#resultCounter').removeClass('limit-exceeded');
+                                                    var countertext = text_remaining + ' character' + (text_remaining == 1 ? '' : 's') +  ' remaining'
+                                                }else{
+                                                    var amountover = -text_remaining;
+                                                    var countertext = '<i class="fa fa-exclamation-circle"></i> ' + amountover + ' character' + (amountover == 1 ? '' : 's') + ' over the limit. Comments must be ' + text_max + ' characters or less in length.'
+                                                    $j('#resultCounter').addClass('limit-exceeded').html(countertext);
+                                                }
+
+                                                $j('#resultCounter').html(countertext);
+                                            }
+                                            
+                                            $j('[id*=commentText]').keyup(function() {
+                                                updateCommentCount();
+                                            }).change(function(){
+                                                updateCommentCount();
+                                            });
+                                        });
+                                        function performValidation()
+                                        { 
+                                            $j('.submit-comment').attr('disabled', true);
+                                            var passed = true;
+                                            var comment = $j('[id*=commentText]');
+                                            if(comment.val() == null  || comment.val()=="" )
+                                            {
+                                                var error = $j('#CommentValidation');
+                                                if(!error.length){
+                                                    comment.after('<span id="CommentValidation" class="required-label">{!$Label.required}</span>');
+                                                }else{
+                                                    error.show();    
+                                                }
+                                                passed = false;
+                                            }else if(comment.val().length > 2000){
+                                                passed = false;
+                                            }else{
+                                                 removeMessage('comment-modal');   
+                                            }
+
+                                            if(!passed){ 
+                                               NotificationMessage('comment-modal', 'error', '{! $Label.Add_Comment_Warning }');
+                                               $j('.submit-comment').attr('disabled', false);
+                                            }
+                                            
+                                            return passed;
+                                        }
+                                    </script>
+                                    <style>
+                                        #resultCounter.limit-exceeded{
+                                            color: red;
+                                        }
+                                    </style>
+                                    
+                                    <c:NotificationMessages elementid="comment-modal"></c:NotificationMessages>
+                                    <apex:pageBlock >
+                                        <apex:pagemessages ></apex:pagemessages>
+                                        <apex:actionstatus id="submitcomment" startStyleClass="searchstatus">
+                                            <apex:facet name="start">
+                                                <div class="waitingSearchDiv" id="comment-submit"> 
+                                                    <div class="waitingHolder">
+                                                        <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="Please Wait..." />
+                                                        <span class="waitingDescription">{! $Label.Loading }</span>
+                                                    </div>
+                                                </div>
+                                            </apex:facet>
+                                        </apex:actionstatus> 
+                                        <apex:pageBlockSection columns="1">
+                                            <apex:outputLabel title="{!$Label.Case_Number}"></apex:outputLabel>
+                                            <!-- apex:outputText value="{!case.casenumber}"></apex:outputText>
+                                            <apex:outputField value="{!case.subject}"  title="Type" / -->
+                                            <apex:pageBlockSectionItem >
+                                                <apex:outputLabel title="Comment" >{!$Label.Comment}&nbsp;<span class="star">*</span> </apex:outputLabel> 
+                                                <apex:inputField id="commentText" value="{!caseComment.CommentBody}"  />
+                                            </apex:pageBlockSectionItem>
+                                           <apex:pageBlockSectionItem >
+                                                <apex:outputLabel title=""></apex:outputLabel>
+                                                <div id="resultCounter" class="result"></div>
+                                            </apex:pageBlockSectionItem>
+                                        </apex:pageBlockSection>
+    
+                                        <apex:pageblocktable value="{!CaseComments}" var="cm" rendered="{!CaseComments.size > 0}">
+                                            <apex:column value="{!cm.CommentBody}" headerValue="Comment"  />
+                                            <apex:column >
+                                                <apex:facet name="header">{!$Label.Created}</apex:facet>
+                                                <apex:outputText value="{0,date, MM/dd/yyyy HH:mm}" style="display: none">
+                                                    <apex:param value="{!cm.CreatedDate}"/>
+                                                </apex:outputText>
+                                                <apex:outputField value="{!cm.CreatedDate}" />
+                                            </apex:column>                              
+                                            <apex:column value="{!cm.CreatedBy.Name}" headerValue="{!$Label.Created_by}" />
+                                        </apex:pageblocktable>
+                                       <div class="action-buttons">
+                                           <a id="close-btn" onClick="closeCommentPopUp(); return false;" class="btn" href="#">{!$Label.Cancel}</a>
+                                           <apex:commandButton styleClass="pull-right submit-comment" status="submitcomment" value="{!$Label.Submit}" onclick="if( !performValidation() ){ return; }" 
+                                                               action="{!submitCaseComment}" reRender="commentList,newCommentSection,commentSavedNotif" oncomplete="closeCommentPopUp(); setuptable();" /> 
+                                       </div>
+                                    </apex:pageBlock>   
+                                </apex:form>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- @end addComments Modal Box -->
+        <apex:form >
+            <apex:actionFunction action="{!cancelCaseComment}" name="cancelComment" reRender="newCommentSection"  />
+            <apex:actionFunction name="processNewAttachments" action="{!processNewAttachments}" reRender="attachmentBlock" status="attachmentBlockStatus" oncomplete="scrollTop()" />
+        </apex:form>
+
+    </body>
+    
+    <script>
+    function closePopUp(){
+        $j('#attachment').modal('hide');
+
+    }
+    function closeCommentPopUp(){
+        $j('[id*=commentText]').val("").change();
+        $j('#addComments').modal('hide');
+        removeMessage('comment-modal'); 
+        $j('#CommentValidation').hide(); 
+    }
+
+    </script>
+    
+</apex:page>

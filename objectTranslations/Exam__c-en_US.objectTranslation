@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Exam</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Exams</value>
+    </caseValues>
+    <fields>
+        <label><!-- Authorization ID --></label>
+        <name>Authorization_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Category --></label>
+        <name>Category__c</name>
+    </fields>
+    <fields>
+        <label><!-- Client --></label>
+        <lookupFilter>
+            <errorMessage><!-- Selected Account is not a Client. --></errorMessage>
+        </lookupFilter>
+        <name>Client__c</name>
+        <relationshipLabel><!-- Exams --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Delivery Mode --></label>
+        <name>Delivery_Mode__c</name>
+        <picklistValues>
+            <masterLabel>Online</masterLabel>
+            <translation><!-- Online --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Exam Name --></label>
+        <name>Exam_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Exam Series Code --></label>
+        <name>Exam_Series_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- VTS Exam ID --></label>
+        <name>VTS_Exam_ID__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

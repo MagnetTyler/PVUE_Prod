@@ -1,0 +1,205 @@
+<apex:component controller="KnowledgeSearchCompController" allowDML="true"> 
+
+ <!-- Attribute Definition -->
+    <apex:attribute name="parentSObjectId" description="searchstring to use for search" 
+                        type="ID" required="false" assignTo="{!parentId}" />
+    <apex:attribute name="myfinal" description="searchstring to use for search" 
+                        type="String" required="true" assignTo="{!final_topic_filter}" />
+    <apex:attribute name="showCheckboxes" description="Show checkboxes for knowledge articles" 
+                        type="Boolean" required="false" default="false" />
+
+   
+    <link rel="stylesheet" href="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.css') }"/>
+    <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, '/css/bootstrap.css') }"/> 
+    <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/>
+    <script src="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.min.js')}"/>
+    <style>
+        .table-results{
+            margin-bottom: 0px !important;
+        }
+    .pagination{
+        width: 100%;
+        text-align: center;
+    }
+    
+    .knowledge-search .panel-heading{
+        background: rgb(45, 50, 55) !important;    
+    }
+    
+    .knowledge-search .panel-heading .fa{
+        color: #fff !important;
+    }
+    
+    .knowledge-search .panel-heading a,
+        .knowledge-search .panel-heading a:hover,
+            .knowledge-search .panel-heading h3{
+                color: #fff;
+            }
+    .knowledge-search .select2-container{
+        min-width: 250px;   
+    }
+    .knowledge-search .select2-container .select2-choice .select2-arrow b{
+        background-size: 60px 25px !important;                
+    }
+    .search-input{
+        margin-bottom: 5px;
+    }
+    .search-input input{
+        margin: 0px;    
+    }
+    .search-input input[type="text"]{
+        height: 27px;
+    }
+    .search-input .btn{
+        border-radius: 0px;
+    }
+    .filter-action{ 
+        padding-bottom: 0px !important;
+    }
+    .filter-toggle:hover{
+        cursor: pointer;    
+    }
+    .search-results{
+        padding-top: 20px;    
+    }
+    .search-results .article{
+        height: 52px;
+        margin-bottom: 15px;    
+    }
+    .search-results .article p{
+        margin-bottom: 0px; 
+    }
+    .search-results .article p small{
+        color: #a4a4a4;
+    }
+    .search-results .article p, .search-results .article h4, .search-results .article a{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .search-results .article .title{
+        font-weight: 500;
+    }
+    .kArticlesCheckbox{
+        margin-top:2px !important;
+        margin-left: 5px !important;
+    }
+    </style> 
+    <script>
+        var $j = jQuery.noConflict();
+    
+    $j(window).ready(function(){
+        
+        $j('.filter-toggle').click(function(){
+            $j('.filter-toggle i').toggleClass('fa-angle-down fa-angle-up');
+        });             
+        
+    });
+    
+    </script>
+    <apex:form >
+        <apex:inputHidden id="KW_selectedKnowledgeArticleIds" value="{!selectedKnowledgeArticleIds}" />
+        <div class="container-fluid">
+            <apex:panelGroup > 
+                <div class="row">
+                    <!--div class="col-sm-6"-->
+                    <div class="panel panel-default knowledge-search">
+                        <div class="panel-heading">
+                            <h3><i class="fa fa-book"></i> Knowledge Base</h3>
+                            <a href="javascript:void(0)" id="close-knowledge" class="pull-right"><i class="fa fa-chevron-circle-right"></i></a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="search-input">
+                                <apex:outputPanel styleClass="search-input">
+                                    <apex:inputText value="{!searchstring}" id="theSearchstring" html-placeholder="Search Knowledge..." maxlength="100" style="width:80%; margin-right:0px"/>
+                                    <apex:commandButton id="submitButton" value="Search" style="width:20%" reRender="theSearchResults" onclick="refreshSearchResult(); return false;"/>
+                                </apex:outputPanel>
+                            </div>
+                            <div class="filter-action">
+                                <a class="filter-toggle" style="width: 20%" data-toggle="collapse" data-target="#filters">Filters <i class="fa fa-angle-down"></i></a>
+                            </div>
+                            <div id="filters" class="filters collapse form-horizontal">
+                                <!--  {{!$User.UserType}!='Standard' && {!dataCategory.name}!='Audience'}       {!ISPICKVAL({!$User.UserType},'Standard' )}-->
+                                <apex:repeat value="{!dataCategoryGroupInfo}" var="dataCategory" id="dataCategory">
+                                    <apex:outputPanel styleClass="control-group" layout="block" rendered="{!OR(TEXT($User.UserType) = 'Standard', dataCategory.name != 'Client_Documents')}">
+                                        
+                                        <label class="control-label" for="categoryType_{!dataCategory.name}">{!dataCategory.label}</label>
+                                        <div class="controls">
+                                            <select id="categoryType_{!dataCategory.name}" name="categoryType_{!dataCategory.name}" onchange = "refreshSearchResult();  return false;">
+                                                <option value="All">All</option>
+                                                <option value="NoFilter">No Filter</option>
+                                                <knowledge:categoryList categoryVar="category" categoryGroup="{!dataCategory.name}" rootCategory="All" level="-1">
+                                                    <option value="{!category.name}">
+                                                        <apex:outputText escape="false" value="{!LPAD(' ',6*category.depth,'&nbsp;')}"/>{!category.label}
+                                                    </option>
+                                                </knowledge:categoryList>
+                                            </select>
+                                            
+                                            
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:repeat> 
+                                <script>
+                                $j('.filters select').select2();
+                                </script>
+                                
+                            </div>
+                            <div class="search-results">
+                                <apex:outputPanel id="theSearchResults">
+                                    <apex:outputText rendered="{!pageArticles.size == 0}"><h4>No Results</h4></apex:outputText>
+                                    <apex:repeat var="da" value="{!pageArticles}">
+                                        <div class="article row">
+                                            <apex:outputPanel rendered="{!showCheckboxes}" styleClass="col-md-1">
+                                                <apex:inputCheckbox value="{!da.isSelected}" styleClass="kArticlesCheckbox" />
+                                            </apex:outputPanel>
+                                            <div class="{!IF(showCheckboxes, 'col-md-10', 'col-md-12')}">
+                                                <p class="title">
+                                                    <apex:outputLink target="_blank" value="/{!da.article.KnowledgeArticleId}">{!da.article.title}</apex:outputLink>
+                                                </p>
+                                                <p>
+                                                    <apex:outputText >{!da.article.Summary}</apex:outputText> 
+                                                </p>
+                                                <p>
+                                                    <small>
+                                                        <apex:outputText >
+                                                            {!da.article.articlenumber} -
+                                                            {!articleTypeNameToLabelMap[LOWER(da.article.ArticleType)]} -
+                                                            Last Published {!da.article.LastPublishedDate} </apex:outputText>
+                                                    </small>
+                                                </p>
+                                            </div>
+                                        </div>                                      
+                                    </apex:repeat>
+                                    
+                                    <apex:outputPanel layout="block" styleClass="pagination" rendered="{!OR(prevRequired, nextRequired)}">
+                                        <apex:commandLink action="{!previous}" value="< Previous" style="color: #999 !important;{!IF(prevRequired,'','display:none')}"
+                                                          reRender="theSearchResults" status="kwProcessing" styleClass="pull-left pagination-link"/>&nbsp;
+                                        <apex:commandLink action="{!next}" value="Next >" style="color: #999 !important;{!IF(nextRequired,'','display:none')}"
+                                                          reRender="theSearchResults" status="kwProcessing" styleClass="pull-right pagination-link"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <div>
+                                    <apex:commandButton value="Attach" action="{!attachArticles}" rendered="{!showCheckboxes}" 
+                                                        reRender="theSearchResults,KW_selectedKnowledgeArticleIds" status="kwProcessing" />
+                                </div>
+                                <apex:actionFunction action="{!refreshSearchResult}" name="refreshSearchResult" reRender="theSearchResults" status="kwProcessing" />
+                                <apex:actionstatus id="kwProcessing" startStyleClass="searchstatus">
+                                    <apex:facet name="start">
+                                        <div class="waitingSearchDiv" id="el_loading"> 
+                                            <div class="waitingHolder">
+                                                <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{! $Label.Loading }" />
+                                                <span class="waitingDescription">{! $Label.Loading }</span>
+                                            </div>
+                                        </div>
+                                    </apex:facet>
+                                </apex:actionstatus> 
+                            </div>
+                        </div>
+                    </div>
+                    <!--/div-->
+                    
+                </div> <!-- close row -->
+            </apex:panelGroup>
+        </div> <!-- close container -->
+    </apex:form>
+</apex:component>

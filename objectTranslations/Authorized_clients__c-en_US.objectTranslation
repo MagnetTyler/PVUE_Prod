@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Authorized clients</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Authorized clients</value>
+    </caseValues>
+    <fields>
+        <label><!-- Authorized clients --></label>
+        <name>Authorized_clients_ID__c</name>
+        <relationshipLabel><!-- Authorized test centers --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Hide from others --></label>
+        <name>Hide_from_others__c</name>
+    </fields>
+    <fields>
+        <label><!-- Hide from web --></label>
+        <name>Hide_from_web__c</name>
+    </fields>
+    <fields>
+        <label><!-- Site name --></label>
+        <name>Site_name__c</name>
+        <relationshipLabel><!-- Authorized clients --></relationshipLabel>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

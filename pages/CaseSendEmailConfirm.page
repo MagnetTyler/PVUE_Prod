@@ -1,0 +1,24 @@
+<apex:page standardController="Case">
+    <apex:includeScript value="/support/console/20.0/integration.js"/>
+    <script type="text/javascript">
+
+    //Refresh emails on parent tab.
+    //alert('window.parent.frames.length: ' + window.parent.frames.length);
+    for ( var i = 0; i < window.parent.frames.length; i++ ) {
+        try {
+            //alert('naaaam: ' + window.parent.frames[i].name + ' --- ' + window.name);
+            if ( window.parent.frames[i].name == window.name ) {
+                //alert('match found... parent name: ' + window.parent.frames[i - 1].name);
+                window.parent.frames[i - 1].refreshEmailsList();
+                break;
+            }
+        } catch(e) { }
+    }
+
+    var closeSubtab = function closeSubtab(result) {
+        sforce.console.closeTab(result.id);
+    };
+    sforce.console.getEnclosingTabId(closeSubtab);
+
+    </script>
+</apex:page>

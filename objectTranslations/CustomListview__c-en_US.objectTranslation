@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CustomListview</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CustomListviews</value>
+    </caseValues>
+    <fields>
+        <label><!-- Custom Buttons --></label>
+        <name>Custom_Buttons__c</name>
+        <picklistValues>
+            <masterLabel>Assign to myself</masterLabel>
+            <translation><!-- Assign to myself --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Default --></label>
+        <name>Default__c</name>
+    </fields>
+    <fields>
+        <label><!-- FieldSet Name --></label>
+        <name>FieldSet_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fields String --></label>
+        <name>Fields_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Closed View --></label>
+        <name>Is_Closed_View__c</name>
+    </fields>
+    <fields>
+        <label><!-- List Order --></label>
+        <name>List_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- List Size Options --></label>
+        <name>List_Size_Options__c</name>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>20</masterLabel>
+            <translation><!-- 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>50</masterLabel>
+            <translation><!-- 50 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- List view name --></label>
+        <name>List_view_name__c</name>
+        <picklistValues>
+            <masterLabel>Cases awaiting pickup</masterLabel>
+            <translation><!-- Cases awaiting pickup --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed case</masterLabel>
+            <translation><!-- Closed case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Comments</masterLabel>
+            <translation><!-- Comments --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>My closed cases</masterLabel>
+            <translation><!-- My closed cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>My open cases</masterLabel>
+            <translation><!-- My open cases --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Open cases</masterLabel>
+            <translation><!-- Open cases --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Object --></label>
+        <name>Object__c</name>
+        <picklistValues>
+            <masterLabel>Attachment</masterLabel>
+            <translation><!-- Attachment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case</masterLabel>
+            <translation><!-- Case --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CaseComment</masterLabel>
+            <translation><!-- CaseComment --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Knowledge</masterLabel>
+            <translation><!-- Knowledge --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Order by --></label>
+        <name>Order_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Field API Name --></label>
+        <name>Parent_Field_API_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field currently is to be filled out in SOQL language and is the WHERE Clause for the search --></help>
+        <label><!-- Search Criteria --></label>
+        <name>Search_Criteria__c</name>
+    </fields>
+    <fields>
+        <label><!-- Then by --></label>
+        <name>Then_by__c</name>
+    </fields>
+    <fields>
+        <label><!-- Use Fieldset --></label>
+        <name>Use_Fieldset__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

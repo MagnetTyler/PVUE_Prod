@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This is the translation layer for the grant codes coming from VTS for SSO User provisioning</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Grant_Code__c</fullName>
+        <description>grant code for the specified permission set.  it is a 2 digit number</description>
+        <externalId>false</externalId>
+        <label>Grant Code</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GroupID__c</fullName>
+        <description>Field to store the group ID for this permission group so that users are added to groups as they are provisioned</description>
+        <externalId>false</externalId>
+        <label>GroupID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Permission_Set_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Permission Set Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>VTS Role Code</label>
+    <visibility>Protected</visibility>
+</CustomObject>

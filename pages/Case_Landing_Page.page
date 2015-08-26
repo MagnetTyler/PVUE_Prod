@@ -1,0 +1,17 @@
+<apex:page StandardController="Case" recordSetVar="cases" extensions="LandingController">
+    <apex:stylesheet value="/apex/Case_Creation_Css"/>
+    <apex:form id="theForm">
+        <apex:outputPanel styleClass="create-buttons">
+            <apex:outPutPanel styleClass="create-button">
+                <apex:commandlink action="{! Create_Reg }" value="Create case about candidate">
+                    <apex:image id="candidate-image" value="/resource/PearsonAssets/CandidateIcon.png" width="50" height="85"/>
+                </apex:commandlink>         
+            </apex:outPutPanel>
+            <apex:outPutPanel styleClass="create-button">
+                <apex:image id="building-icon" value="/resource/PearsonAssets/BuildingIcon.png" width="85" height="85"/>
+                <apex:commandButton action="{! Create_Site }" value="Create case about site"/>
+            </apex:outPutPanel>
+        </apex:outputPanel>
+    </apex:form> 
+    <apex:enhancedList type="Case" height="400" rowsPerPage="10" id="CaseList"/>
+</apex:page>

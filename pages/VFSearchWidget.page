@@ -1,0 +1,89 @@
+<apex:page controller="VfSearchController" showHeader="false" sidebar="false" title="Knowledge Search">
+    <head>
+        <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, '/css/bootstrap.css') }"/>  
+        <style>
+            .table-results{
+                margin-bottom: 0px !important;
+            }
+            .pagination{
+                width: 100%;
+                text-align: center;
+            }
+        </style> 
+    </head>
+    <body>
+        <apex:form >
+            <div class="container-fluid">
+            <apex:panelGroup > 
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3><apex:outputText value="Filter Your Results" /></h3>
+                            </div>
+                            <div class="panel-body">
+                                <apex:repeat value="{!dataCategoryGroupInfo}" var="dataCategory" id="dataCategory">
+                                    <div class="form-group">
+                                        <apex:outputLabel for="categoryType_{!dataCategory.name}">{!dataCategory.label}</apex:outputLabel>
+                                        <select id="categoryType_{!dataCategory.name}" name="categoryType_{!dataCategory.name}" onchange = "refreshSearchResult()" style="width: 100%">
+                                            <option value="NoFilter">No Filter</option>
+                                            <option value="All">All</option>
+                                            <knowledge:categoryList categoryVar="category" categoryGroup="{!dataCategory.name}" rootCategory="All" level="-1">
+                                                <option value="{!category.name}">
+                                                    <apex:outputText escape="false" value="{!LPAD(' ',6*category.depth,'&nbsp;')}"/>{!category.label}
+                                                </option>
+                                            </knowledge:categoryList>
+                                        </select>
+                                    </div>
+                                </apex:repeat> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">   
+                            <div class="panel-heading">
+                                <h3>Search</h3>
+                            </div> 
+                            <div class="panel-body">
+                                <apex:outputPanel styleClass="search-input">
+                                    <apex:inputText value="{!searchstring}" id="theSearchstring" maxlength="100" style="width:80%" onkeypress="if (event.keyCode == 13) {refreshSearchResult();return false;} "/> &nbsp;
+                                    <apex:commandButton value="Search" id="submitButton" style="width:60px" reRender="theSearchResults" />
+                                    <apex:messages />
+                                </apex:outputPanel>
+                                <apex:outputPanel id="theSearchResults">
+                                        <table width="99%">
+                                            <thead>
+                                                <tr>
+                                                    <th width="33%">Title</th>
+                                                    <th width="33%">Article Type</th>
+                                                    <th width="33%">Summary</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <knowledge:articleList articleVar="article" categories="{!categoryKeyword}" Keyword="{!searchstring}" pageNumber="{!currentPageNumber}" hasMoreVar="false" pageSize="10">
+                                            <table class="table table-condensed table-results" width="99%">
+                                                <tr>      
+                                                    <td width="33%">
+                                                        <apex:outputLink target="_blank" value="{!URLFOR($Action.KnowledgeArticle.View, article.id,['popup' = 'true'])}">{!article.title}</apex:outputLink>
+                                                    </td>
+                                                    <td width="33%"><apex:outputText >{!article.articleTypeLabel}</apex:outputText></td>
+                                                    <td width="33%"><apex:outputText >{!article.abstract}</apex:outputText></td>
+                                                </tr>
+                                            </table>
+                                        </knowledge:articleList>
+                                        <div class="pagination">
+                                            <apex:commandLink action="{!previous}" value="< Previous" style="{!IF(prevRequired = true,'display:block','display:none')}" reRender="theSearchResults"/>
+                                            <apex:commandLink action="{!next}" value="Next >" style="{!IF(nextRequired = true,'display:block','display:none')}" reRender="theSearchResults"/>
+                                        </div>
+                                    </apex:outputPanel>
+                                <apex:actionFunction action="{!refreshSearchResult}" name="refreshSearchResult" reRender="theSearchResults,mytest">
+                                </apex:actionFunction>                       
+                            </div> <!-- close panel body -->
+                        </div> <!-- close panel -->
+                    </div> <!-- close col -->
+                </div> <!-- close row -->
+             </apex:panelGroup>
+            </div> <!-- close container -->
+        </apex:form>
+    </body>
+</apex:page>

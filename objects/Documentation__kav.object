@@ -45,6 +45,15 @@
         <type>File</type>
     </fields>
     <fields>
+        <fullName>Attachment__c</fullName>
+        <description>A place to attach a file.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Browse to a file.</inlineHelpText>
+        <label>Attachment</label>
+        <required>false</required>
+        <type>File</type>
+    </fields>
+    <fields>
         <fullName>Case_topic__c</fullName>
         <externalId>false</externalId>
         <label>Case topic</label>

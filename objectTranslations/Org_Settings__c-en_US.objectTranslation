@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Org Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Org Settings</value>
+    </caseValues>
+    <fields>
+        <label><!-- Assist Auth Provider ID --></label>
+        <name>Assist_Auth_Provider_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- CAS Auth Provider ID --></label>
+        <name>CAS_Auth_Provider_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Comma-separated list of Profiles/Permission Set names that should be able to see the mass assign button on Case list view. --></help>
+        <label><!-- Case Mass Assign Profiles --></label>
+        <name>Case_Mass_Assign_Profiles__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max File Attach Size --></label>
+        <name>Max_File_Attach_Size__c</name>
+    </fields>
+    <fields>
+        <label><!-- Production Org Id --></label>
+        <name>Production_Org_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- UAT Org Id --></label>
+        <name>UAT_Org_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Time (in minutes) during which the VTS Reg data is considered fresh in Salesforce. --></help>
+        <label><!-- VTS Reg Data Fresh Life --></label>
+        <name>VTS_Reg_Data_Fresh_Life__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

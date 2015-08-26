@@ -1,0 +1,39 @@
+<apex:page showHeader="true" sidebar="false">
+    <head>
+        <apex:includeScript value="/support/console/29.0/integration.js"/>
+        <script type="text/javascript">
+            
+            function OpenNewCaseTab() {
+                //Open a new primary tab with the salesforce.com home page in it
+                sforce.console.openPrimaryTab(null, '{! URLFOR($Action.Case.NewCase)}', true, 
+                    'New Case', null, 'NewCaseTab');
+            }
+            
+        </script>
+        <style>
+            .button-container{
+                text-align: center;
+            }
+            .new-case-button{
+                width: 100px;
+                text-align: center;
+                background: #007cc2;
+                border-radius: 3px;
+                color: #fff;
+                padding: 10px;
+                font-size: 16px;
+                display: block;
+                text-decoration: none;
+            }
+            .new-case-button:hover{
+                text-decoration: none;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="button-container">
+            <a href="javascript:void(0)" onClick="OpenNewCaseTab();return false" class="new-case-button">New Case</a> 
+        </div>   
+    </body> 
+</apex:page>

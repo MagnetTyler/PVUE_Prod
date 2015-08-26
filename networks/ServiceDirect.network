@@ -2,6 +2,8 @@
 <Network xmlns="http://soap.sforce.com/2006/04/metadata">
     <allowMembersToFlag>false</allowMembersToFlag>
     <branding>
+        <pageFooter>Public_Documents/Pearson_Community_Footer.html</pageFooter>
+        <pageHeader>Public_Documents/Pearson_Community_Header.html</pageHeader>
         <primaryColor>#EEEEEE</primaryColor>
         <primaryComplementColor>#222222</primaryComplementColor>
         <quaternaryColor>#EEEEEE</quaternaryColor>
@@ -24,6 +26,7 @@
     <forgotPasswordTemplate>unfiled$public/CommunityForgotPasswordEmailTemplate</forgotPasswordTemplate>
     <networkMemberGroups>
         <profile>admin</profile>
+        <profile>test center admin - community</profile>
     </networkMemberGroups>
     <picassoSite>ServiceDirect1</picassoSite>
     <selfRegistration>false</selfRegistration>

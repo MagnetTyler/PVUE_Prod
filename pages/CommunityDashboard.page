@@ -1,0 +1,42 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:includeScript value="{! $Resource.jQuery }"/>
+    <apex:stylesheet value="{! URLFOR($Page.PearsonStyles) }"/>
+    <style>
+        html, body{
+            background: transparent !important;
+        }
+    </style>
+    <script>
+        function gotolist(reportid){
+            window.parent.location = '/ta/500?fcf=' + reportid;
+            window.location = '/ta/CommunityDashboard';
+        }
+    </script>
+     <base target="_top" />
+    <apex:pageBlock title="Dashboard">
+        <apex:pageBlockSection columns="3">
+            <apex:pageBlockSectionItem onDataclick="gotolist('00BQ0000001Ba9x')">
+                    <analytics:reportChart developerName="Created_this_month" size="small" showRefreshButton="false"></analytics:reportChart>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem onDataclick="gotolist('00BQ0000001BPZk')">
+                <analytics:reportChart developerName="All_Cases" size="small" showRefreshButton="false"></analytics:reportChart>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem onDataclick="gotolist('00BQ0000001BaA7')">
+                <analytics:reportChart developerName="Awaiting_Test_Center_Action" size="small" showRefreshButton="false"></analytics:reportChart>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem onDataclick="gotolist('00BQ0000001BaA2')">
+                <analytics:reportChart developerName="Closed_Cases" size="small" showRefreshButton="false"></analytics:reportChart>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem onDataclick="gotolist('00BQ0000001Ba9x')">
+                <analytics:reportChart developerName="Open_Cases" size="small" showRefreshButton="false"></analytics:reportChart>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <script>
+        var $j = jQuery.noConflict();
+        
+        $j(document).ready(function(){
+
+        });
+    </script>
+</apex:page>

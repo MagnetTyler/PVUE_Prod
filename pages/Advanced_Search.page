@@ -1,0 +1,743 @@
+<apex:page showHeader="false" sidebar="false" controller="AdvancedSearchController">
+       
+        <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/>
+        <apex:includeScript value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.js')}"/>
+        <apex:includescript value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/js/jquery.dataTables.min.js')}" />
+        <apex:includeScript value="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.js') }"/>
+        <apex:includeScript value="{! URLFOR($Resource.Bootstrap, 'js/bootstrap.js') }"/>
+        
+        <apex:stylesheet value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.css')}"/>
+        <apex:stylesheet value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/css/jquery.dataTables.css')}" />
+        <apex:stylesheet value="{! URLFOR($Resource.Select2, 'select2-3.5.2/select2.css') }"/>
+        <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, 'css/bootstrap.css') }"/>
+    
+<script>
+        j$ = jQuery.noConflict();
+                
+        function initTables(whichtable){
+            //console.log('initTables called on this table : ' + whichtable );
+            if(whichtable == 'returntable2')
+            {    
+                var contactTable = j$('[id$="returntable2"]').DataTable({
+                        order: [[1, 'asc']],
+                        
+                        //var parameter=jQuery.param(dataentry);//idfield;
+                       
+                        initComplete: function() {
+                           
+                            var api = this.api();
+                            var select = j$('[id$=accountSelect]');
+                            api.column(0).data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            } );   
+                        }
+
+                });
+            };
+            if(whichtable == 'returntable' || whichtable == 'returntable3')
+            {        
+                var candidateTable = j$('[id$="returntable"],[id$="returntable3"]').DataTable({
+                    order: [[3, 'desc']],
+                    
+                    //var parameter=jQuery.param(dataentry);//idfield;
+                    fnDrawCallback: function () {
+                    // first radio button list selection is not rendered, so needs to be re-drawn
+                        //console.log('redrawn');
+                        var hc = j$('#hidden-candidate').val();
+                        //console.log('Hidden input value: ' + hc)
+                        j$('input[type="radio"][name="candidate"]').removeAttr("checked");
+                        j$('input[type="radio"][name="candidate"]').each(function(){
+                            var sc = j$(this).val();
+                            if(hc == sc){
+                                j$(this).attr("checked", "checked").click();        
+                            }
+                        });
+                    },
+                    initComplete: function() {
+                       
+                        var api = this.api();
+                        var select = j$('[id$=accountSelect]');
+                        api.column(0).data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );   
+                    }
+                });
+            };
+          
+        if(whichtable == 'returntable2')
+            {       
+                var contactTableNoSearch = j$('[id$="returntable2a"]').DataTable({
+                    bPaginate: false,
+                    bFilter: false, 
+                    bInfo: false,
+                    aoColumnDefs : [   
+                    {
+                      bSortable : false,  
+                      aTargets : [ 0,1,2,3 ]
+                    }],
+                    //var parameter=jQuery.param(dataentry);//idfield;
+                   
+                    initComplete: function() {
+                       
+                        var api = this.api();
+                        var select = j$('[id$=accountSelect]');
+                        api.column(0).data().unique().sort().each( function ( d, j ) {
+                            select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );   
+                    }
+                }); 
+            };
+        }
+        
+        function showparent(id, idfield, searchtype)
+            {                 
+                window.parent.fillIn(id, idfield, searchtype);
+            }
+    
+        function showparentcand(fieldid, value, label){
+            window.parent.addCandidate(fieldid, value, label);    
+        }
+        
+        function performValidations(){
+            //Add validations
+            
+            var errors = [];
+            var passed = true;
+
+            j$('.required').not('.select2-container').each(function(){
+                var item = j$(this);
+                var value = item.val();
+                var visible = false; // added as a workaround for conflicts in typeahead and required field code
+                
+                if(item.next()){
+                    var next = item.next();
+                    if(next.hasClass('required-label') || next.hasClass('date-error-label')){
+                        item.next().remove();  
+                    }
+                }
+                
+                if((item.is(":visible") || item == j$('select[id*="client-list"]')) && !item.hasClass('select2-focusser')){
+                    visible = true;    
+                }
+                
+                if((value == null || value == "") && visible == true){
+                    //var name = item.attr('name');
+                    //errors.push(name);
+                    item.after('<span class="required-label">{!$Label.Required}</span>');
+                    passed = false;
+                    
+                }
+                
+             });
+            if(j$('input[id*="start-date"]').datepicker("getDate")/1000 > j$('input[id*="end-date"]').datepicker("getDate")/1000)
+            {
+                if(j$('input[id*="start-date"]').next().hasClass("required-label") || j$('input[id*="start-date"]').next().hasClass("date-error-label")){
+                        j$('input[id*="start-date"]').next().remove();
+                }
+                j$('input[id*="start-date"]').after('<span class="date-error-label">{! $Label.Start_date_warning }</span>');
+                //alert('{!$Label.Start_date_warning}');
+                passed = false;
+            }
+            
+            if(passed == false){
+                NotificationMessage('as-messages', 'error', '{! $Label.Advanced_Search_Warning }')    
+            }
+            
+            return passed;
+        }
+
+
+        function validateSiteId(type)
+            {
+                if(!performValidations()){
+                    return false;
+                }
+
+                var retVal = true;
+                var siteID = j$('[id*="sitecriteria"]');
+                var siteIdRegex = /^\d+$/;
+                var iderror = j$('#siteIdValidation');
+                //console.log(type);
+                if((siteID.val() !== null && siteID.val() !== '') && type !== '{!$Label.Client_Candidate_ID_Adv}'){
+                    if ( !siteIdRegex.test(siteID.val())) {
+                        var label = '{!$Label.Reg_Id_Invalid}';
+                        
+                        //console.log(siteID.val());
+                        if(iderror.length !== null ){
+                            j$('.site-id-error').html('');
+                            j$('.site-id-error').append('<span id="siteIdValidation" class="required-label">' + label + '</span>');
+                        }
+                        retVal = false;
+                    }else{
+                        j$('.site-id-error').html("");    
+                    }
+                }
+                //console.log(retVal);
+                return retVal;
+            }
+    
+        function selectCandidate(){
+            
+            /* Get checked Candidate */
+            var checkedcandidate = j$('input[type="radio"][name="candidate"]:checked');
+            //console.log(checkedcandidate);
+            
+            /* If none checked throw error */
+            if(checkedcandidate.length > 0){
+
+                var regid = checkedcandidate.val();
+                var fieldid = checkedcandidate.data('fieldid');
+                var label = checkedcandidate.data('label');
+                
+                if(regid && fieldid && label){
+                    showparentcand(fieldid, regid, label);      
+                }
+                
+            }else{
+                
+                /* Show Error */
+                j$('#candidate-error-message').show();
+                j$('html, body').animate({
+                    scrollTop: j$('#candidate-error-message').offset().top
+                }, 500);
+                
+            }
+            
+            
+        }
+    
+        function closeModal(){
+            window.parent.closeModal();    
+        }
+    
+        function setCandidateField(id){
+            j$('#hidden-candidate').val(id);    
+        }
+    
+        function validateToSearch(){
+            
+            alert('validateToSearch');
+            
+            var pass = performValidations();
+            if(pass){
+                j$('.search-button').click();    
+            }else{
+                return false;    
+            }
+        }
+    
+    
+            
+        </script>
+
+<style type="text/css">
+    
+            body{
+                font-size: 12px !important;
+            }
+        
+            h1, h2, h3{
+                margin: 0px !important;
+                font-size: 10px !important;
+            }
+            
+
+            .searchstatus {
+                color:Red; 
+                background-color:white; 
+                text-align:center;
+                margin-right: 100px;
+                margin-left: 300px;
+             }
+             
+             .modal .modal-dialog{
+                 width: 700px;
+             }
+             
+             .pull-right{
+                 float: right;
+             }
+             
+             .btn.btn-select{
+                 background: #007cc2;
+                 color: #fff;
+                 text-decoration: none;  
+                 border-color: #007cc2;   
+                 width: 100%;           
+             }
+             
+             .required-label, .date-error-label{
+                 margin-left: 10px;
+                 color: red;
+                 font-weight: 600;
+             }
+             
+             .labelCol label::after{
+                 content: " *";
+             }
+    
+             .advanced-options .labelCol label::after{
+                 content: "" !important;
+             }
+    
+            .select2-container{
+                   min-width: 200px;
+               }
+               
+            .select2-results li{
+                margin-left: 0px;
+                font-size: 12px;
+            }
+            
+            .select2-choice{
+                height: 18px !important;
+                font-size: 12px !important;
+                line-height: 16px !important;
+            }
+            
+            .select2-container .select2-choice .select2-arrow b{
+                background-size: 60px 22px !important;
+            }
+    
+            .no-results{
+                padding: 10px 0px;
+                text-align: center;
+            }
+    
+            #returntable2a{
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+    
+            #returntable2a thead{
+                display: none !important;
+            }
+            .action-buttons{
+                padding: 10px 0px;
+            }
+    
+            #candidate-error-message{
+                border: 1px solid #e04854;
+                background: #fff;
+                border-left: 10px solid #e04854;
+                padding: 15px;
+                margin-bottom: 20px;
+                border-radius: 4px;
+            }
+            #candidate-error-message p{
+                margin: 0px !important;
+            }
+            .action-buttons .btn{
+                width: 100px !important; 
+                padding: 4px 3px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .action-buttons .save-button {
+              background: #0089b7 !important;
+              color: #ffffff;
+              border: 1px solid #308cac !important;
+            }
+            button.close-alert {
+              -webkit-appearance: none;
+              padding: 0;
+              cursor: pointer;
+              background: transparent;
+              border: 0;
+              position: relative;
+              top: -7px;
+              color: #b5b5b5;
+              font-size: 21px;
+            }
+    
+            #required-error{
+                border: 1px solid #e04854;
+                background: #fff;
+                border-left: 10px solid #e04854;
+            }
+
+            input[type="radio"]{
+                margin-right: 5px !important;
+
+            }
+            .waitingSearchDiv{
+                background-color: rgba(0,0,0,0.2);
+                height: 100%;
+                width:100%;  
+              }
+                         
+              .waitingHolder{
+                padding: 10px !important;
+                background: #ffffff !important;
+                border: 1px solid #333 !important;
+                border-radius: 3px !important;
+                top: 250px; 
+                width: 91px;
+                opacity: 1;
+              }
+                
+              .waitingDescription{
+                color: #333;  
+              }
+
+        </style>
+    <apex:form id="theform" >
+        <c:NotificationMessages elementid="as-messages"></c:NotificationMessages>
+        <apex:pageBlock id="searchform" Rendered="{!pagetype == 'Community' || (searchtype == $Label.Site_ID && siteidfrompage != null)}">
+            <apex:messages />
+            <apex:inputHidden id="hiddenvalue" value="{!hiddenfieldforreg}"/> 
+            <apex:pageBlockButtons location="bottom">
+               
+                <apex:commandButton onclick="return performValidations()" action="{! do_oldsearch }" value="{!$Label.Search}" status="searching" reRender=""/>
+                
+            </apex:pageBlockButtons> 
+             
+           <apex:pageBlockSection columns="1" >
+               <apex:inputText id="start-date" value="{!startdate}" label="{!$Label.Start_date}" styleClass="required"/>
+               <apex:inputText id="end-date" value="{!enddate}" label="{!$Label.End_date}" styleClass="required" />
+               <script>
+               j$('input[id*="start-date"], input[id*="end-date"]').datepicker({ dateFormat: 'mm/dd/yy' });
+               </script>
+           </apex:pageBlockSection>
+            <apex:actionstatus id="searching" startStyleClass="searchstatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading"> 
+                        <div class="waitingHolder">
+                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.Please_Wait}" />
+                            <span class="waitingDescription">{!$Label.Loading}</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>     
+           <!-- apex:actionStatus startText=" (Retrieving Results Please Wait...)"  stopText="" id="searching" startStyleClass="searchstatus"/ --> 
+           <apex:actionFunction Name="setValueToVariable" action="{!setValueToVariable}"  reRender="searchform">
+               <apex:param name="firstparam" value="" assignTo="{!searchtype}"/> 
+            </apex:actionFunction>
+            <!--apex:actionStatus startText=" (Retrieving Results Please Wait...)"  stopText="" id="searching2" startStyleClass="searchstatus"/ -->   
+        </apex:pageBlock>
+        <apex:pageBlock Rendered="{!searchtype == $Label.Site_ID && siteidfrompage == null}" id="siteform">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="{!$Label.Search}" onclick="if(validateSiteId('{! SiteSearchType}')){ do_oldsearch(); }else{ return false; }" status="searching2" rerender="thereturns">
+                    <!-- apex:actionSupport event="onclick" Status="searching"/-->
+                </apex:commandbutton>
+                 <apex:actionFunction name="do_oldsearch" action="{! do_oldsearch }" status="searching" rerender="thereturns" /> 
+            </apex:pageBlockButtons>
+            <apex:actionstatus id="searching2" startStyleClass="searchstatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv"> 
+                        <div class="waitingHolder">
+                            <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.Please_Wait}" />
+                            <span class="waitingDescription">{!$Label.Loading}</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>     
+            <apex:pageblockSection columns="1" >
+                <apex:selectRadio value="{!SiteSearchtype}" label="{!$Label.By}"  rendered="{!searchtype == $Label.Site_ID}" layout="pageDirection">
+                      <!--  <apex:selectOption itemValue="" itemLabel="{!$Label.Select_One}"/> -->
+                        <apex:selectOption itemvalue="{!$Label.RegID}" itemLabel="{!$Label.RegID}"/>
+                        <apex:selectOption itemvalue="{!$Label.Client_Candidate_ID_Adv}" itemLabel="{!$Label.Client_Candidate_ID_Adv}"/>
+                        <apex:actionSupport event="onchange" action="{!clearentries}" reRender="siteform" status="searching"/><!-- searching2 -->
+                </apex:selectRadio>                
+                    <apex:selectList id="client-list2" size="1" value="{!SiteCriteria2}" Label="{!$Label.Client}"  rendered="{!!isBackToSearch && SiteSearchType == $Label.Client_Candidate_ID_Adv}" styleClass="required" >
+                        <apex:selectOptions value="{!ClientList}" />
+                    </apex:selectList>
+                    <script>
+                        j$('select[id*="client-list"]').select2();
+                    </script>                           
+
+                
+                            <apex:inputtext value="{!Sitecriteria1}" id="sitecriteria" label="{!SiteSearchtype}" onblur="if(validateSiteId('{! SiteSearchtype }')){}else{ return false; }" styleClass="required" rendered="{!Searchtype == $Label.Site_ID && SiteSearchtype != null}"> 
+                                <!--<apex:actionSupport event="onchange" onsubmit="if(!validateSiteId()){return;}" action="{! Retrieve_Reg_or_Site }" status="searching" rerender="theform,myrender"/>-->
+                            </apex:inputtext>
+                            <apex:outputPanel styleClass="site-id-error"/>
+                            
+                            
+                       
+
+            </apex:pageblockSection>
+            <!-- apex:actionStatus startText=" (Retrieving Results Please Wait...)"  stopText="" id="searching3" startStyleClass="searchstatus"/ --> 
+        </apex:pageBlock>
+
+ <apex:commandLink value="{!$Label.Back_to_search}" action="{!backToSearch}" reRender="theform" rendered="{!isBackToSearch}" />
+        <apex:pageBlock id="advsearchform" rendered="{!pagetype == 'Console' && siteidfrompage == null && (searchtype == $Label.Registration_ID || searchtype == $Label.Candidate_Name_pickval)}">
+            
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton onclick="return performValidations()" action="{! dosearch }" value="{!$Label.Search}" rendered="{!!isBackToSearch}" status="searching">
+                    <!-- apex:actionSupport event="onclick" Status="searching" / -->
+                </apex:commandbutton>
+        <!--        <apex:commandButton action="{! backToSearch }" value="{!$Label.Select_Candidate}" rendered="{!isBackToSearch}" reRender="theform" /> -->
+            </apex:pageBlockButtons> 
+            <apex:pageBlockSection >
+                <apex:selectList id="client-list" size="1" value="{!RegCriteria2}" Label="{!$Label.Client}"  rendered="{!!isBackToSearch}" styleClass="required" >
+                    <apex:selectOptions value="{!ClientList}" />
+                </apex:selectList>
+                <apex:outputText value="{!clientMap[RegCriteria2]}" Label="{!$Label.Client}"  rendered="{!isBackToSearch}" ></apex:outputText>
+                <script>
+                    j$('select[id*="client-list"]').select2();
+                </script>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:selectRadio id="clientlist" value="{!selectedAdvanceCriteria}" Label="{!$Label.Additional_criteria}" layout="pageDirection" rendered="{!!isBackToSearch}" >
+                    <apex:selectOptions value="{!advanceCriteriaOptions}" />
+                    <apex:actionSupport event="onchange" reRender="advsearchform" />
+                </apex:selectRadio>
+                <apex:outputText value="{!selectedAdvanceCriteria}" Label="{!$Label.Additional_criteria}"  rendered="{!isBackToSearch}"></apex:outputText>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:inputText value="{!Regcriteria1}" label="{!selectedAdvanceCriteria}" rendered="{!selectedAdvanceCriteria != null && !isBackToSearch}" styleClass="required" />
+                <apex:outputText value="{!Regcriteria1}" label="{!selectedAdvanceCriteria}" rendered="{!isBackToSearch}" ></apex:outputText>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandLink value="{!$Label.Advanced_options}" action="{!advancedOptions}" reRender="isAdvancedOptions_Id" rendered="{!!isBackToSearch}"/>
+            </apex:pageBlockSection>
+            <apex:outputPanel id="isAdvancedOptions_Id" styleClass="advanced-options">
+                <apex:pageBlockSection rendered="{!isAdvancedOptions}" >
+                    <apex:selectList size="1" value="{!selectedcountry}" Label="{!$Label.Country}"  rendered="{!!isBackToSearch}" >
+                        <apex:selectOptions value="{!countries}" />
+                        <apex:actionSupport event="onchange" reRender="stateoption"/>
+                    </apex:selectList>
+                    <apex:outputText value="{!selectedcountry}" label="{!$Label.Country}" rendered="{!isBackToSearch}" ></apex:outputText>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!isAdvancedOptions}" > 
+                    <apex:inputText value="{!selectedAddressOne}" label="{!$Label.Address_1}" rendered="{!!isBackToSearch}" />
+                    <apex:outputText value="{!selectedAddressOne}" label="{!$Label.Address_1}" rendered="{!isBackToSearch}" ></apex:outputText>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!isAdvancedOptions}" >
+                    <apex:inputText value="{!selectedAddressTwo}" label="{!$Label.Address_2}" rendered="{!!isBackToSearch}" />
+                    <apex:outputText value="{!selectedAddressTwo}" label="{!$Label.Address_2}" rendered="{!isBackToSearch}" ></apex:outputText>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!isAdvancedOptions}" >
+                    <apex:inputText value="{!selectedCity}" label="{!$Label.City}" rendered="{!!isBackToSearch}" />
+                    <apex:outputText value="{!selectedCity}" label="{!$Label.City}" rendered="{!isBackToSearch}" ></apex:outputText>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection rendered="{!isAdvancedOptions}" id="stateoption">
+                    <apex:selectList size="1" value="{!selectedState}" Label="{!$Label.State}" rendered="{!!isBackToSearch}"  >
+                        <apex:selectOptions value="{!states}" />
+                    </apex:selectList>
+                    <apex:outputText value="{!selectedState}" label="{!$Label.State}" rendered="{!isBackToSearch}" ></apex:outputText>
+                </apex:pageBlockSection>
+                
+            </apex:outputPanel>
+            <apex:actionStatus startText=" ({!$Label.Loading})"  stopText="" id="searching" startStyleClass="searchstatus"/> 
+
+
+
+         <!--   Section removed for new story design
+                <apex:selectList value="{!SiteSearchtype}" label="By:" size="1" rendered="{!searchtype == $Label.Site_ID}">
+                    <apex:selectOption itemValue="" itemLabel="Select one"/>
+                    <apex:selectOption itemvalue="Phone number" itemLabel="Phone number"/>
+                    <apex:actionSupport event="onchange" reRender="searchform"/>
+                </apex:selectList>
+             
+                
+          
+                <apex:inputText value="{!Sitecriteria1}" label="{!SiteSearchtype}:" rendered="{!Searchtype == $Label.Site_ID && SiteSearchtype != null}" />
+                                         
+                <apex:selectList value="{!RegistrationSearchtype}" size="1" label="By:" rendered="{!searchtype == 'Registration ID'}">
+                    <apex:selectOption itemValue="" itemLabel="Select one"/>
+                    <apex:selectOption itemValue="Student or VUE ID" itemLabel="Student or VUE ID"/>
+                    <apex:selectOption itemvalue="CC ID" itemLabel="CC ID and Client ID"/>
+                    <apex:actionSupport event="onchange" reRender="searchform"/>
+                </apex:selectList>
+                
+                <apex:inputText value="{!RegCriteria1}" label="{!RegistrationSearchtype}:" rendered="{!Searchtype =='Registration ID' && RegistrationSearchtype != null}"/>
+                <apex:inputText value="{!RegCriteria2}" label="{!$Label.Client}:" rendered="{!Searchtype == $Label.Registration_ID && RegistrationSearchtype == 'CC ID'}"/>   -->         
+ 
+        </apex:pageblock>  
+
+    <apex:pageBlock id="thereturns">
+        <apex:outputPanel Rendered="{! Siteadvanced != null}">
+            <table id="returntable" class="display" >
+                <thead>
+                    <tr>
+                        <th>{!$Label.Select}</th>
+                        <th>{!$Label.Candidate_name}</th>
+                        <!--<th>{!$Label.Client_name}</th>-->
+                       <th>{!$Label.Registration_ID}</th>
+                       <th>{!$Label.Appointment_date_time}</th>
+                       <!-- <th>{!$Label.Exam_name}</th> -->
+                        <th>{!$Label.Site_ID}</th>
+                        <th>{!$Label.Site_name}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!SiteAdvanced}" var="TC">
+                        <tr>
+                            <td><input value="{!$Label.select}" type="button" onclick="showparent('{!TC.Registration.Testcenter.id}','{!fieldid}','{!$Label.Site_id}')" class="btn btn-select" /></td>
+                        <!--    <td>                           
+                                <apex:outputLink value="#" onclick="showparent('{!TC.VTS_Test_Center_ID__c}','{!fieldid}','Site ID')" styleClass="btn btn-select">Select</apex:outputLink>                               
+                            </td>  -->
+                            <td>{!TC.Registration.Candidate.Firstname} {!TC.Registration.Candidate.Lastname}</td>
+                            <!--<td>{!TC.Registration.Exam.ClientId}</td>-->
+                            <!--<td>{!TC.Registration.Exam.ClientId}</td>-->
+                            <td>{!TC.Registration.id}</td>
+                            <td>
+                                
+                                   <apex:outputText value="{0,date, MM/dd/yyyy HH:mm:ss}" style="display: none">
+                                                <apex:param value="{!TC.sorttime}"/>
+                                            </apex:outputText>
+                                
+                                {!TC.commontime}
+                            </td>
+                            <td>{!TC.Registration.testCenter.id}</td>
+                            <td>{!TC.Registration.testCenter.name}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+            <script type="text/javascript">
+                initTables('returntable');
+            </script>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{! SiteAdvanced == null && Searchtype == $label.Site_id }" id="ret2noresults" > 
+            <div class="no-results">
+                {!$Label.No_results}
+            </div>
+        </apex:outputPanel> 
+     </apex:pageblock> 
+     
+       
+        <apex:pageBlock id="thereturns2" rendered="{!(searchtype == $label.Registration_ID || searchtype == $Label.Candidate_Name_pickval) }">
+               
+        <apex:repeat value="{!CandidateRows}" var="CR">
+                <table id="returntable2a" class="display" >
+                    <thead>
+                        <tr>
+                            <th>{!$Label.Select}</th>
+                            <th>{!$Label.AS_Candidate_name}</th>
+                            <th>{!$Label.Address}</th>                           
+                            <th>{!$Label.Email}</th>
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!CR.Candidate}" var="myC">
+                            <tr>
+                                <td><input value="{!$Label.select}" type="button" onclick="showparent('{!myC.Id}','{!fieldid}','{!$Label.Candidate_Name_pickval}')" class="btn btn-select" /></td>
+                            <!--    <td>                           
+                                    <apex:outputLink value="#" onclick="showparent('{!myC.Id}','{!fieldid}','{!$Label.Candidate_Name_pickval}')" styleClass="btn btn-select">Select Candidate</apex:outputLink>      
+                                    
+                                </td> -->
+                                
+                                <td>{!myC.firstname} {!myC.middleInitial} {!myC.lastName}</td>
+                                <td>{!myC.city & IF(ISBLANK(myC.city), '', ', ') & myC.stateCode}</td>
+                                <td>{!myC.email}</td>
+                                
+                            </tr>
+                        </apex:repeat>        
+                    </tbody>
+                </table>
+            
+                <table id="returntable2" class="display" >
+                    <thead>
+                        <tr>
+                            <th>{!$Label.Select}</th>
+                            <th>{!$Label.Client_name}</th>
+                            <th>{!$Label.Exam_name}</th>
+                            <th>{!$Label.Appointment_date_time}</th>
+                            <th>{!$Label.Registration_ID}</th>
+                            <th>{!$Label.CCID}</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!CR.registrations}" var="Reg">
+                            <tr>
+                                <td><input value="{!$Label.select}" type="button" onclick="showparent('{!Reg.registration.id}','{!fieldid}','{!$Label.Registration_ID}')" class="btn btn-select" /></td>
+                            <!--    <td>                           
+                                    <apex:outputLink value="#" onclick="showparent('{!Reg.registration.id}','{!fieldid}','Registration ID')" styleClass="btn btn-select">Select</apex:outputLink>                               
+                                </td> -->
+                                
+                                <td>
+                                {!Reg.registration.candidate.clientID}</td>
+                                <td>{!Reg.registration.Exam.name} {!Reg.registration.Exam.code}</td>
+                                <td>
+                                    <apex:outputtext value="{!Reg.Registration.appointmentTime.TimestampinUTC}" style="display: none"/>                                    
+                                    {!Reg.commontime}
+                                </td>
+                                <td>{!Reg.registration.id}</td>
+                                <td>{!Reg.registration.Candidate.ClientCandidateId}</td>
+                            </tr>
+                        </apex:repeat> 
+        
+                    </tbody>
+                </table>
+                
+        </apex:repeat>
+        <script type="text/javascript">
+            initTables('returntable2');
+        </script>
+
+        <apex:outputPanel layout="none" rendered="{!if(candidateresults == null, true, false)}" id="ret3noresults" >
+            <div class="no-results">
+                {!$Label.No_results}
+            </div>
+        </apex:outputPanel>    
+        
+     </apex:pageblock> 
+     
+    <apex:pageBlock id="communityreturns" rendered="{!(pagetype == 'Community' || siteidfrompage != null) && if(candidateresults == null, false, candidateresults.size >0)}">
+        
+        <table id="returntable3" class="display">
+            <thead>
+                <tr>
+                    <th>{!$Label.Select}</th>
+                    <th>{!$Label.AS_Candidate_name}</th>
+                    <th>{!$Label.Exam_name}</th>
+                    <th>{!$Label.Appointment_date_time}</th>
+                    <th>{!$Label.Registration_ID}</th>
+                    <th>{!$Label.Exam_series_code}</th>
+                    
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!candidateresults}" var="CR">
+                    <tr>
+                        <td><input value="{!$Label.select}" type="button" onclick="showparentcand('{! fieldid}', '{!CR.Registration.id}','{!CR.Registration.Candidate.firstname} {!CR.Registration.Candidate.lastname} - {!CR.commontime}')" class="btn btn-select" /></td>
+                   <!--     <td>   
+                            <input type="radio" name="candidate" onclick="setCandidateField({! CR.Registration.id })" value="{! CR.Registration.id }" data-fieldid="{! fieldid }" data-label="{!CR.Registration.Candidate.firstname} {!CR.Registration.Candidate.lastname} - {!CR.commontime}" />
+                            
+                            <!-- apex:outputLink value="#" onclick="showparentcand('{! fieldid}', '{!CR.Registration.id}','{!CR.Registration.Candidate.firstname} {!CR.Registration.Candidate.lastname} - {!CR.commontime}')" styleClass="btn btn-select">Select</apex:outputLink                                 
+                        </td> -->
+                        
+                        <td>{!CR.Registration.Candidate.firstname} {!CR.Registration.Candidate.lastname}</td>
+                        <td>
+                            {!CR.Registration.Exam.Name}
+                        </td>
+                        <td>
+                            <apex:outputtext value="{!CR.Registration.appointmentTime.TimestampinUTC}" style="display: none"/>
+                            {!CR.commontime}
+                        </td>
+                        <td>{!CR.registration.Id}</td>
+                        <td>{!CR.registration.exam.code}</td>
+                    </tr>
+                </apex:repeat> 
+
+            </tbody>
+
+        </table>
+        <script type="text/javascript">
+            initTables('returntable3');
+        </script>
+        <input id="hidden-candidate" type="hidden" value=""/>
+        <div class="action-buttons">
+            <a id="cancel-candidate" class="btn" href="javascript:void(0);" onclick="closeModal()">{!$Label.Cancel}</a>
+        </div>
+     </apex:pageblock> 
+     <apex:pageBlock rendered="{!candidateresults == null}">
+         <div class="action-buttons">
+            <a id="cancel-candidate" class="btn" href="javascript:void(0);" onclick="closeModal()">{!$Label.Cancel}</a>
+       </div>
+     </apex:pageBlock>
+     
+      
+      <apex:pageBlock id="hiddenBlock" rendered="false">
+           
+       </apex:pageBlock>
+    </apex:form>
+     
+</apex:page>

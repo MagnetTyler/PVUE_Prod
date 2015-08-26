@@ -28,7 +28,7 @@
 	color: #000000;
 	font-style: normal;
 	font-weight: normal;
-	margin-bottom: 12pt;
+	margin-bottom: 6pt;
 	font-size: 14pt;
 	x-next-type: p;
 }
@@ -116,7 +116,7 @@ p.ArticleInfoText {
 .knowledge-article ol,
 .knowledge-article ul {
 	margin-top: 0pt;
-	margin-bottom: 6pt;
+	margin-bottom: 16pt;
 }
 .knowledge-article ol{
 	margin-left: 40px;
@@ -129,7 +129,7 @@ p.ArticleInfoText {
 	font-family: Verdana;
 	font-size: 10.5pt;
 	margin-left: 0px;
-	margin-top: 9px;
+	margin-top: 6px;
 	margin-bottom: 6pt;
 }
 .knowledge-article LI.p-BulletList, .knowledge-article ul li {

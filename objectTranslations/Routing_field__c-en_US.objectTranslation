@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Routing field</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Routing_fields</value>
+    </caseValues>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Logic type --></label>
+        <name>Logic_type__c</name>
+        <picklistValues>
+            <masterLabel>AND</masterLabel>
+            <translation><!-- AND --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OR</masterLabel>
+            <translation><!-- OR --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Operator --></label>
+        <name>Operator__c</name>
+        <picklistValues>
+            <masterLabel>Equals</masterLabel>
+            <translation><!-- Equals --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Greater than</masterLabel>
+            <translation><!-- Greater than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Less than</masterLabel>
+            <translation><!-- Less than --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not equals</masterLabel>
+            <translation><!-- Not equals --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Record Type ID --></label>
+        <name>Record_Type_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Routing logic --></label>
+        <name>Routing_logic__c</name>
+        <relationshipLabel><!-- Routing_fields --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Time to subtract from: --></label>
+        <name>Subtractionfield__c</name>
+    </fields>
+    <fields>
+        <label><!-- Value: --></label>
+        <name>Value__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Dynamic Routing Field --></label>
+        <name>Dynamic_Routing_Field</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Dynamic Sections Field --></label>
+        <name>Dynamic_Sections_field</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

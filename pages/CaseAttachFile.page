@@ -1,0 +1,256 @@
+<apex:page controller="CaseAttachFileController" showHeader="false" sidebar="false" tabStyle="Case">
+    <head>
+        <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/>
+        
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700' rel='stylesheet' type='text/css'/>
+        <apex:stylesheet value="{! URLFOR($Resource.Bootstrap, 'css/bootstrap.css') }"/>
+        <apex:stylesheet value="{! $Page.PearsonStyles }"/>
+        
+        
+        <style>
+            .file_sep{
+                margin-bottom:15px;
+                position:relative;
+            }
+                
+            html{
+                background-color: #fff !important;    
+            }
+                
+            span.remove_attachement{
+                position: absolute;
+                right: -4px;
+                top: -5px;
+            }
+                
+            a.add_more{
+                color:#428bca !important;
+            }
+                
+            #documentLoader{
+                position: absolute;
+                height: 20px;
+                top: 0px;
+                z-index: 100000;
+                text-align: center;
+                width: 100%;
+                padding-bottom: 230px;
+                background-color: rgba(255, 255, 255, 0.5);
+                left:0px;
+            }
+                
+            .file_sep input.file-input{
+                padding-top: 0px;
+                  padding-left: 0px;
+                  padding-bottom: 0px;
+                  height: auto;
+                }
+                
+            .caseBlock{
+                border: none !important;   
+             }
+            html body .caseBlock .bPageBlock{
+                border: none !important;
+                border-radius: 0px !important;
+            }
+            .pbBody{
+                padding: 0px !important;
+                margin: 0px !important;
+            }
+            .text-center{
+                padding: 0px !important;
+            }
+             .required-label{
+                    margin-left: 5px;
+                    color: #e04854;
+                }
+            .text-center .btn{
+                width: 100px !important;
+                padding: 5px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 12px;
+                font-weight: 400 !important;
+                background: #eee !important;
+                border-color: #ccc !important;
+            }
+            .text-center .btn:hover{
+            	background: #dadada !important;
+            	border-color: #ADADAD !important;
+            }
+            .text-center .btn.upload-btn{
+            	color: #ffffff;
+                border: 1px solid #308cac !important;
+                background: #0089b7 !important;
+                font-weight: normal !important;
+            }
+            .text-center .btn.upload-btn:hover{
+            	background: #2c83a1 !important;
+            	border-color: #22657d;
+            }
+            #attach-error{
+                border: 1px solid #e04854;
+                background: #fff;
+                border-left: 10px solid #e04854;
+                margin-bottom: 10px;
+            }
+            button.close-alert {
+                -webkit-appearance: none;
+                padding: 0;
+                cursor: pointer;
+                background: transparent;
+                border: 0;
+                position: relative;
+                top: -7px;
+                color: #b5b5b5;
+                font-size: 21px;
+            }
+        </style>       
+        <script>
+            
+            $j = jQuery.noConflict();
+            
+            function performValidation(){ 
+                var passed = true;
+                $j('.upload .file-input').each(function(){
+                    var myinput = $j(this).val();
+                    if(myinput == null || myinput == ""){
+                        //comment.after('<span id="CommentValidation" class="required-label">{!$Label.Required}</span>');
+                        NotificationMessage('attach-modal', 'error', '{!$Label.No_file_selected}');
+                        passed = false;
+                    }
+                    return false;
+                });
+                if(passed){
+                    showDocumentLoader(); 
+                }
+                return passed;
+            }
+        </script>
+    </head>
+    
+    <body>
+        <apex:pageBlock >
+            <apex:form styleClass="attach_form" style="display:none;">
+                <div class="container-fluid">
+                    <c:NotificationMessages elementid="attach-modal"></c:NotificationMessages>
+                    <apex:outputPanel rendered="{! has_size_error }">
+                        <script>
+                            NotificationMessage('attach-modal', 'error', '{!$Label.Save_Validation_Error}')
+                        </script>
+                    </apex:outputPanel>
+                </div>
+                <!-- div class="container-fluid">
+                    <div id="attach-error" class="message error-message alert" role="alert" style="display: none">
+                        <button type="button" class="close-alert pull-right" onclick="$j('#attach-error').hide()"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                            {!$Label.No_file_selected}
+                        </p>
+                    </div>
+                </div>
+                <apex:outputpanel rendered="{!has_size_error}">
+                <div class="container-fluid">
+                    <div id="file-error" class="message error-message alert" role="alert">
+                        <button type="button" class="close-alert pull-right" onclick="$j('#file-error').hide()"><span aria-hidden="true">&times;</span></button>
+                        <p>
+                            {!$Label.Save_Validation_Error}
+                        </p>
+                    </div>
+                </div>
+                </apex:outputpanel -->
+                <div class="container-fluid">
+                    <div id="documentLoader" style="display:none;">
+                        <div class="waitingSearchDiv">
+                            <div class="waitingHolder">
+                                <img class="waitingImage" src="{! URLFOR($Resource.PearsonAssets, 'LoadingIndicator.gif') }" title="{!$Label.please_wait}" />
+                                <span class="waitingDescription">{! $Label.Loading }</span>
+                            </div> 
+                        </div>
+                    </div> <!-- @end Loader -->
+                <div class="form-group">
+                    <div class="">
+                        <div class="upload">                            
+                            <apex:variable value="{!1}" var="rowNum"/>
+                            <apex:repeat value="{!attachments}" var="att">
+                                <div class="file_sep">
+                                    <apex:inputFile value="{!att.Body}" fileSize="{!att.bodylength}" filename="{!att.Name}" styleclass="form-control file-input" id="inputfile"/> 
+                                    <a href="javascript:void(0)" class="library_btn"></a>
+                                    <apex:outputPanel rendered="{!NOT(rowNum == 1) }" layout="none">
+                                        <span class="remove_attachement">
+                                            <a href="javascript:void(0)"><img src="{!$Resource.DeleteIcon}" /></a>
+                                        </span>                                            
+                                    </apex:outputPanel>
+                                    <apex:outputPanel styleclass="required-label" rendered="{!has_size_error}">
+                                         {!sizerror}                                            
+                                    </apex:outputPanel>
+                                </div>
+                                <apex:variable var="rowNum" value="{!rowNum + 1}"/>                                        
+                            </apex:repeat>
+                            <a href="javascript:void(0)" onClick="addAttachment()" class="add_more">{!$Label.Add_another_file}</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-xs-12 text-center">
+                            <a id="cancel-candidate" class="btn pull-left" href="javascript:void(0);" onclick="closeModal()">{!$Label.Cancel}</a>
+                            <apex:commandButton onclick="return performValidation()" action="{!attachCaseFiles}" status="uploadingAttachment" value="{!$Label.Upload}" styleClass="pull-right btn upload-btn" />
+                    </div>
+                </div>
+                </div>
+            </apex:form>
+        </apex:pageBlock>
+        
+        <apex:form >
+            <apex:actionFunction name="refreshIframe" action="{!refreshIframe}"/>
+        </apex:form>
+
+        <apex:includeScript value="{! URLFOR($Resource.jQuery)}"/>       
+        <apex:includeScript value="{! URLFOR($Resource.Bootstrap, '/js/bootstrap.js')}"/>
+        <script>
+        $j(document).ready(function(){
+            $j(".upload").each(function(){
+                $j(".file_sep:not(:first)", this).hide();
+            });
+            
+            $j('.remove_attachement a').each(function(){
+                $j(this).click(function(){
+                    var $input = $j(this).parent().parent().find('.file-input');
+                    $input.replaceWith($input.val('').clone(true));
+                    $j(this).parent().parent().hide();
+                    $j(this).parent().parent().clone(true).insertAfter( ".file_sep:hidden:first" );
+                    $j(this).parent().parent().remove();
+                });
+            });
+            
+            if('{!$CurrentPage.parameters.isUploaded}' == 'true'){
+                refreshIframe();
+                parent.closePopUp(); 
+                if(parent.processNewAttachments)
+                {
+                    parent.processNewAttachments();
+                }
+                parent.NotificationMessage('main-messager', 'success', '{! $Label.Attachment_uploaded_sucessfully }');
+   
+            }
+            
+            $j('.attach_form').show();
+        });
+        
+        function addAttachment(){
+            $j('.file_sep:hidden:first').show();
+        }
+        
+        function showDocumentLoader(){
+            $j('#documentLoader').show();
+        }
+        
+        function closeModal(){
+            window.parent.closeAttachmentModal();
+            refreshIframe();
+        }
+        
+        </script>
+    </body>
+</apex:page>

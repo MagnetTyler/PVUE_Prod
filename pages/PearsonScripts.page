@@ -1,0 +1,47 @@
+<apex:page contentType="application/javascript">
+
+  $j = jQuery.noConflict();
+    
+  if(self.location.href.indexOf('/ta/500/o') >= 0) {
+    self.location.href = '/ta/500?pg:lv:fcf={!$Label.Default_Case_List_View}'; 
+  }  
+
+  $j(document).ready(function(){
+  	  
+      var body = $j('body');
+      var selected = $j('#selected-dropdown');   
+      var path = location.pathname.split('/');
+
+      $j('#user-name').html('<i class="fa fa-user"></i> {! $User.firstName } {! $User.lastName}');
+      $j('#test-center-name').html('{! $User.Testing_Center_Name__c }');
+      $j('#test-center-id').html('Site ID {! $User.Testing_Center__c }');
+      
+      var newcase = '<a id="create-case-btn" class="btn btn-primary" href="/ta/CreateCaseComm" onclick="this.href+=\'?retURL=\' + escape(location.pathname+location.search);">Create case</a>';
+    
+      var customcaselist = $j('.custom-case-list');	
+      
+      if(body.hasClass('homepage')){
+          $j('#nav-home').addClass('active');
+          $j('.new-case-container').append(newcase);
+      }
+      else if(body.hasClass('caseTab') || customcaselist.length > 0){
+          selected.html('Cases'); 
+          $j('#nav-cases').addClass('active');  
+          
+          if(path[2] == 'CreateCaseComm'){
+              $j('#navigation-breadcrumb').html('Create case');
+          }
+          
+          $j('.new-case-container').append(newcase);
+                
+      }else if(body.hasClass('knowledgeTab')){
+          selected.html('Knowledge');
+          $j('#nav-knowledge').addClass('active'); 
+      }else{
+          $j('.community-navigation .dropdown').remove();
+          var homebutton = '<a id="home-button" class="btn btn-default" href="/ta/home/home.jsp"><i class="glyphicon glyphicon-home"></i> Home</a>'
+          $j('.community-navigation').prepend(homebutton);
+      }
+        
+  });
+</apex:page>

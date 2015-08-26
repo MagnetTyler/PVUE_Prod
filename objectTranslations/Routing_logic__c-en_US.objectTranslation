@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Routing logic</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Routing_logics</value>
+    </caseValues>
+    <fields>
+        <label><!-- Error message --></label>
+        <name>Error_message__c</name>
+        <picklistValues>
+            <masterLabel>You must select ready for resolution to close the case</masterLabel>
+            <translation><!-- You must select ready for resolution to close the case --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Go to step --></label>
+        <name>Go_to_step__c</name>
+    </fields>
+    <fields>
+        <label><!-- Move Step on Render --></label>
+        <name>Move_Step_on_Render__c</name>
+    </fields>
+    <fields>
+        <label><!-- Page Order --></label>
+        <name>Page_Order__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Section --></label>
+        <name>Parent_Section__c</name>
+        <picklistValues>
+            <masterLabel>Section 1</masterLabel>
+            <translation><!-- Section 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 10</masterLabel>
+            <translation><!-- Section 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 2</masterLabel>
+            <translation><!-- Section 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 3</masterLabel>
+            <translation><!-- Section 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 4</masterLabel>
+            <translation><!-- Section 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 5</masterLabel>
+            <translation><!-- Section 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 6</masterLabel>
+            <translation><!-- Section 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 7</masterLabel>
+            <translation><!-- Section 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 8</masterLabel>
+            <translation><!-- Section 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Section 9</masterLabel>
+            <translation><!-- Section 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Re-Render Block --></label>
+        <name>Re_Render_Block__c</name>
+        <picklistValues>
+            <masterLabel>PBlock01</masterLabel>
+            <translation><!-- PBlock01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock02</masterLabel>
+            <translation><!-- PBlock02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock03</masterLabel>
+            <translation><!-- PBlock03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock04</masterLabel>
+            <translation><!-- PBlock04 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock05</masterLabel>
+            <translation><!-- PBlock05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock06</masterLabel>
+            <translation><!-- PBlock06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock07</masterLabel>
+            <translation><!-- PBlock07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock08</masterLabel>
+            <translation><!-- PBlock08 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock09</masterLabel>
+            <translation><!-- PBlock09 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock10</masterLabel>
+            <translation><!-- PBlock10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PBlock11</masterLabel>
+            <translation><!-- PBlock11 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Record Type ID --></label>
+        <name>Record_Type_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Step --></label>
+        <name>Step__c</name>
+        <relationshipLabel><!-- Routing_logics --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Sub Section Fieldset --></label>
+        <name>Sub_Section_Fieldset__c</name>
+    </fields>
+    <recordTypes>
+        <label><!-- Dynamic Routing Logic --></label>
+        <name>Dynamic_Routing_Logic</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Dynamic Section Logic --></label>
+        <name>Dynamic_Section_Logic</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

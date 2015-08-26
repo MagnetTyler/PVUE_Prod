@@ -164,6 +164,7 @@
         <location>full</location>
     </listPlacement>
     <listRefreshMethod>refreshListRows</listRefreshMethod>
+    <logo>Public_Documents/ServiceDirect_Logo.png</logo>
     <saveUserSessions>true</saveUserSessions>
     <tab>standard-Case</tab>
     <tab>standard-Dashboard</tab>

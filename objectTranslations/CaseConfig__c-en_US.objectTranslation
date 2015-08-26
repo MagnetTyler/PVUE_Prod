@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CaseConfig</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CaseConfig</value>
+    </caseValues>
+    <fields>
+        <label><!-- DevSandboxId --></label>
+        <name>DevSandboxId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lower Fieldset --></label>
+        <name>Lower_Fieldset__c</name>
+    </fields>
+    <fields>
+        <label><!-- Middle Fieldset --></label>
+        <name>Middle_Fieldset__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type Name --></label>
+        <name>Record_Type_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Upper Fieldset --></label>
+        <name>Upper_Fieldset__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

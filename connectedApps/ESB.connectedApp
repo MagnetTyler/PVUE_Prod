@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConnectedApp xmlns="http://soap.sforce.com/2006/04/metadata">
+    <contactEmail>tyler.rendleman@magnet360.com</contactEmail>
+    <label>ESB</label>
+    <oauthConfig>
+        <callbackUrl>https://login.salesforce.com/services/oauth2/success</callbackUrl>
+        <consumerKey>3MVG99OxTyEMCQ3gui1cYH3zAGF8TwVR6gNdohynIfic87Ot2MmJXtBhL3SG6cCzNeCCPpqDBTn2AfNIiWtMb</consumerKey>
+        <scopes>Full</scopes>
+    </oauthConfig>
+</ConnectedApp>

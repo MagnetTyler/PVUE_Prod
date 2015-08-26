@@ -1,0 +1,88 @@
+<apex:component controller="CaseCommentsComponentController" allowDML="true">
+    
+    <script type="text/javascript" src="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/js/jquery.dataTables.min.js')}"></script>
+    
+    <apex:stylesheet value="{! URLFOR($Resource.jQueryUI, 'jquery-ui/jquery-ui.min.css')}"/>
+    <apex:stylesheet value="{! URLFOR($Resource.DataTables, 'DataTables-1.10.4/media/css/jquery.dataTables.css')}" />
+        
+
+
+    <!-- Attribute Definition -->
+    <apex:attribute name="Case_Id" description="Salesforce Id of the Case whose Case Comments needs to be rendered" 
+                        type="Id" required="true" assignTo="{!caseId}" />
+    <apex:attribute name="mypagetype" description="location of page.  console or community" 
+                        type="string" required="false" assignTo="{!pagetype}" />
+    <apex:attribute name="caseisclosed" description="Status of the case" assignTo="{!Caseclosed}" required="false"
+                        type="boolean"/>
+    
+    <!-- Component Body -->    
+    <apex:componentBody >
+        <apex:form styleClass="Commentform">
+            <apex:pageBlock title="{!$Label.Comments}" tabStyle="Case" >
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton action="{!NewComment}" value="{!$Label.Add_comment}" rendered="{!AND(Pagetype != 'Community', caseclosed == false)}" />
+                    <apex:outputPanel layout="none" rendered="{!AND(Pagetype == 'Community', caseclosed == false)}">
+                        <a data-target="#addComments" data-toggle="modal" id="attach-btn" class="btn" href="#">{!$Label.Add_comment}</a>
+                    </apex:outputPanel>
+                </apex:pageBlockButtons>
+                <apex:outputPanel rendered="{!Comments.size=0}" >                            
+                    <table class="list" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr class="headerRow">
+                                <th scope="col" class="noRowsHeader">{!$Label.No_comments}</th>
+                            </tr>
+                        </tbody>
+                    </table>                            
+               </apex:outputPanel> 
+                <apex:outputpanel rendered="{!Comments.size > 0}">     
+                     <table id="thetable" class="display case-comment-table">
+                        <thead>
+                            <tr>
+                                <apex:outputpanel rendered="{!Pagetype != 'Community'}">
+                                    <th>{!$Label.Action}</th>                               
+                                    <th>{!$Label.Public}</th>
+                                </apex:outputpanel>
+                                <th>{!$Label.Comment}</th>
+                                <th>{!$Label.Created}</th>
+                                <th>{!$Label.Created_by}</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!Comments}" var="comment" >
+                                <tr>
+                                    <apex:outputpanel rendered="{!Pagetype != 'Community'}">
+                                        <td>
+                                            
+                                        <apex:outputLink value="/{!comment.cComment.Id}/e?parent_id={!caseId}&retURL=/{!caseId}" rendered="{!CaseClosed == false}">{!$Label.Edit}
+                                        </apex:outputLink><apex:outputtext value="  |  " rendered="{!caseclosed == false}"/>
+                                            
+                                        <apex:commandLink action="{!makePublicPrivate}" value="{!comment.PublicPrivateAction}" rendered="{!CaseClosed == false}">
+                                        <apex:param name="CommentId_p" value="{!comment.cComment.Id}" />
+                                        </apex:commandLink>
+                                                                         
+                                        </td>                                   
+                                        <td><apex:inputcheckbox disabled="true" value="{!comment.cComment.IsPublished}"/></td>
+                                    </apex:outputPanel> 
+                                    <td><apex:outputText escape="false" value="{!comment.cComment.commentBody}"/></td>
+                                    <td>
+                                        <apex:outputText value="{0,date, MM/dd/yyyy HH:mm}" style="display: none">
+                                            <apex:param value="{!comment.cComment.CreatedDate}"/>
+                                        </apex:outputText>
+                                        <apex:outputField value="{!comment.cComment.CreatedDate}"/>
+                                    </td>
+                                    
+                                    <td>
+                                        <apex:variable var="list" value="{!''}{!myagents}" />
+                                        <apex:outputText value="{!IF(CONTAINS(list, comment.cComment.Createdby.name), comment.cComment.Createdby.name,$Label.Pearson_Vue)}" rendered="{!pagetype=='Community'}" />
+
+                                        <apex:outputText value="{!comment.cComment.Createdby.name}" rendered="{!pagetype != 'Community'}" />
+                                    </td> 
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                   </table>                     
+                </apex:outputpanel>
+            </apex:pageBlock>   
+        </apex:form>    
+    </apex:componentBody>
+</apex:component>
