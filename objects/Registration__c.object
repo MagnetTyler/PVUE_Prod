@@ -96,6 +96,7 @@
     </fieldSets>
     <fields>
         <fullName>Candidate_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>Candidate__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -132,6 +133,7 @@
     <fields>
         <fullName>Display_VTS_Registration_ID__c</fullName>
         <description>This field is used on page layouts to display the VTS Registration Id in a friendlier manner (without commas)</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>text(VTS_Registration_ID__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -144,6 +146,7 @@
     </fields>
     <fields>
         <fullName>Disposition__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Disposition</label>
         <length>100</length>
@@ -169,6 +172,7 @@
     </fields>
     <fields>
         <fullName>Process_State_Code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Process state code</label>
         <length>20</length>
@@ -193,6 +197,7 @@
     </fields>
     <fields>
         <fullName>Test_Driver_Version__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Test driver / version</label>
         <length>100</length>

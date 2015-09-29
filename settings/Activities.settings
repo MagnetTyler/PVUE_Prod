@@ -5,7 +5,6 @@
     <enableClickCreateEvents>false</enableClickCreateEvents>
     <enableDragAndDropScheduling>false</enableDragAndDropScheduling>
     <enableEmailTracking>true</enableEmailTracking>
-    <enableEventScheduler>false</enableEventScheduler>
     <enableGroupTasks>true</enableGroupTasks>
     <enableListViewScheduling>false</enableListViewScheduling>
     <enableLogNote>false</enableLogNote>

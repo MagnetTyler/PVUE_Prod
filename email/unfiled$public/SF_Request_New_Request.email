@@ -1,0 +1,16 @@
+A new Salesforce Request has been created.
+
+Created by: {!Salesforce_Request__c.CreatedBy}
+
+Short Description: {!Salesforce_Request__c.Short_Description__c}
+
+Department: {!Salesforce_Request__c.Date_Needed__c}
+
+Needed by: {!Salesforce_Request__c.Date_Needed__c}
+
+Urgency: {!Salesforce_Request__c.Urgency__c}
+
+Details:
+{!Salesforce_Request__c.Details__c}
+
+Request in Salesforce: {!Salesforce_Request__c.Link}

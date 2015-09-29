@@ -41,6 +41,6 @@
         <forceRelogin>false</forceRelogin>
         <lockSessionsToDomain>false</lockSessionsToDomain>
         <lockSessionsToIp>false</lockSessionsToIp>
-        <sessionTimeout>FifteenMinutes</sessionTimeout>
+        <sessionTimeout>FourHours</sessionTimeout>
     </sessionSettings>
 </SecuritySettings>

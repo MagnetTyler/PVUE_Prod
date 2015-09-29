@@ -367,6 +367,54 @@ Public static String Relationshipfields (string Objectname, string relatedobject
 					
 		}
 
+
+	//
+	// utility class used to clear the values from the case when finalcategory details are changed
+	//
+
+public static void clearCaseIntegrationDetails(case mycase)
+	{
+		
+        mycase.Client_id__c =  null;
+        mycase.Client_id__r =  null;
+        mycase.Registration_id__r =  null;
+        mycase.Registration_id__c =  null;
+        
+        mycase.Exam_id__r =  null;
+        mycase.exam_id__c =  null;
+        mycase.Candidate_id__r =  null;
+        mycase.candidate_id__c =  null;
+		mycase.Candidate_Address_Line_1__c =  null;
+        mycase.Candidate_Address_Line_2__c =  null;
+        mycase.Candidate_Address_Line_3__c =  null;
+        mycase.Candidate_City__c =  null;
+        mycase.Candidate_Country__c =  null;
+        mycase.Candidate_Country_Name__c =  null;
+        mycase.Candidate_Email__c = null;
+        mycase.Candidate_First_Name__c =  null;
+        mycase.Candidate_Last_Name__c =  null;
+        mycase.Candidate_Middle_Name__c =  null;
+        mycase.Candidate_Phone_Country_Code__c = null;
+        mycase.Candidate_Phone_Extension__c = null;
+        mycase.Candidate_Phone_Number__c = null;
+        mycase.Candidate_Postal_Code__c = null;
+        mycase.Candidate_State__c = null;
+        mycase.Candidate_State_Name__c = null;
+        mycase.Candidate_Student_ID__c = null;
+        mycase.candidate_CCID__c = null;
+        mycase.Exam_Authorization_ID__c = null;
+        mycase.Exam_Category__c = null;
+        mycase.Exam_Delivery_Mode__c = null;
+        mycase.Exam_Name__c = null;
+        mycase.Exam_Series_Code__c = null;
+        mycase.Registration_Date_and_Time_of_Exam__c =  null;
+        mycase.Registration_Disposition__c = null;
+        mycase.Registration_Process_State_Code__c = null;
+        mycase.Registration_Test_Driver_Version__c =  null;
+        
+	}				
+
+
 public static void CommitRegistration(case mycase, VTS_Registration RegInput){
 		
 		 VTSPersistenceUtility p = new VTSPersistenceUtility();
@@ -376,9 +424,11 @@ public static void CommitRegistration(case mycase, VTS_Registration RegInput){
             Account mytestcenter = p.upsertTestCenter(RegInput.testCenter, true);
             
             Candidate__c RegCandidate = p.upsertCandidate(RegInput.Candidate, true);
-            Exam__c relatedexam = p.upsertExam(RegInput.exam, RegInput.candidate.clientId,true);
+            long myclientid;
+            if(RegInput.candidate.clientId != null){myclientid = RegInput.candidate.clientId;} else{myclientid = RegInput.exam.clientId;}
+            Exam__c relatedexam = p.upsertExam(RegInput.exam, myclientid,true);
             Registration__c relatedReg = p.upsertRegistration(RegInput, true);
-            decimal myclientid = RegInput.candidate.clientId;
+            //decimal myclientid = RegInput.candidate.clientId;
             string clientsearch = 'SELECT name, vts_client_id__c FROM Account where VTS_Client_id__c = :myclientid';
             string myid = relatedreg.id;
             string regsearch = 'SELECT ' + utility.Editablefields('Registration__c') + ' FROM Registration__c where id =: myid';
@@ -422,12 +472,14 @@ public static void CommitRegistration(case mycase, VTS_Registration RegInput){
             mycase.Exam_Delivery_Mode__c = relatedexam.Delivery_Mode__c;
             mycase.Exam_Name__c = relatedexam.Exam_Name__c;
             mycase.Exam_Series_Code__c = relatedexam.Exam_Series_Code__c;
+            mycase.registration_VTS_Id__c = string.valueof(RelatedReg.VTS_Registration_id__c);
             mycase.Registration_Date_and_Time_of_Exam__c = relatedReg.Date_and_Time_of_Exam__c;
             mycase.Registration_Disposition__c = relatedReg.Disposition__c;
             mycase.Registration_Process_State_Code__c = relatedReg.Process_State_Code__c;
             mycase.Registration_Test_Driver_Version__c = relatedReg.Test_Driver_Version__c;
             mycase.Site_name_static__c = mytestcenter.Name;
             mycase.site_type_static__c = mytestcenter.Channel_type__c;
+            mycase.Site_id__c = mytestcenter.VTS_Site_ID__c;
 			
 			system.debug('attachcandidate' + mycase.Registration_id__c);
 			

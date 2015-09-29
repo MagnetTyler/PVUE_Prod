@@ -7,20 +7,23 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>TYPE</field>
+        <field>RATING</field>
     </columns>
     <columns>
-        <field>RATING</field>
+        <field>SALES</field>
     </columns>
     <columns>
         <field>INDUSTRY</field>
     </columns>
-    <description>total number of insurance accts w/PM</description>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <description>states w/PM and prior yrs revenue (no client contacts)</description>
     <filter>
         <criteriaItems>
             <column>INDUSTRY</column>
             <operator>contains</operator>
-            <value>Insurance,Continuing Education</value>
+            <value>Cosmetology</value>
         </criteriaItems>
         <criteriaItems>
             <column>TYPE</column>
@@ -29,7 +32,7 @@
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Clients - Insurance accts only</name>
+    <name>Clients - Cosmetology accts</name>
     <params>
         <name>co</name>
         <value>1</value>
@@ -41,6 +44,8 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATE</dateColumn>
+        <endDate>2020-12-31</endDate>
         <interval>INTERVAL_CUSTOM</interval>
+        <startDate>2000-01-01</startDate>
     </timeFrameFilter>
 </Report>

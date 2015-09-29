@@ -57,6 +57,7 @@
     <enableStreamingApi>false</enableStreamingApi>
     <fields>
         <fullName>Error_Message__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Error message</label>
         <length>32768</length>
@@ -67,6 +68,7 @@
     <fields>
         <fullName>Process_Function_Name__c</fullName>
         <description>Name of the Process/Function that resulted in the error.</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Process/Function name</label>
         <length>255</length>
@@ -111,6 +113,7 @@
     </fields>
     <fields>
         <fullName>Related_data__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Related data</label>
         <length>32768</length>

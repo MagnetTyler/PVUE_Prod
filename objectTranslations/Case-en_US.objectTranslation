@@ -44,20 +44,20 @@
             <translation><!-- Ran RMA --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Refresh Database</masterLabel>
-            <translation><!-- Refresh Database --></translation>
+            <masterLabel>Refreshed database</masterLabel>
+            <translation><!-- Refreshed database --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Reinstalled software</masterLabel>
             <translation><!-- Reinstalled software --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Replace host files</masterLabel>
-            <translation><!-- Replace host files --></translation>
+            <masterLabel>Replaced host files</masterLabel>
+            <translation><!-- Replaced host files --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Restart wrapper</masterLabel>
-            <translation><!-- Restart wrapper --></translation>
+            <masterLabel>Restarted Wrapper</masterLabel>
+            <translation><!-- Restarted Wrapper --></translation>
         </picklistValues>
     </fields>
     <fields>
@@ -1860,7 +1860,7 @@
         <name>Hold_results_when_available__c</name>
     </fields>
     <fields>
-        <label><!-- Hot issues list --></label>
+        <label><!-- Hot issue --></label>
         <name>Hot_issues_list__c</name>
         <picklistValues>
             <masterLabel>Issue 1</masterLabel>
@@ -1900,7 +1900,11 @@
         <name>IN_Or_Out_of_SLA__c</name>
     </fields>
     <fields>
-        <label><!-- I have checked the knowledge article --></label>
+        <label><!-- I have attached the EVT folder --></label>
+        <name>I_have_attached_the_EVT_folder__c</name>
+    </fields>
+    <fields>
+        <label><!-- I followed the reimage process article --></label>
         <name>I_have_checked_the_Knowledge_Article__c</name>
     </fields>
     <fields>
@@ -2688,6 +2692,10 @@
     <fields>
         <label><!-- Registration Test driver / version --></label>
         <name>Registration_Test_Driver_Version__c</name>
+    </fields>
+    <fields>
+        <label><!-- Registration VTS ID --></label>
+        <name>Registration_VTS_ID__c</name>
     </fields>
     <fields>
         <label><!-- Registration --></label>
@@ -4874,6 +4882,18 @@
     <fields>
         <label><!-- Test center region --></label>
         <name>Test_center_region__c</name>
+    </fields>
+    <fields>
+        <label><!-- The workstation needs to be reimaged --></label>
+        <name>The_workstation_needs_to_be_reimaged__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- Enter time off phone in minutes --></label>

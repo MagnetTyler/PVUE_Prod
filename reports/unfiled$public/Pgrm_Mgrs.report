@@ -12,9 +12,6 @@
     <columns>
         <field>ACCOUNT.NAME</field>
     </columns>
-    <columns>
-        <field>ADDRESS1_STATE</field>
-    </columns>
     <description>PM&apos;s with the assigned accounts</description>
     <filter>
         <criteriaItems>
@@ -22,9 +19,18 @@
             <operator>equals</operator>
             <value>Customer</value>
         </criteriaItems>
+        <criteriaItems>
+            <column>Account.Region__c</column>
+            <operator>equals</operator>
+            <value>Americas</value>
+        </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Pgrm Mgrs &amp; their accts</name>
+    <name>Program Mgrs &amp; their accts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
     <reportType>AccountList</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
@@ -32,8 +38,6 @@
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATE</dateColumn>
-        <endDate>2020-12-31</endDate>
         <interval>INTERVAL_CUSTOM</interval>
-        <startDate>1990-01-01</startDate>
     </timeFrameFilter>
 </Report>

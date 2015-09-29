@@ -6,6 +6,7 @@
     <fields>
         <fullName>Case_Field__c</fullName>
         <description>Name of the Case field in Salesforce.</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>Name of the Case field in Salesforce.</inlineHelpText>
         <label>Case Field</label>

@@ -7,18 +7,18 @@
         <field>ACCOUNT_NAME</field>
     </columns>
     <columns>
+        <field>RATING</field>
+    </columns>
+    <columns>
         <field>SALES</field>
     </columns>
     <columns>
-        <field>START_DATE</field>
+        <field>INDUSTRY</field>
     </columns>
     <columns>
-        <field>END_DATE</field>
+        <field>TYPE</field>
     </columns>
-    <columns>
-        <field>Contract.Client_Inception_Date__c</field>
-    </columns>
-    <description>current RE clients w/term dates (no contacts)</description>
+    <description>states w/PM and prior yrs revenue (no client contacts)</description>
     <filter>
         <criteriaItems>
             <column>TYPE</column>
@@ -37,7 +37,7 @@
         </criteriaItems>
     </filter>
     <format>Tabular</format>
-    <name>Clients - Real Estate Accts</name>
+    <name>Clients - Real Estate accts</name>
     <params>
         <name>co</name>
         <value>1</value>

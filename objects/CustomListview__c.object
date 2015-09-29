@@ -82,6 +82,7 @@
         <fullName>FieldSet_Name__c</fullName>
         <defaultValue>&quot;External_list_view&quot;</defaultValue>
         <description>field to hold the name of a fieldset for building tables</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>FieldSet Name</label>
         <length>50</length>
@@ -92,6 +93,7 @@
     </fields>
     <fields>
         <fullName>Fields_String__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Fields String</label>
         <length>1000</length>
@@ -205,6 +207,7 @@
     </fields>
     <fields>
         <fullName>Order_by__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Order by</label>
         <length>30</length>
@@ -216,6 +219,7 @@
     <fields>
         <fullName>Parent_Field_API_Name__c</fullName>
         <description>This is the API or Developer name for the parent field.  The component looks for the ID of the parent record in this field as part of a dynamic query</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Parent Field API Name</label>
         <length>80</length>
@@ -227,6 +231,7 @@
     <fields>
         <fullName>Search_Criteria__c</fullName>
         <description>This field is used by Custom_Case_Listview to build the dynamic SOQL Query string.  Visibility is currently set for System Administrators only.  It has to be in legitimate SOQL language</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>This field currently is to be filled out in SOQL language and is the WHERE Clause for the search</inlineHelpText>
         <label>Search Criteria</label>
@@ -236,6 +241,7 @@
     </fields>
     <fields>
         <fullName>Then_by__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Then by</label>
         <length>80</length>

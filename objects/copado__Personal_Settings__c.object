@@ -6,6 +6,7 @@
     <fields>
         <fullName>copado__API_Key__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>API Key</label>
         <length>255</length>
@@ -17,6 +18,7 @@
     <fields>
         <fullName>copado__AccessStatusColumn__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>Options are either &quot;dropdown&quot; or &quot;images&quot;</inlineHelpText>
         <label>AccessStatusColumn</label>

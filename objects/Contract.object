@@ -75,6 +75,7 @@
     <fields>
         <fullName>Client_Inception_Date__c</fullName>
         <description>Date of first contract between Promissor and client</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Client Inception Date</label>
         <length>20</length>
@@ -164,6 +165,7 @@
     <fields>
         <fullName>Other_Services__c</fullName>
         <description>Services provided by Promissor other than the standard ones</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Other Services</label>
         <required>false</required>
@@ -181,6 +183,7 @@
     </fields>
     <fields>
         <fullName>Pearson_Contract_Number__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Pearson Contract Number</label>
         <length>30</length>
@@ -295,9 +298,10 @@
     </fields>
     <fields>
         <fullName>Status</fullName>
+        <encrypted>false</encrypted>
         <picklist>
             <picklistValues>
-                <fullName>Inactive</fullName>
+                <fullName>Active</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -305,7 +309,11 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>Active</fullName>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
                 <default>false</default>
             </picklistValues>
             <picklistValues>
@@ -314,10 +322,6 @@
             </picklistValues>
             <picklistValues>
                 <fullName>Terminated</fullName>
-                <default>false</default>
-            </picklistValues>
-            <picklistValues>
-                <fullName>In Progress</fullName>
                 <default>false</default>
             </picklistValues>
             <restrictedPicklist>true</restrictedPicklist>

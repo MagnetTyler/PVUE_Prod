@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email sent to the creator of a SF Request record upon creation</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SF Request: Confirmation to Creator</name>
+    <style>none</style>
+    <subject>Thank you for creating your Salesforce Request ID {!Salesforce_Request__c.Name} &quot;{!Salesforce_Request__c.Short_Description__c}&quot;</subject>
+    <type>text</type>
+</EmailTemplate>

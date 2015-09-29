@@ -59,6 +59,7 @@
     <fields>
         <fullName>copado__Action_Description__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__Script_Step__r.copado__Action_Description__c</formula>
         <label>Action/Description</label>
@@ -70,6 +71,7 @@
     <fields>
         <fullName>copado__Actual_Result__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Actual Result</label>
         <length>32768</length>
@@ -80,6 +82,7 @@
     <fields>
         <fullName>copado__Expected_Result__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__Script_Step__r.copado__Expected_Result__c</formula>
         <label>Expected Result</label>
@@ -91,6 +94,7 @@
     <fields>
         <fullName>copado__Guidance_notes__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__Script_Step__r.copado__Guidance_notes__c</formula>
         <label>Guidance notes</label>

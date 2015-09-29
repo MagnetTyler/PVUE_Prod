@@ -69,6 +69,7 @@
         <fullName>copado__Flow_Step_Coordinates__c</fullName>
         <deprecated>false</deprecated>
         <description>This field is used to store the Deployment Flow Step locations of each box. This field should not be added to the page layout.</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Flow Step Coordinates</label>
         <length>32768</length>

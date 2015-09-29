@@ -136,6 +136,7 @@ copado__SUM_Deployed__c / copado__Step_Count__c,
     <fields>
         <fullName>copado__Status_Flag__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>IMAGE( 
   CASE(  copado__Status__c,  &quot;Completed Successfully&quot;, &quot;/img/samples/flag_green.gif&quot;,
@@ -192,6 +193,7 @@ copado__SUM_Deployed__c / copado__Step_Count__c,
     <fields>
         <fullName>copado__To_Org_Name__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__To_Org__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

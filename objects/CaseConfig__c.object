@@ -5,6 +5,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>DevSandboxId__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>DevSandboxId</label>
         <length>18</length>
@@ -15,6 +16,7 @@
     </fields>
     <fields>
         <fullName>Lower_Fieldset__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Lower Fieldset</label>
         <length>50</length>
@@ -25,6 +27,7 @@
     </fields>
     <fields>
         <fullName>Middle_Fieldset__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Middle Fieldset</label>
         <length>50</length>
@@ -35,6 +38,7 @@
     </fields>
     <fields>
         <fullName>Record_Type_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Record Type Name</label>
         <length>55</length>
@@ -45,6 +49,7 @@
     </fields>
     <fields>
         <fullName>Upper_Fieldset__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Upper Fieldset</label>
         <length>50</length>

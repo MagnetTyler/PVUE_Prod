@@ -6,6 +6,7 @@
     <fields>
         <fullName>Grant_Code__c</fullName>
         <description>grant code for the specified permission set.  it is a 2 digit number</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Grant Code</label>
         <length>4</length>
@@ -17,6 +18,7 @@
     <fields>
         <fullName>GroupID__c</fullName>
         <description>Field to store the group ID for this permission group so that users are added to groups as they are provisioned</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>GroupID</label>
         <length>18</length>
@@ -27,6 +29,7 @@
     </fields>
     <fields>
         <fullName>Permission_Set_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Permission Set Name</label>
         <length>255</length>

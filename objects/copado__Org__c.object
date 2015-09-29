@@ -59,6 +59,7 @@
     <fields>
         <fullName>copado__Custom_Domain__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>Eg: https://company.my.salesforce.com</inlineHelpText>
         <label>Custom Domain</label>
@@ -95,6 +96,7 @@
     <fields>
         <fullName>copado__Error__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Error</label>
         <length>255</length>
@@ -175,6 +177,7 @@
     <fields>
         <fullName>copado__Metadata_Types__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>Empty means all types. Select one or more types to limit the backup only to selected items.</inlineHelpText>
         <label>Metadata Types</label>
@@ -201,6 +204,7 @@
     <fields>
         <fullName>copado__Oauth_Signature__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Oauth Signature</label>
         <length>255</length>
@@ -233,6 +237,7 @@
     <fields>
         <fullName>copado__Password__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Password</label>
         <length>255</length>
@@ -246,6 +251,7 @@
         <fullName>copado__SFDC_Org_ID__c</fullName>
         <caseSensitive>true</caseSensitive>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>SFDC Org ID</label>
         <length>40</length>
@@ -287,6 +293,7 @@
     <fields>
         <fullName>copado__Token__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>A security token is an automatically generated key that you must use when connecting via the API.</inlineHelpText>
         <label>Security Token</label>
@@ -300,6 +307,7 @@
     <fields>
         <fullName>copado__Username__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Username</label>
         <length>255</length>
@@ -322,6 +330,7 @@
     <fields>
         <fullName>copado__Validated_Status__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>IF(ISBLANK(copado__Validated_Date__c),
 &quot;Error&quot; ,

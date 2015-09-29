@@ -59,6 +59,7 @@
     <fields>
         <fullName>copado__Password__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Password</label>
         <length>255</length>
@@ -70,6 +71,7 @@
     <fields>
         <fullName>copado__URI__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>URI</label>
         <length>255</length>
@@ -81,6 +83,7 @@
     <fields>
         <fullName>copado__Username__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Username</label>
         <length>255</length>

@@ -7,15 +7,18 @@
         <field>ACCOUNT.NAME</field>
     </columns>
     <columns>
-        <field>TYPE</field>
+        <field>RATING</field>
     </columns>
     <columns>
-        <field>RATING</field>
+        <field>SALES</field>
     </columns>
     <columns>
         <field>INDUSTRY</field>
     </columns>
-    <description>total number of real estate appraisers accts w/PM</description>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <description>states w/PM and prior yrs revenue (no client contacts)</description>
     <filter>
         <criteriaItems>
             <column>INDUSTRY</column>

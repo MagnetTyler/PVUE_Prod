@@ -238,6 +238,7 @@
     <fields>
         <fullName>FAQ_Department__c</fullName>
         <description>FAQ SME</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>FAQ Department</label>
         <required>false</required>

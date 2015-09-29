@@ -2,7 +2,7 @@
 <AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
     <authorizeUrl>https://assist.pearsonvue.com/Assist/api/v1/openid/authorize</authorizeUrl>
     <consumerKey>serviceDirect</consumerKey>
-    <consumerSecret>kd/hFnkmFF2kzGSLJmzzTxQcFDNQMEDwMvtRrFhsphdwQRj3Ygtq1w==</consumerSecret>
+    <consumerSecret>3y06OJqarik6ugIfRSyxUHo9ibit7kCQWX4zln26mWBwQRj3Ygtq1w==</consumerSecret>
     <executionUser>esb.system@pearson.com</executionUser>
     <friendlyName>Pearson Assist Login</friendlyName>
     <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>

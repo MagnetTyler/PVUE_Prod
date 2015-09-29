@@ -97,6 +97,7 @@
     <fields>
         <fullName>External_ID__c</fullName>
         <description>field that is used in the higher org for matching records that come from the lower environments</description>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>External ID</label>
         <length>20</length>

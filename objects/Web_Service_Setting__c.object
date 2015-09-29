@@ -4,6 +4,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Endpoint__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Endpoint</label>
         <length>255</length>
@@ -14,6 +15,7 @@
     </fields>
     <fields>
         <fullName>Password__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Password</label>
         <length>255</length>
@@ -37,6 +39,7 @@
     </fields>
     <fields>
         <fullName>Username__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Username</label>
         <length>255</length>

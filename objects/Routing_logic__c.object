@@ -71,6 +71,7 @@
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>External Id</label>
         <length>18</length>
@@ -222,6 +223,7 @@
     </fields>
     <fields>
         <fullName>Record_Type_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Record Type ID</label>
         <length>21</length>
@@ -248,6 +250,7 @@
     </fields>
     <fields>
         <fullName>Sub_Section_Fieldset__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Sub Section Fieldset</label>
         <required>false</required>

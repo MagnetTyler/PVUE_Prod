@@ -151,6 +151,7 @@
     </fieldSets>
     <fields>
         <fullName>Address_Line_1__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Address line 1</label>
         <length>155</length>
@@ -161,6 +162,7 @@
     </fields>
     <fields>
         <fullName>Address_Line_2__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Address line 2</label>
         <length>155</length>
@@ -172,6 +174,7 @@
     <fields>
         <fullName>Address_Line_3__c</fullName>
         <description>Info about candidate from VTS via integration</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Address Line 3</label>
         <length>155</length>
@@ -184,6 +187,7 @@
         <fullName>CCID__c</fullName>
         <caseSensitive>true</caseSensitive>
         <description>Client Candidate ID</description>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>CCID</label>
         <length>30</length>
@@ -194,6 +198,7 @@
     </fields>
     <fields>
         <fullName>Candidate_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Candidate ID</label>
         <length>30</length>
@@ -204,6 +209,7 @@
     </fields>
     <fields>
         <fullName>City__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>City</label>
         <length>55</length>
@@ -237,6 +243,7 @@
     <fields>
         <fullName>Country_Name__c</fullName>
         <description>Field populated via API, this is the non-abbreviated name of the country</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Country Name</label>
         <length>155</length>
@@ -247,6 +254,7 @@
     </fields>
     <fields>
         <fullName>Country__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Country</label>
         <length>55</length>
@@ -257,6 +265,7 @@
     </fields>
     <fields>
         <fullName>Email__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Email</label>
         <required>false</required>
@@ -266,6 +275,7 @@
     </fields>
     <fields>
         <fullName>First_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>First name</label>
         <length>50</length>
@@ -276,6 +286,7 @@
     </fields>
     <fields>
         <fullName>Last_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Last name</label>
         <length>50</length>
@@ -287,6 +298,7 @@
     <fields>
         <fullName>Middle_Name__c</fullName>
         <description>Candidate middle name.  coming from VTS via integration</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Middle Name</label>
         <length>50</length>
@@ -297,6 +309,7 @@
     </fields>
     <fields>
         <fullName>Phone_Country_Code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Phone country code</label>
         <length>5</length>
@@ -307,6 +320,7 @@
     </fields>
     <fields>
         <fullName>Phone_Extension__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Phone extension</label>
         <length>10</length>
@@ -317,6 +331,7 @@
     </fields>
     <fields>
         <fullName>Phone_Number__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Phone number</label>
         <required>false</required>
@@ -325,6 +340,7 @@
     </fields>
     <fields>
         <fullName>Postal_Code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Postal code</label>
         <length>20</length>
@@ -336,6 +352,7 @@
     <fields>
         <fullName>State_Name__c</fullName>
         <description>Field retrieved via API call.  this is the non-abbreviated name of the state</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>State Name</label>
         <length>155</length>
@@ -346,6 +363,7 @@
     </fields>
     <fields>
         <fullName>State__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>State</label>
         <length>55</length>
@@ -356,6 +374,7 @@
     </fields>
     <fields>
         <fullName>Student_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>Student ID</label>
         <length>25</length>
@@ -366,6 +385,7 @@
     </fields>
     <fields>
         <fullName>VTS_Candidate_ID_FRMLA__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>Text(VTS_Candidate_ID__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>

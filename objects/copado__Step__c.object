@@ -129,6 +129,7 @@
     <fields>
         <fullName>copado__Attachment_Id__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Attachment Id</label>
         <length>18</length>
@@ -141,6 +142,7 @@
     <fields>
         <fullName>copado__Branch__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Branch</label>
         <length>255</length>
@@ -165,6 +167,7 @@ WARNING: Credits consumption will apply as a regular deployment since resource-w
     <fields>
         <fullName>copado__Commit_Id__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Commit Id</label>
         <length>255</length>
@@ -177,6 +180,7 @@ WARNING: Credits consumption will apply as a regular deployment since resource-w
     <fields>
         <fullName>copado__Commit_Name__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Commit Name</label>
         <length>255</length>
@@ -315,6 +319,7 @@ copado__SUM_Deployed__c / copado__Org_Count__c,
     <fields>
         <fullName>copado__Status_Flag__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>IMAGE( 
   CASE(  copado__Status__c,  &quot;Completed Successfully&quot;, &quot;/img/samples/flag_green.gif&quot;,
@@ -416,6 +421,7 @@ copado__SUM_Deployed__c / copado__Org_Count__c,
     <fields>
         <fullName>copado__View_Attachment__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>IF( 
   NOT(ISBLANK(copado__Attachment_Id__c)),
@@ -434,6 +440,7 @@ copado__SUM_Deployed__c / copado__Org_Count__c,
         <deprecated>false</deprecated>
         <description>If the step type is &quot;data&quot;  this should contains the json defining the query. 
 In production this field should be HIDDEN</description>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>dataJson</label>
         <length>32768</length>

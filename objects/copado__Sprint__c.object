@@ -95,6 +95,7 @@
     <fields>
         <fullName>copado__Objective__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Objective</label>
         <length>10000</length>

@@ -184,6 +184,7 @@
     </fields>
     <fields>
         <fullName>Account_Type__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>IMAGE(&apos;/img/icon/&apos;  &amp; IF(RecordTypeId = &apos;012Q00000004tBM&apos;, &apos;bigtop24.png&apos;, &apos;hands24.png&apos;), IF(RecordTypeId = &apos;012Q00000004tBM&apos;, &apos;Test Center&apos;, &apos;Client&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -195,6 +196,7 @@
     </fields>
     <fields>
         <fullName>Acronym__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Acronym</label>
         <length>10</length>
@@ -218,6 +220,7 @@
     </fields>
     <fields>
         <fullName>Advisory_note2__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Advisory note2</label>
         <length>1000</length>
@@ -228,6 +231,7 @@
     </fields>
     <fields>
         <fullName>Advisory_note__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Advisory note</label>
         <length>1000</length>
@@ -284,6 +288,7 @@
     </fields>
     <fields>
         <fullName>Athena_version__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Athena version</label>
         <length>50</length>
@@ -300,6 +305,7 @@
     </fields>
     <fields>
         <fullName>Browser_version__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Browser version</label>
         <length>255</length>
@@ -311,6 +317,7 @@
     </fields>
     <fields>
         <fullName>Business_Review_Comments__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>255 max characters</inlineHelpText>
         <label>Business Review Comments</label>
@@ -388,6 +395,7 @@
     </fields>
     <fields>
         <fullName>Channel_type__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Channel type</label>
         <length>100</length>
@@ -399,6 +407,7 @@
     </fields>
     <fields>
         <fullName>Client_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Client ID</label>
         <length>30</length>
@@ -422,6 +431,7 @@
     </fields>
     <fields>
         <fullName>Country_Region__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Country/Region</label>
         <length>50</length>
@@ -466,6 +476,7 @@
     </fields>
     <fields>
         <fullName>Directions__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Directions</label>
         <length>255</length>
@@ -549,6 +560,7 @@
     </fields>
     <fields>
         <fullName>External_Id__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>External Id</label>
         <length>18</length>
@@ -565,6 +577,7 @@
     </fields>
     <fields>
         <fullName>Focus_group__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Focus group</label>
         <length>50</length>
@@ -596,6 +609,7 @@
     </fields>
     <fields>
         <fullName>Geocode_precision__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Geocode precision</label>
         <length>25</length>
@@ -619,6 +633,7 @@
     </fields>
     <fields>
         <fullName>Has_local_admin_permission__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Has local admin permission</label>
         <length>3</length>
@@ -642,6 +657,7 @@
     </fields>
     <fields>
         <fullName>IBT_delivery_rating__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>IBT delivery rating</label>
         <length>12</length>
@@ -759,6 +775,7 @@
     </fields>
     <fields>
         <fullName>Internet_access_time_percentage__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Internet access time percentage</label>
         <length>50</length>
@@ -787,6 +804,7 @@
     </fields>
     <fields>
         <fullName>Last_IBT_update__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Last IBT update</label>
         <length>50</length>
@@ -816,6 +834,7 @@
     </fields>
     <fields>
         <fullName>Last_update_status__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Last update status</label>
         <length>32</length>
@@ -848,6 +867,7 @@
     </fields>
     <fields>
         <fullName>Name</fullName>
+        <encrypted>false</encrypted>
         <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>false</trackHistory>
     </fields>
@@ -915,6 +935,7 @@
     </fields>
     <fields>
         <fullName>OS_version__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>OS version</label>
         <length>50</length>
@@ -1047,6 +1068,42 @@
                 <fullName>APJ</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>India</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Middle East Africa</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South East Asia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korea</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -1142,6 +1199,7 @@
     </fields>
     <fields>
         <fullName>Runs_wrapper__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Runs wrapper</label>
         <length>7</length>
@@ -1252,6 +1310,7 @@
     </fields>
     <fields>
         <fullName>Scenario__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Scenario</label>
         <required>false</required>
@@ -1261,6 +1320,7 @@
     </fields>
     <fields>
         <fullName>Server_OS__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Server OS</label>
         <length>25</length>
@@ -1272,6 +1332,7 @@
     </fields>
     <fields>
         <fullName>Server_internet_access__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Server internet access</label>
         <length>50</length>
@@ -1283,6 +1344,7 @@
     </fields>
     <fields>
         <fullName>Ship_to_address_country_code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Ship to address country code</label>
         <length>3</length>
@@ -1294,6 +1356,7 @@
     </fields>
     <fields>
         <fullName>Ship_to_address_state_code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Ship to address state code</label>
         <length>20</length>
@@ -1346,6 +1409,7 @@
     </fields>
     <fields>
         <fullName>Site_Id__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site ID</label>
         <length>15</length>
@@ -1366,6 +1430,7 @@
     </fields>
     <fields>
         <fullName>Site_affiliation_s__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site affiliation(s)</label>
         <length>25</length>
@@ -1386,6 +1451,7 @@
     </fields>
     <fields>
         <fullName>Site_category__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site category</label>
         <length>50</length>
@@ -1397,6 +1463,7 @@
     </fields>
     <fields>
         <fullName>Site_chain__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site chain</label>
         <length>50</length>
@@ -1408,6 +1475,7 @@
     </fields>
     <fields>
         <fullName>Site_focus_group__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site focus group</label>
         <length>100</length>
@@ -1419,6 +1487,7 @@
     </fields>
     <fields>
         <fullName>Site_type__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Site type</label>
         <length>100</length>
@@ -1439,6 +1508,7 @@
     </fields>
     <fields>
         <fullName>Software_update_track__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Software update track</label>
         <length>100</length>
@@ -1478,6 +1548,7 @@
     </fields>
     <fields>
         <fullName>System_langauge__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>System langauge</label>
         <length>50</length>
@@ -1489,6 +1560,7 @@
     </fields>
     <fields>
         <fullName>TED_status__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>TED status</label>
         <length>100</length>
@@ -1500,6 +1572,7 @@
     </fields>
     <fields>
         <fullName>Test_Center_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Test Center ID</label>
         <length>30</length>
@@ -1511,6 +1584,7 @@
     </fields>
     <fields>
         <fullName>Test_Center_Location__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Test center location</label>
         <length>60</length>
@@ -1550,6 +1624,7 @@
     </fields>
     <fields>
         <fullName>Time_zone__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Time zone</label>
         <length>32</length>
@@ -1561,6 +1636,7 @@
     </fields>
     <fields>
         <fullName>Time_zone_name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Time zone name</label>
         <length>100</length>
@@ -1649,6 +1725,10 @@
                 <fullName>Press</fullName>
                 <default>false</default>
             </picklistValues>
+            <picklistValues>
+                <fullName>Unqualified Lead</fullName>
+                <default>false</default>
+            </picklistValues>
             <sorted>false</sorted>
         </picklist>
         <trackFeedHistory>false</trackFeedHistory>
@@ -1657,6 +1737,7 @@
     </fields>
     <fields>
         <fullName>Update_track__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Update track</label>
         <length>20</length>
@@ -1694,6 +1775,7 @@
         <fullName>VTS_Site_ID__c</fullName>
         <caseSensitive>true</caseSensitive>
         <description>Unique ID of the Site record in VTS</description>
+        <encrypted>false</encrypted>
         <externalId>true</externalId>
         <label>VTS Site ID</label>
         <length>10</length>
@@ -1717,6 +1799,7 @@
     </fields>
     <fields>
         <fullName>VTS_version__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>VTS version</label>
         <length>30</length>
@@ -1728,6 +1811,7 @@
     </fields>
     <fields>
         <fullName>VUE_office__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>VUE office</label>
         <length>50</length>
@@ -1739,6 +1823,7 @@
     </fields>
     <fields>
         <fullName>VUE_root__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>VUE root</label>
         <length>25</length>
@@ -1750,6 +1835,7 @@
     </fields>
     <fields>
         <fullName>Video_resolution__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Video resolution</label>
         <length>50</length>
@@ -1838,6 +1924,22 @@
             <role>Global_Proposal_Development</role>
             <role>Regulatory_Americas_BusDev_Prog_Mgmt_Sales</role>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_Test_Centers</fullName>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>ACCOUNT.TYPE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.Site</value>
+        </filters>
+        <label>All Test Centers</label>
     </listViews>
     <listViews>
         <fullName>MyAccounts</fullName>
@@ -2516,6 +2618,42 @@
                 <fullName>Americas</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Middle East Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South East Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sales_Business_Developer__c</picklist>
@@ -2643,6 +2781,10 @@
             </values>
             <values>
                 <fullName>Qualified Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unqualified Lead</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2862,7 +3004,43 @@
         <picklistValues>
             <picklist>Region__c</picklist>
             <values>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EMEA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Middle East Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South East Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Kingdom</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3110,6 +3288,42 @@
                 <fullName>Americas</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Korea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Middle East Africa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>South East Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Sales_Business_Developer__c</picklist>
@@ -3138,10 +3352,6 @@
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Launch</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3173,6 +3383,10 @@
             </values>
             <values>
                 <fullName>Qualified Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unqualified Lead</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -1,0 +1,5 @@
+Thank you for creating Salesforce Request "{!Salesforce_Request__c.Short_Description__c}". 
+			
+For your future reference the ID of your Salesforce Request is {!Salesforce_Request__c.Name} 
+			
+Go to this URL to see the request in Salesforce: {!Salesforce_Request__c.Link}

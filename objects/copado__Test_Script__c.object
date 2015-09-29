@@ -59,6 +59,7 @@
     <fields>
         <fullName>copado__Expected_Result__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Expected Result</label>
         <length>2000</length>
@@ -69,6 +70,7 @@
     <fields>
         <fullName>copado__Introduction__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Introduction</label>
         <length>2000</length>
@@ -79,6 +81,7 @@
     <fields>
         <fullName>copado__Org__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Org</label>
         <length>255</length>
@@ -126,6 +129,7 @@
     <fields>
         <fullName>copado__Prerequisites__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Prerequisites</label>
         <length>32768</length>
@@ -136,6 +140,7 @@
     <fields>
         <fullName>copado__Project__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__User_Story__r.copado__Project__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -171,6 +176,7 @@
     <fields>
         <fullName>copado__Sprint__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <formula>copado__User_Story__r.copado__Sprint__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -206,6 +212,7 @@
     <fields>
         <fullName>copado__Test_Description__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Test Description</label>
         <required>false</required>
@@ -215,6 +222,7 @@
     <fields>
         <fullName>copado__Test_Title__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Test Title</label>
         <length>255</length>

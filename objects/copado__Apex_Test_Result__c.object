@@ -59,6 +59,7 @@
     <fields>
         <fullName>copado__Details__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Details</label>
         <length>32768</length>

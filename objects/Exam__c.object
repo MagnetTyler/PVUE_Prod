@@ -96,6 +96,7 @@
     </fieldSets>
     <fields>
         <fullName>Authorization_ID__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Authorization ID</label>
         <length>30</length>
@@ -106,6 +107,7 @@
     </fields>
     <fields>
         <fullName>Category__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Category</label>
         <length>50</length>
@@ -152,6 +154,7 @@
     </fields>
     <fields>
         <fullName>Exam_Name__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Exam Name</label>
         <length>225</length>
@@ -162,6 +165,7 @@
     </fields>
     <fields>
         <fullName>Exam_Series_Code__c</fullName>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <label>Exam Series Code</label>
         <length>30</length>

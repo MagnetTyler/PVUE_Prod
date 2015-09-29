@@ -41,12 +41,17 @@
         <name>type</name>
         <value>te</value>
     </params>
+    <params>
+        <name>co</name>
+        <value>0</value>
+    </params>
     <reportType>AccountActivity</reportType>
+    <roleHierarchyFilter>Administrator</roleHierarchyFilter>
     <scope>organization</scope>
     <showDetails>true</showDetails>
     <timeFrameFilter>
         <dateColumn>DUE_DATE</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
-        <startDate>2004-11-11</startDate>
+        <startDate>2015-01-01</startDate>
     </timeFrameFilter>
 </Report>

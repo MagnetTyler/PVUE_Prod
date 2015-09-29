@@ -59,6 +59,7 @@
         <fullName>copado__Branch__c</fullName>
         <defaultValue>&quot;master&quot;</defaultValue>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>the branch in the selected git repository. Usually &quot;master&quot;.</inlineHelpText>
         <label>Branch</label>
@@ -120,6 +121,7 @@
     <fields>
         <fullName>copado__Metadata_Types__c</fullName>
         <deprecated>false</deprecated>
+        <encrypted>false</encrypted>
         <externalId>false</externalId>
         <inlineHelpText>Empty means all types. Select one or more types to limit the backup only to selected items.</inlineHelpText>
         <label>Metadata Types</label>

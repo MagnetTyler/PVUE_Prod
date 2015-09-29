@@ -19,6 +19,9 @@
         <field>END_DATE</field>
     </columns>
     <columns>
+        <field>Contract.Opportunity_End_Date__c</field>
+    </columns>
+    <columns>
         <field>Contract.Client_Inception_Date__c</field>
     </columns>
     <description>A list of all contracts w/expiration dates, inception  date and PM</description>
